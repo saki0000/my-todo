@@ -1,6 +1,7 @@
-import { AppShell, Header, Navbar } from "@mantine/core";
+import { AppShell, Header, Navbar, Text } from "@mantine/core";
 import React, { useState } from "react";
 import Head from "./Header";
+import Main from "./Main";
 
 const Loggined = () => {
   const [opened, setOpened] = useState(true);
@@ -9,8 +10,16 @@ const Loggined = () => {
       <AppShell
         navbar={
           opened ? (
-            <Navbar width={{ base: 300 }} hidden={true} height={700} p="xs">
-              <Navbar.Section grow>Task</Navbar.Section>
+            <Navbar width={{ base: 300 }} hidden={true} p="xl">
+              <Navbar.Section>
+                <Text>Task</Text>
+              </Navbar.Section>
+              <Navbar.Section>
+                <Text>今日</Text>
+              </Navbar.Section>
+              <Navbar.Section>
+                <Text>今週</Text>
+              </Navbar.Section>
             </Navbar>
           ) : (
             <></>
@@ -18,7 +27,7 @@ const Loggined = () => {
         }
         header={
           <Header height={70}>
-            <Head></Head>
+            <Head setOpened={setOpened} opened={opened}></Head>
           </Header>
         }
         styles={(theme) => ({
@@ -30,7 +39,7 @@ const Loggined = () => {
           },
         })}
       >
-        app
+        <Main />
       </AppShell>
     </div>
   );

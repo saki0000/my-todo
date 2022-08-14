@@ -1,7 +1,8 @@
-import { Avatar, Button, Group, Text } from "@mantine/core";
+import { ActionIcon, Avatar, Button, Group, Text } from "@mantine/core";
 import React from "react";
+import { AiOutlineBars } from "react-icons/ai";
 
-const Head = () => {
+const Head = ({ setOpened, opened }: any) => {
   return (
     <>
       <Group
@@ -10,6 +11,13 @@ const Head = () => {
         style={{ marginRight: 30, marginLeft: 30, height: 70 }}
       >
         <Group>
+          <ActionIcon
+            onClick={() => {
+              setOpened(!opened);
+            }}
+          >
+            <AiOutlineBars></AiOutlineBars>
+          </ActionIcon>
           <Avatar></Avatar>
           <Text>Name</Text>
         </Group>
