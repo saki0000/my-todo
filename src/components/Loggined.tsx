@@ -1,14 +1,26 @@
-import { AppShell, Navbar } from "@mantine/core";
-import React from "react";
-import Header from "./Header";
+import { AppShell, Header, Navbar } from "@mantine/core";
+import React, { useState } from "react";
+import Head from "./Header";
 
 const Loggined = () => {
+  const [opened, setOpened] = useState(true);
   return (
     <div>
       <AppShell
-        padding="md"
-        // navbar={<Navbar width={{ base: 300 }} height={500} p="xs"></Navbar>}
-        header={<Header></Header>}
+        navbar={
+          opened ? (
+            <Navbar width={{ base: 300 }} hidden={true} height={700} p="xs">
+              <Navbar.Section grow>Task</Navbar.Section>
+            </Navbar>
+          ) : (
+            <></>
+          )
+        }
+        header={
+          <Header height={70}>
+            <Head></Head>
+          </Header>
+        }
         styles={(theme) => ({
           main: {
             backgroundColor:
@@ -18,7 +30,7 @@ const Loggined = () => {
           },
         })}
       >
-        {/* Your application here */}
+        app
       </AppShell>
     </div>
   );
