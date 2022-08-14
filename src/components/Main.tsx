@@ -2,7 +2,6 @@ import { Container, Grid, Paper, Stack } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import Inbox from "./Inbox";
 import Separate from "./Separate";
-import Task from "./Task";
 import Today from "./Today";
 import Week from "./Week";
 

@@ -1,5 +1,5 @@
-import { MantineProvider, Text } from "@mantine/core";
-import React, { useState } from "react";
+import { MantineProvider } from "@mantine/core";
+import React from "react";
 import "./App.css";
 import Loggined from "./components/Loggined";
 
