@@ -3,10 +3,10 @@ import React from "react";
 
 const Task = () => {
   return (
-    <Group>
+    <Group position="apart">
       <Group>
-        <Checkbox checked={true} />
-        <Text>Task</Text>
+        <Checkbox checked={true} onChange={() => {}} />
+        <Text>Taskaaaaaaaaaaaaaaaa</Text>
       </Group>
       <Group>
         <Badge>予定</Badge>

@@ -2,7 +2,7 @@ import { Divider, Stack, Text } from "@mantine/core";
 import React from "react";
 import Task from "./Task";
 
-const Today = () => {
+const Today = ({ first }: any) => {
   return (
     <div>
       <Stack>

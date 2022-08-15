@@ -1,4 +1,4 @@
-import { AppShell, Header, Navbar, Text } from "@mantine/core";
+import { AppShell, Center, Header, Navbar, Text } from "@mantine/core";
 import React, { useState } from "react";
 import Head from "./Header";
 import Main from "./Main";
@@ -11,14 +11,20 @@ const Loggined = () => {
         navbar={
           opened ? (
             <Navbar width={{ base: 300 }} hidden={true} p="xl">
-              <Navbar.Section>
-                <Text>Task</Text>
+              <Navbar.Section style={{ marginTop: 30 }}>
+                <Center>
+                  <Text>Task</Text>
+                </Center>
               </Navbar.Section>
-              <Navbar.Section>
-                <Text>今日</Text>
+              <Navbar.Section style={{ marginTop: 30 }}>
+                <Center>
+                  <Text>今日</Text>
+                </Center>
               </Navbar.Section>
-              <Navbar.Section>
-                <Text>今週</Text>
+              <Navbar.Section style={{ marginTop: 30 }}>
+                <Center>
+                  <Text>今週</Text>
+                </Center>
               </Navbar.Section>
             </Navbar>
           ) : (
