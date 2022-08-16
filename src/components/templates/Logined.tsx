@@ -1,10 +1,12 @@
 import { AppShell, Center, Header, Navbar, Text } from "@mantine/core";
 import React, { useState } from "react";
-import Head from "./Header";
+import DoneTask from "../parts/DoneTask";
+import Head from "../parts/Header";
 import Main from "./Main";
 
-const Loggined = () => {
-  const [opened, setOpened] = useState(true);
+const Logined = () => {
+  const [opened, setOpened] = useState<boolean>(true);
+  const [page, setPage] = useState<boolean>(false);
   return (
     <div>
       <AppShell
@@ -13,17 +15,24 @@ const Loggined = () => {
             <Navbar width={{ base: 300 }} hidden={true} p="xl">
               <Navbar.Section style={{ marginTop: 30 }}>
                 <Center>
-                  <Text>Task</Text>
+                  <Text
+                    onClick={() => {
+                      setPage(true);
+                    }}
+                  >
+                    Task
+                  </Text>
                 </Center>
               </Navbar.Section>
               <Navbar.Section style={{ marginTop: 30 }}>
                 <Center>
-                  <Text>今日</Text>
-                </Center>
-              </Navbar.Section>
-              <Navbar.Section style={{ marginTop: 30 }}>
-                <Center>
-                  <Text>今週</Text>
+                  <Text
+                    onClick={() => {
+                      setPage(false);
+                    }}
+                  >
+                    Done Task
+                  </Text>
                 </Center>
               </Navbar.Section>
             </Navbar>
@@ -45,10 +54,10 @@ const Loggined = () => {
           },
         })}
       >
-        <Main />
+        {page ? <Main /> : <DoneTask />}
       </AppShell>
     </div>
   );
 };
 
-export default Loggined;
+export default Logined;

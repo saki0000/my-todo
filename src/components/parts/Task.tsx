@@ -1,9 +1,8 @@
 import { Badge, Checkbox, Group, Text } from "@mantine/core";
-import React from "react";
 
 const Task = () => {
   return (
-    <Group position="apart">
+    <Group position="apart" style={{ margin: 30 }}>
       <Group>
         <Checkbox checked={true} onChange={() => {}} />
         <Text>Taskaaaaaaaaaaaaaaaa</Text>

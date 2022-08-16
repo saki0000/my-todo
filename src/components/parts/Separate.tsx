@@ -2,11 +2,11 @@ import { Divider, Stack, Text } from "@mantine/core";
 import React from "react";
 import Task from "./Task";
 
-const Today = ({ first }: any) => {
+const Separate = ({ state }: any) => {
   return (
     <div>
       <Stack>
-        <Text>今日</Text>
+        <Text>タスク</Text>
         <Divider />
         <Task />
       </Stack>
@@ -14,4 +14,4 @@ const Today = ({ first }: any) => {
   );
 };
 
-export default Today;
+export default Separate;
