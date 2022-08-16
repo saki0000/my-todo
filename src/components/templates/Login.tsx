@@ -13,12 +13,19 @@ const Login = () => {
   const [register, setRegister] = useState<boolean>(false);
   return (
     <Container style={{ height: "100%" }}>
-      <Stack align="center" justify="center" style={{ height: "100%" }}>
+      <Stack
+        spacing="xl"
+        align="center"
+        justify="center"
+        style={{ height: "100%" }}
+      >
         <Title>{register ? "Register" : "Login"}</Title>
-        {register && <Autocomplete data={[]} />}
-        <Autocomplete data={[]} />
-        <PasswordInput placeholder="Password" required style={{ width: 150 }} />
-        <Button>{register ? "Register" : "Login"}</Button>
+        {register && <Autocomplete data={[]} style={{ width: 180 }} />}
+        <Autocomplete data={[]} style={{ width: 180 }} />
+        <PasswordInput placeholder="Password" required style={{ width: 180 }} />
+        <Button style={{ width: 180 }}>
+          {register ? "Register" : "Login"}
+        </Button>
         {register || (
           <Text
             onClick={() => {

@@ -5,8 +5,8 @@ import Head from "../parts/Header";
 import Main from "./Main";
 
 const Logined = () => {
-  const [opened, setOpened] = useState<boolean>(true);
-  const [page, setPage] = useState<boolean>(false);
+  const [opened, setOpened] = useState<boolean>(false);
+  const [page, setPage] = useState<boolean>(true);
   return (
     <div>
       <AppShell

@@ -7,8 +7,8 @@ import Logined from "./components/templates/Logined";
 function App() {
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
-      <Login />
-      {/* <Logined /> */}
+      {/* <Login /> */}
+      <Logined />
     </MantineProvider>
   );
 }
