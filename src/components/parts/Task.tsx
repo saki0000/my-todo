@@ -1,15 +1,18 @@
 import { Badge, Checkbox, Group, Text } from "@mantine/core";
+import { useSetState } from "@mantine/hooks";
+import { useEffect } from "react";
 
-const Task = () => {
+const Task = (task: any) => {
+  const [doneTask, setDoneTask] = useSetState(task.task);
   return (
     <Group position="apart" style={{ margin: 30 }}>
       <Group>
         <Checkbox checked={true} onChange={() => {}} />
-        <Text>Taskaaaaaaaaaaaaaaaa</Text>
+        <Text>{doneTask?.name}</Text>
       </Group>
       <Group>
-        <Badge>予定</Badge>
-        <Badge>重さ</Badge>
+        <Badge>{doneTask?.due_date}</Badge>
+        <Badge>{doneTask?.weight}</Badge>
         <Checkbox />
       </Group>
     </Group>

@@ -1,8 +1,8 @@
 import { AppShell, Center, Header, Navbar, Text } from "@mantine/core";
 import React, { useState } from "react";
-import DoneTask from "../parts/DoneTask";
+import DoneTask from "../templates/DoneTask";
 import Head from "../parts/Header";
-import Main from "./Main";
+import Main from "../templates/Main";
 
 const Logined = () => {
   const [opened, setOpened] = useState<boolean>(false);

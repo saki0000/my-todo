@@ -1,6 +1,6 @@
 import { Divider, Stack, Text } from "@mantine/core";
 import React from "react";
-import Task from "./Task";
+import Task from "../parts/Task";
 
 const Separate = ({ state }: any) => {
   return (
