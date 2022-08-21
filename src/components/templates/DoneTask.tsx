@@ -18,11 +18,11 @@ const DoneTask = () => {
     <>
       <Container style={{ height: "100%" }}>
         <Paper p="xl" style={{ width: "100%", height: "100%" }}>
-          <Stack>
+          <Stack style={{ height: "100%" }}>
             <Text>Done Tasks</Text>
             <Divider />
             <div style={{ height: "100%" }} ref={ref}>
-              <ScrollArea.Autosize maxHeight={height} type="hover">
+              <ScrollArea.Autosize maxHeight={height}>
                 {doneTasks.map((task: any) => (
                   <Task task={task} />
                 ))}

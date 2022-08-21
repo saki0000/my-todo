@@ -7,7 +7,8 @@ const useGetDoTask = (date: string) => {
     await axios
       .get(`http://localhost:4000/api/v1/do_tasks?id=1&date=${date}`)
       .then((res) => {
-        setTasks(res.data.data);
+        setTasks(res.data);
+        console.log(tasks);
       })
       .catch((err) => {
         console.log(err);

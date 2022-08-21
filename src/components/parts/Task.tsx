@@ -1,21 +1,43 @@
-import { Badge, Checkbox, Group, Text } from "@mantine/core";
+import { Checkbox, Divider, Group, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
-import { useEffect } from "react";
+import DueDate from "./DueDate";
+import SubTask from "./SubTask";
+import Weight from "./Weight";
 
-const Task = (task: any) => {
-  const [doneTask, setDoneTask] = useSetState(task.task);
+const Task = ({ task, first }: any) => {
+  const [tasks, setTasks] = useSetState(task);
+  console.log(first);
   return (
-    <Group position="apart" style={{ margin: 30 }}>
-      <Group>
-        <Checkbox checked={true} onChange={() => {}} />
-        <Text>{doneTask?.name}</Text>
+    <Stack>
+      <Group
+        position="apart"
+        style={{ marginRight: 30, marginLeft: 30, marginTop: 20 }}
+      >
+        <Group>
+          <Checkbox checked={true} onChange={() => {}} />
+
+          <Text>{tasks?.name}</Text>
+        </Group>
+        <Group>
+          <Weight weight={tasks?.weight} />
+          <DueDate dueDate={tasks?.due_date} />
+          <Checkbox />
+        </Group>
       </Group>
-      <Group>
-        <Badge>{doneTask?.due_date}</Badge>
-        <Badge>{doneTask?.weight}</Badge>
-        <Checkbox />
-      </Group>
-    </Group>
+      <Text color="gray" style={{ marginLeft: 65 }}>
+        {tasks?.memo}
+      </Text>
+      {first &&
+        tasks?.subtasks.length !== 0 &&
+        tasks?.subtasks.map((task: any) => (
+          <>
+            <Stack align="stretch" justify="" style={{ width: "100%" }}>
+              <SubTask task={task} />
+            </Stack>
+          </>
+        ))}
+      {first === true && <Divider />}
+    </Stack>
   );
 };
 

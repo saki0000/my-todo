@@ -16,7 +16,8 @@ const Today = ({ state }: any) => {
             <Divider />
             <div style={{ height: "100%" }} ref={ref}>
               <ScrollArea.Autosize maxHeight={height}>
-                {tasks && tasks.map((task: any) => <Task task={task} />)}
+                {tasks &&
+                  tasks.map((task: any) => <Task task={task} first={true} />)}
               </ScrollArea.Autosize>
             </div>
           </Stack>
@@ -27,7 +28,7 @@ const Today = ({ state }: any) => {
             <Stack>
               <Text>今日</Text>
               <Divider />
-              {tasks && <Task task={tasks[0]} />}
+              {tasks && <Task task={tasks[0]} first={false} />}
             </Stack>
           </div>
         </>
