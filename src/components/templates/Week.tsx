@@ -1,12 +1,16 @@
-import { Stack, Divider, Text, ScrollArea, Center, Group } from "@mantine/core";
+import { Stack, Divider, Text, ScrollArea } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
-import React from "react";
+import React, { useEffect } from "react";
 import useGetDoTask from "../hooks/GetDoTask";
+import AddTask from "./AddTask";
 import Task from "../parts/Task";
 
 const Week = ({ state }: any) => {
-  const tasks = useGetDoTask("week");
+  const [tasks, setTasks, getTasks] = useGetDoTask("week");
   const { ref, height } = useElementSize();
+  useEffect(() => {
+    // getTasks();
+  }, [tasks]);
   return (
     <>
       {state.first === "week" ? (
@@ -19,7 +23,16 @@ const Week = ({ state }: any) => {
             <div style={{ height: "100%" }} ref={ref}>
               <ScrollArea.Autosize maxHeight={height}>
                 {tasks &&
-                  tasks.map((task: any) => <Task task={task} first={true} />)}
+                  tasks.map((task: any, index: number) => (
+                    <Task
+                      task={task}
+                      first={true}
+                      allTask={tasks}
+                      setAllTask={setTasks}
+                      index={index}
+                    />
+                  ))}
+                <AddTask date={"week"} tasks={tasks} setTasks={setTasks} />
               </ScrollArea.Autosize>
             </div>
           </Stack>

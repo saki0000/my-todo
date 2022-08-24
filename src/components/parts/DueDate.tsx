@@ -3,9 +3,9 @@ import { Calendar } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import React, { useState } from "react";
 
-const DueDate = (dueDate: any) => {
+const DueDate = ({ dueDate, setAddDate }: any) => {
   const [opened, { close, open }] = useDisclosure(false);
-  const [date, setDate] = useState<any>(dueDate.dueDate);
+  const [date, setDate] = useState<any>(dueDate);
   return (
     <div>
       <Popover
@@ -28,7 +28,10 @@ const DueDate = (dueDate: any) => {
               <Menu.Label>
                 <Calendar
                   value={date}
-                  onChange={(e) => setDate(e?.toJSON().split("T")[0])}
+                  onChange={(e) => {
+                    setDate(e?.toJSON().split("T")[0]);
+                    setAddDate({ due_date: e?.toJSON().split("T")[0] });
+                  }}
                 />
               </Menu.Label>
             </Menu.Dropdown>

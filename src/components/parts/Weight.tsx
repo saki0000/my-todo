@@ -1,9 +1,10 @@
 import { Popover, Text, Badge, Menu } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import React from "react";
+import React, { useState } from "react";
 
-const Weight = (weight: any) => {
+const Weight = ({ weight, setAddWeight }: any) => {
   const [opened, { close, open }] = useDisclosure(false);
+  const [taskWeight, setTaskWeight] = useState<number>(weight);
   return (
     <div>
       <Popover
@@ -17,7 +18,7 @@ const Weight = (weight: any) => {
           <Menu>
             <Menu.Target>
               <Badge onMouseEnter={open} onMouseLeave={close}>
-                {weight.weight}
+                {taskWeight}
               </Badge>
             </Menu.Target>
             <Menu.Dropdown>
@@ -25,7 +26,14 @@ const Weight = (weight: any) => {
               <Menu.Divider />
               {[...Array(10)].map((_, i: number) => (
                 <Menu.Item>
-                  <Text>{i}</Text>
+                  <Text
+                    onClick={() => {
+                      setTaskWeight(i);
+                      setAddWeight({ weight: i });
+                    }}
+                  >
+                    {i}
+                  </Text>
                 </Menu.Item>
               ))}
             </Menu.Dropdown>

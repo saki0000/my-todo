@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-const useGetDoTask = (date: string) => {
+const useGetDoTask = (date: any) => {
   const [tasks, setTasks] = useState<any>();
   const getTasks = async () => {
     await axios
@@ -18,7 +18,7 @@ const useGetDoTask = (date: string) => {
     getTasks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return tasks;
+  return [tasks, setTasks, getTasks];
 };
 
 export default useGetDoTask;

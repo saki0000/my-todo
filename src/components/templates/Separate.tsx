@@ -8,7 +8,6 @@ const Separate = ({ state }: any) => {
       <Stack>
         <Text>タスク</Text>
         <Divider />
-        <Task />
       </Stack>
     </div>
   );

@@ -1,11 +1,13 @@
-import { Checkbox, Group, Text } from "@mantine/core";
+import { ActionIcon, Checkbox, Group, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
-import { AiOutlineEnter } from "react-icons/ai";
+import { AiOutlineDelete, AiOutlineEnter } from "react-icons/ai";
+import useDeleteTask from "../hooks/DeleteTask";
 import DueDate from "./DueDate";
 import Weight from "./Weight";
 
 const SubTask = (task: any) => {
   const [tasks, setTasks] = useSetState(task.task);
+  const deleteTask = useDeleteTask();
   return (
     <>
       <Group
@@ -20,13 +22,19 @@ const SubTask = (task: any) => {
       >
         <Group>
           <AiOutlineEnter style={{ transform: "scale(-1,1)" }}></AiOutlineEnter>
-          <Checkbox checked={true} onChange={() => {}} />
+          <Checkbox checked={false} onChange={() => {}} />
           <Text>{tasks?.name}</Text>
         </Group>
         <Group>
           <Weight weight={tasks?.weight} />
           <DueDate dueDate={tasks?.due_date} />
-          <Checkbox />
+          <ActionIcon
+            onClick={() => {
+              deleteTask(tasks.id);
+            }}
+          >
+            <AiOutlineDelete></AiOutlineDelete>
+          </ActionIcon>
         </Group>
       </Group>
     </>
