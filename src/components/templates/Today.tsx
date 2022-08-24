@@ -6,10 +6,10 @@ import AddTask from "./AddTask";
 import Task from "../parts/Task";
 
 const Today = ({ state }: any) => {
-  const [tasks, setTasks, getTasks] = useGetDoTask("today");
+  const [tasks, setTasks] = useGetDoTask("today");
   const { ref, height } = useElementSize();
   useEffect(() => {
-    // getTasks();
+    console.log(0);
   }, [tasks]);
   return (
     <>

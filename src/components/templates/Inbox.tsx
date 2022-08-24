@@ -1,16 +1,15 @@
 import { Divider, ScrollArea, Stack, Text } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import { useEffect } from "react";
-
 import useGetDoTask from "../hooks/GetDoTask";
 import AddTask from "./AddTask";
 import Task from "../parts/Task";
 
 const Inbox = ({ state }: any) => {
-  const [tasks, setTasks, getTasks] = useGetDoTask("inbox");
+  const [tasks, setTasks] = useGetDoTask("inbox");
   const { ref, height } = useElementSize();
   useEffect(() => {
-    // getTasks();
+    console.log(0);
   }, [tasks]);
   return (
     <>
@@ -31,7 +30,12 @@ const Inbox = ({ state }: any) => {
                       index={index}
                     />
                   ))}
-                <AddTask date={"inbox"} tasks={tasks} setTasks={setTasks} />
+                <AddTask
+                  date={"inbox"}
+                  tasks={tasks}
+                  setTasks={setTasks}
+                  done={true}
+                />
               </ScrollArea.Autosize>
             </div>
           </Stack>

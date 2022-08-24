@@ -10,21 +10,24 @@ import {
 import { useSetState } from "@mantine/hooks";
 import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import useAddTask from "../hooks/AddTask";
+import { useSelector } from "react-redux";
+import { selectSeparate } from "../../features/counterSlice";
+import useAddSubTask from "../hooks/AddSubTask";
 import DueDate from "../parts/DueDate";
 import Weight from "../parts/Weight";
 
-const AddTask = ({ date, tasks, setTasks }: any) => {
-  const addTaskAPI = useAddTask();
+const AddSubTask = ({ date, tasks, setTasks }: any) => {
+  const addSubTaskAPI = useAddSubTask();
+  const id = useSelector(selectSeparate);
   const [open, setOpen] = useState(true);
   const [addTask, setAddTask] = useSetState({
-    user_id: 1,
+    task_id: id.id,
     name: "",
     date: date,
     due_date: "期日",
     weight: 0,
     subtasks: [],
-    statement: false,
+    statement: true,
     memo: "",
   });
   return (
@@ -73,8 +76,8 @@ const AddTask = ({ date, tasks, setTasks }: any) => {
             </Button>
             <Button
               onClick={() => {
-                addTaskAPI(addTask);
-                setTasks([...tasks, addTask]);
+                addSubTaskAPI(id.id, addTask);
+                setTasks({ subtasks: [...tasks, addTask] });
                 setOpen(true);
               }}
             >
@@ -87,4 +90,4 @@ const AddTask = ({ date, tasks, setTasks }: any) => {
   );
 };
 
-export default AddTask;
+export default AddSubTask;

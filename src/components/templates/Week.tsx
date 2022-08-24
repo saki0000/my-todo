@@ -10,6 +10,7 @@ const Week = ({ state }: any) => {
   const { ref, height } = useElementSize();
   useEffect(() => {
     // getTasks();
+    console.log(1);
   }, [tasks]);
   return (
     <>

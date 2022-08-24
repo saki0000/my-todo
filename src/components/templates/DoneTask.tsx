@@ -24,7 +24,7 @@ const DoneTask = () => {
             <div style={{ height: "100%" }} ref={ref}>
               <ScrollArea.Autosize maxHeight={height}>
                 {doneTasks.map((task: any) => (
-                  <Task task={task} />
+                  <Task task={task} first={true} done={false} />
                 ))}
               </ScrollArea.Autosize>
             </div>

@@ -8,7 +8,7 @@ const useGetDoTask = (date: any) => {
       .get(`http://localhost:4000/api/v1/do_tasks?id=1&date=${date}`)
       .then((res) => {
         setTasks(res.data);
-        console.log(tasks);
+        console.log(res);
       })
       .catch((err) => {
         console.log(err);
@@ -18,7 +18,7 @@ const useGetDoTask = (date: any) => {
     getTasks();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  return [tasks, setTasks, getTasks];
+  return [tasks, setTasks];
 };
 
 export default useGetDoTask;
