@@ -7,13 +7,15 @@ import {
   Textarea,
 } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
+import { useSelector } from "react-redux";
+import { selectSeparate } from "../../features/counterSlice";
 import useUpdateTask from "../hooks/UpdateTask";
 import DueDate from "../parts/DueDate";
 import Weight from "../parts/Weight";
 
-const UpdateTask = ({ task, setOpen, setTasks }: any) => {
+const UpdateTask = ({ task, setOpen, setTasks, updateTaskApi, sub }: any) => {
   const [updateTask, setUpdateTask] = useSetState(task);
-  const updateTaskApi = useUpdateTask();
+  const taskId = useSelector(selectSeparate);
   return (
     <div style={{ margin: 30 }}>
       <Stack>
@@ -49,7 +51,9 @@ const UpdateTask = ({ task, setOpen, setTasks }: any) => {
           <Button
             onClick={() => {
               setTasks(updateTask);
-              updateTaskApi(updateTask.id, updateTask);
+              sub
+                ? updateTaskApi(taskId.id, updateTask.id, updateTask)
+                : updateTaskApi(updateTask.id, updateTask);
               setOpen(false);
             }}
           >

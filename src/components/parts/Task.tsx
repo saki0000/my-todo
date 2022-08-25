@@ -38,14 +38,19 @@ const Task = ({ task, allTask, setAllTask, first, index, sub }: any) => {
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);
   // const [isDone, setIsDone] = useState(done || task.statement);
-
+  const updateTaskApi = useUpdateTask();
   const updateTask = useUpdateTask();
   const deleteTask = useDeleteTask();
   const dispatch = useDispatch();
   return (
     <>
       {open ? (
-        <UpdateTask task={tasks} setOpen={setOpen} setTasks={setTasks} />
+        <UpdateTask
+          task={tasks}
+          setOpen={setOpen}
+          setTasks={setTasks}
+          updateTaskApi={updateTaskApi}
+        />
       ) : (
         <Stack>
           <Group
@@ -102,8 +107,6 @@ const Task = ({ task, allTask, setAllTask, first, index, sub }: any) => {
                     </Menu.Item>
                   </Menu.Dropdown>
                 </Menu>
-                {/* <ActionIcon onClick={() => setOpen(true)}></ActionIcon> */}
-                {/* <ActionIcon></ActionIcon> */}
               </Group>
             )}
           </Group>

@@ -27,7 +27,7 @@ const AddSubTask = ({ date, tasks, setTasks }: any) => {
     due_date: "期日",
     weight: 0,
     subtasks: [],
-    statement: true,
+    statement: false,
     memo: "",
   });
   return (
