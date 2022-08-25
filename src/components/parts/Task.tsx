@@ -25,15 +25,15 @@ import SubTask from "./SubTask";
 
 const Task = ({ task, allTask, setAllTask, first, index, sub }: any) => {
   const [tasks, setTasks] = useSetState({
-    id: task.id,
-    user_id: task.user_id,
-    name: task.name,
-    date: task.date,
-    due_date: task.due_date,
-    weight: task.weight,
-    subtasks: task.subtasks,
-    statement: task.statement,
-    memo: task.memo,
+    id: task?.id,
+    user_id: task?.user_id,
+    name: task?.name,
+    date: task?.date,
+    due_date: task?.due_date,
+    weight: task?.weight,
+    subtasks: task?.subtasks,
+    statement: task?.statement,
+    memo: task?.memo,
   });
   const [open, setOpen] = useState(false);
   const [menu, setMenu] = useState(false);

@@ -13,38 +13,42 @@ const Today = ({ state }: any) => {
   }, [tasks]);
   return (
     <>
-      {state.first === "today" ? (
-        <>
-          <Stack style={{ height: "100%" }}>
-            <Text>今日</Text>
-            <Divider />
-            <div style={{ height: "100%" }} ref={ref}>
-              <ScrollArea.Autosize maxHeight={height}>
-                {tasks &&
-                  tasks.map((task: any, index: number) => (
-                    <Task
-                      task={task}
-                      first={true}
-                      allTask={tasks}
-                      setAllTask={setTasks}
-                      index={index}
-                    />
-                  ))}
-                <AddTask date={"today"} tasks={tasks} setTasks={setTasks} />
-              </ScrollArea.Autosize>
-            </div>
-          </Stack>
-        </>
-      ) : (
-        <>
-          <div>
-            <Stack>
+      {tasks !== [] ? (
+        state.first === "today" ? (
+          <>
+            <Stack style={{ height: "100%" }}>
               <Text>今日</Text>
               <Divider />
-              {tasks && <Task task={tasks[0]} first={false} />}
+              <div style={{ height: "100%" }} ref={ref}>
+                <ScrollArea.Autosize maxHeight={height}>
+                  {tasks &&
+                    tasks.map((task: any, index: number) => (
+                      <Task
+                        task={task}
+                        first={true}
+                        allTask={tasks}
+                        setAllTask={setTasks}
+                        index={index}
+                      />
+                    ))}
+                  <AddTask date={"today"} tasks={tasks} setTasks={setTasks} />
+                </ScrollArea.Autosize>
+              </div>
             </Stack>
-          </div>
-        </>
+          </>
+        ) : (
+          <>
+            <div>
+              <Stack>
+                <Text>今日</Text>
+                <Divider />
+                {tasks && <Task task={tasks[0]} first={false} />}
+              </Stack>
+            </div>
+          </>
+        )
+      ) : (
+        <></>
       )}
     </>
   );

@@ -1,5 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../features/userSlice";
 
 const useGetDoneTask = () => {
   const [tasks, setTasks] = useState<any>([
@@ -17,9 +19,10 @@ const useGetDoneTask = () => {
       weight: 0,
     },
   ]);
+  const user = useSelector(selectUser);
   const getTask = async () => {
     await axios
-      .get("http://localhost:4000/api/v1/done_tasks?id=1")
+      .get(`http://localhost:4000/api/v1/done_tasks?id=${user.uid}`)
       .then((res) => {
         setTasks(res.data);
       })

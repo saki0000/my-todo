@@ -1,8 +1,12 @@
 import { ActionIcon, Avatar, Button, Group, Text } from "@mantine/core";
 import React from "react";
 import { AiOutlineBars } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectUser } from "../../features/userSlice";
 
 const Head = ({ setOpened, opened }: any) => {
+  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
   return (
     <>
       <Group
@@ -18,10 +22,16 @@ const Head = ({ setOpened, opened }: any) => {
           >
             <AiOutlineBars></AiOutlineBars>
           </ActionIcon>
-          <Avatar></Avatar>
-          <Text>Name</Text>
+
+          <Text>{user.displayName}</Text>
         </Group>
-        <Button>Logout</Button>
+        <Button
+          onClick={() => {
+            dispatch(logout());
+          }}
+        >
+          Logout
+        </Button>
       </Group>
     </>
   );
