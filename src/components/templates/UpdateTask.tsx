@@ -9,7 +9,8 @@ import {
 import { useSetState } from "@mantine/hooks";
 import { useSelector } from "react-redux";
 import { selectSeparate } from "../../features/counterSlice";
-import useUpdateTask from "../hooks/UpdateTask";
+import Box from "../parts/Box";
+import Date from "../parts/Date";
 import DueDate from "../parts/DueDate";
 import Weight from "../parts/Weight";
 
@@ -19,20 +20,23 @@ const UpdateTask = ({ task, setOpen, setTasks, updateTaskApi, sub }: any) => {
   return (
     <div style={{ margin: 30 }}>
       <Stack>
-        <Group position="apart">
-          <Autocomplete
-            placeholder="Name"
-            value={updateTask.name}
-            onChange={(e) => {
-              setUpdateTask({ name: e });
-            }}
-            data={[]}
-          ></Autocomplete>
-          <Group>
-            <Weight weight={updateTask.weight} setAddWeight={setUpdateTask} />
-            <DueDate dueDate={updateTask.due_date} setAddDate={setUpdateTask} />
-          </Group>
+        <Autocomplete
+          placeholder="Name"
+          value={updateTask.name}
+          onChange={(e) => {
+            setUpdateTask({ name: e });
+          }}
+          data={[]}
+        ></Autocomplete>
+        <Group>
+          <Weight weight={updateTask.weight} setAddWeight={setUpdateTask} />
+          <DueDate dueDate={updateTask.due_date} setAddDate={setUpdateTask} />
+          <Box taskBox={updateTask.box} setTaskBox={setUpdateTask} />
+          {updateTask.box === "calender" && (
+            <Date date={updateTask.date} setAddDate={setUpdateTask} />
+          )}
         </Group>
+
         <Textarea
           placeholder="Memo"
           value={updateTask.memo}

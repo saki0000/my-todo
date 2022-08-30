@@ -1,23 +1,23 @@
 import { Container, Grid, Paper, Stack } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import Inbox from "./Inbox";
-import Separate from "./Separate";
-import Today from "./Today";
+import NextAction from "./NextAction";
 import Week from "./Week";
+import Calender from "./Calender";
 
 const Main = () => {
   const [state, setState] = useSetState<any>({
     first: "inbox",
-    second: "separate",
-    third: "today",
-    fourth: "week",
+    second: "calender",
+    third: "nextAction",
+    fourth: "someday",
   });
 
   const components: any = {
     inbox: <Inbox state={state}></Inbox>,
-    separate: <Separate state={state}></Separate>,
-    today: <Today state={state}></Today>,
-    week: <Week state={state}></Week>,
+    calender: <Calender state={state}></Calender>,
+    nextAction: <NextAction state={state}></NextAction>,
+    someday: <Week state={state}></Week>,
   };
 
   return (

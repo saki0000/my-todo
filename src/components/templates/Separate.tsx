@@ -1,16 +1,12 @@
-import { Badge, Divider, Group, ScrollArea, Stack, Text } from "@mantine/core";
+import { Divider, ScrollArea, Stack, Text } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { selectSeparate } from "../../features/counterSlice";
 import useGetTask from "../hooks/GetTask";
 import SubTask from "../parts/SubTask";
-import Task from "../parts/Task";
 import AddSubTask from "./AddSubTask";
 
 const Separate = ({ state }: any) => {
   const [task, setTask] = useGetTask();
-  const id = useSelector(selectSeparate);
   const { ref, height } = useElementSize();
   useEffect(() => {
     console.log("");
@@ -29,7 +25,7 @@ const Separate = ({ state }: any) => {
             {task.subtasks.length === 0 ||
               task.subtasks.map((task: any) => <SubTask task={task} />)}
             <AddSubTask
-              date={task.date}
+              box={task.box}
               tasks={task.subtasks}
               setTasks={setTask}
             />

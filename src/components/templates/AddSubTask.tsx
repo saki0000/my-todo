@@ -16,14 +16,15 @@ import useAddSubTask from "../hooks/AddSubTask";
 import DueDate from "../parts/DueDate";
 import Weight from "../parts/Weight";
 
-const AddSubTask = ({ date, tasks, setTasks }: any) => {
+const AddSubTask = ({ box, tasks, setTasks }: any) => {
   const addSubTaskAPI = useAddSubTask();
   const id = useSelector(selectSeparate);
   const [open, setOpen] = useState(true);
   const [addTask, setAddTask] = useSetState({
     task_id: id.id,
     name: "",
-    date: date,
+    box: box,
+    date: "",
     due_date: "期日",
     weight: 0,
     subtasks: [],

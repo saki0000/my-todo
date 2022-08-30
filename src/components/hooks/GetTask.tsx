@@ -5,8 +5,9 @@ import { useSelector } from "react-redux";
 import { selectSeparate } from "../../features/counterSlice";
 
 const useGetTask = () => {
-  const id = useSelector(selectSeparate);
+  const id: any = useSelector(selectSeparate);
   const [tasks, setTasks] = useSetState<any>({
+    box: "",
     created_at: "",
     date: "",
     due_date: "",
@@ -24,15 +25,13 @@ const useGetTask = () => {
       .get(`http://localhost:4000/api/v1/tasks/${id.id}`)
       .then((res) => {
         setTasks(res.data);
-        console.log(tasks);
       })
       .catch((err) => {
         console.log(err);
       });
   };
   useEffect(() => {
-    console.log(id);
-    getTask();
+    id.id !== undefined && getTask();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return [tasks, setTasks];

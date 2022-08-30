@@ -2,8 +2,8 @@ import { Text, Badge, Menu, HoverCard } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 import { useState } from "react";
 
-const DueDate = ({ dueDate, setAddDate }: any) => {
-  const [date, setDate] = useState<any>(dueDate || "期日");
+const Date = ({ date, setAddDate }: any) => {
+  const [dateData, setDate] = useState<any>(date || "予定日");
   return (
     <div>
       <HoverCard
@@ -16,15 +16,15 @@ const DueDate = ({ dueDate, setAddDate }: any) => {
         <HoverCard.Target>
           <Menu position="bottom">
             <Menu.Target>
-              <Badge>{date}</Badge>
+              <Badge>{dateData}</Badge>
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Label>
                 <Calendar
-                  value={date}
+                  value={dateData}
                   onChange={(e) => {
                     setDate(e?.toJSON().split("T")[0]);
-                    setAddDate({ due_date: e?.toJSON().split("T")[0] });
+                    setAddDate({ date: e?.toJSON().split("T")[0] });
                   }}
                 />
               </Menu.Label>
@@ -33,11 +33,11 @@ const DueDate = ({ dueDate, setAddDate }: any) => {
         </HoverCard.Target>
 
         <HoverCard.Dropdown sx={{ pointerEvents: "none" }}>
-          <Text size="sm">期日を設定</Text>
+          <Text size="sm">予定日を設定</Text>
         </HoverCard.Dropdown>
       </HoverCard>
     </div>
   );
 };
 
-export default DueDate;
+export default Date;

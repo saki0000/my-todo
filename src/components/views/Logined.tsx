@@ -3,12 +3,13 @@ import React, { useState } from "react";
 import DoneTask from "../templates/DoneTask";
 import Head from "../parts/Header";
 import Main from "../templates/Main";
+import { RecoilRoot } from "recoil";
 
 const Logined = () => {
   const [opened, setOpened] = useState<boolean>(false);
   const [page, setPage] = useState<boolean>(true);
   return (
-    <div>
+    <RecoilRoot>
       <AppShell
         navbar={
           opened ? (
@@ -56,7 +57,7 @@ const Logined = () => {
       >
         {page ? <Main /> : <DoneTask />}
       </AppShell>
-    </div>
+    </RecoilRoot>
   );
 };
 
