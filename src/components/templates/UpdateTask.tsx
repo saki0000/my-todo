@@ -8,6 +8,8 @@ import {
 } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import { useSelector } from "react-redux";
+import { useRecoilState } from "recoil";
+import { renAtom } from "../../atoms/atom";
 import { selectSeparate } from "../../features/counterSlice";
 import Box from "../parts/Box";
 import Date from "../parts/Date";
@@ -16,6 +18,7 @@ import Weight from "../parts/Weight";
 
 const UpdateTask = ({ task, setOpen, setTasks, updateTaskApi, sub }: any) => {
   const [updateTask, setUpdateTask] = useSetState(task);
+  const [ren, setRen] = useRecoilState(renAtom);
   const taskId = useSelector(selectSeparate);
   return (
     <div style={{ margin: 30 }}>
@@ -58,6 +61,7 @@ const UpdateTask = ({ task, setOpen, setTasks, updateTaskApi, sub }: any) => {
               sub
                 ? updateTaskApi(taskId.id, updateTask.id, updateTask)
                 : updateTaskApi(updateTask.id, updateTask);
+              setRen(!ren);
               setOpen(false);
             }}
           >

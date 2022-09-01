@@ -1,8 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
   ActionIcon,
   Badge,
   Checkbox,
-  // Divider,
   Group,
   Modal,
   Stack,
@@ -16,38 +16,37 @@ import {
   AiOutlinePartition,
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
+import { deleteTask, updateTask } from "../../api";
 import { separate } from "../../features/counterSlice";
-import useDeleteTask from "../hooks/DeleteTask";
-import useUpdateTask from "../hooks/UpdateTask";
 import Separate from "../templates/Separate";
 import UpdateTask from "../templates/UpdateTask";
 import SubTask from "./SubTask";
 
-const Task = ({ task, allTask, setAllTask, first, index, done }: any) => {
-  const [tasks, setTasks] = useSetState({
-    id: task?.id,
-    user_id: task?.user_id,
-    name: task?.name,
-    box: task?.box,
-    date: task?.date,
-    due_date: task?.due_date,
-    weight: task?.weight,
-    subtasks: task?.subtasks,
-    statement: task?.statement,
-    memo: task?.memo,
-  });
+const Task = ({ task, first, done, mutate }: any) => {
+  const [tasks, setTasks] = useSetState(task);
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
   const [modal, setModal] = useState(false);
-  const updateTaskApi = useUpdateTask();
-  const updateTask = useUpdateTask();
-  const deleteTask = useDeleteTask();
   const dispatch = useDispatch();
   useEffect(() => {
-    checked && setTasks({ statement: true });
-    checked && updateTask(tasks.id, tasks);
+    checked &&
+      mutate(
+        updateTask(tasks.id, {
+          name: tasks.name,
+          box: tasks.box,
+          date: tasks.date,
+          due_date: tasks.due_date,
+          weight: tasks.weight,
+          statement: true,
+          memo: tasks.memo,
+        })
+      );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked]);
+  useEffect(() => {
+    setTasks(task);
+  }, [task]);
+  console.log(tasks);
   return (
     <>
       {open ? (
@@ -55,11 +54,11 @@ const Task = ({ task, allTask, setAllTask, first, index, done }: any) => {
           task={tasks}
           setOpen={setOpen}
           setTasks={setTasks}
-          updateTaskApi={updateTaskApi}
+          updateTaskApi={updateTask}
         />
       ) : (
         <>
-          {checked || (
+          {tasks === undefined || checked || (
             <>
               <Modal
                 onClose={() => {
@@ -70,14 +69,9 @@ const Task = ({ task, allTask, setAllTask, first, index, done }: any) => {
               >
                 <Separate state={{ first: "separate" }} />
               </Modal>
-              <Stack
-                onClick={() => {
-                  dispatch(separate(tasks.id));
-                  // setModal(true);
-                }}
-              >
+              <Stack>
                 <Stack
-                  style={{ marginRight: 30, marginLeft: 30, marginTop: 20 }}
+                  style={{ marginRight: 30, marginLeft: 30, marginTop: 10 }}
                 >
                   <Group position="apart">
                     <Group>
@@ -96,39 +90,48 @@ const Task = ({ task, allTask, setAllTask, first, index, done }: any) => {
 
                       <Text>{tasks?.name}</Text>
                     </Group>
-                    <Group>
-                      <ActionIcon
-                        onClick={() => {
-                          dispatch(separate(tasks.id));
-                          setModal(true);
-                        }}
-                      >
-                        <AiOutlinePartition></AiOutlinePartition>
-                      </ActionIcon>
-                      <ActionIcon
-                        onClick={() => {
-                          setOpen(true);
-                        }}
-                      >
-                        <AiOutlineEdit></AiOutlineEdit>
-                      </ActionIcon>
-                      <ActionIcon
-                        onClick={() => {
-                          deleteTask(tasks.id);
-                          allTask.splice(index, 1);
-                          setAllTask(allTask);
-                        }}
-                      >
-                        <AiOutlineDelete></AiOutlineDelete>
-                      </ActionIcon>
-                    </Group>
+                    {first && (
+                      <Group>
+                        <ActionIcon
+                          onClick={() => {
+                            dispatch(separate(tasks.id));
+                            setModal(true);
+                          }}
+                        >
+                          <AiOutlinePartition></AiOutlinePartition>
+                        </ActionIcon>
+                        <ActionIcon
+                          onClick={() => {
+                            setOpen(true);
+                          }}
+                        >
+                          <AiOutlineEdit></AiOutlineEdit>
+                        </ActionIcon>
+                        <ActionIcon
+                          onClick={() => {
+                            mutate(deleteTask(task.id));
+                          }}
+                        >
+                          <AiOutlineDelete></AiOutlineDelete>
+                        </ActionIcon>
+                      </Group>
+                    )}
                   </Group>
 
-                  {first && tasks.weight !== 0 && tasks.due_date && (
-                    <Group style={{ marginLeft: 30 }}>
-                      {tasks.weight && <Badge>{tasks?.weight}</Badge>}
-                      {tasks.due_date && <Badge>{tasks?.due_date}</Badge>}
-                    </Group>
+                  {tasks.weight === 0 &&
+                  (tasks.due_date === "" || tasks.due_date === "期日") ? (
+                    <></>
+                  ) : (
+                    <>
+                      {first && (
+                        <Group style={{ marginLeft: 30 }}>
+                          {tasks.weight !== 0 && <Badge>{tasks?.weight}</Badge>}
+                          {tasks.due_date && tasks.due_date !== "期日" && (
+                            <Badge>期日:{tasks?.due_date}</Badge>
+                          )}
+                        </Group>
+                      )}
+                    </>
                   )}
                   <Text color="gray" style={{ marginLeft: 30 }}>
                     {tasks?.memo}
@@ -144,7 +147,7 @@ const Task = ({ task, allTask, setAllTask, first, index, done }: any) => {
                         justify=""
                         style={{ width: "100%" }}
                       >
-                        <SubTask task={task} />
+                        <SubTask task={task} mutate={mutate} />
                       </Stack>
                     </>
                   ))}

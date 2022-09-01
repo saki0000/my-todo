@@ -1,34 +1,31 @@
 import { Divider, ScrollArea, Stack, Text } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
-import React, { useEffect } from "react";
-import useGetTask from "../hooks/GetTask";
+import { useSelector } from "react-redux";
+import { getTask } from "../../api";
+import { selectSeparate } from "../../features/counterSlice";
 import SubTask from "../parts/SubTask";
 import AddSubTask from "./AddSubTask";
 
 const Separate = ({ state }: any) => {
-  const [task, setTask] = useGetTask();
   const { ref, height } = useElementSize();
-  useEffect(() => {
-    console.log("");
-  }, [task]);
+  const id: any = useSelector(selectSeparate);
+  const { data, isLoading, error, mutate } = getTask(id);
+  if (isLoading) return <div>Loading</div>;
+  if (error) return <div>error</div>;
   return (
     <>
       {state.first === "separate" ? (
         <div>
           <Stack>
-            <Text>{task.name}</Text>
+            <Text>{data.name}</Text>
 
             <Divider />
             <div style={{ height: "100%" }} ref={ref}>
               <ScrollArea.Autosize maxHeight={height}></ScrollArea.Autosize>
             </div>
-            {task.subtasks.length === 0 ||
-              task.subtasks.map((task: any) => <SubTask task={task} />)}
-            <AddSubTask
-              box={task.box}
-              tasks={task.subtasks}
-              setTasks={setTask}
-            />
+            {data.subtasks.length === 0 ||
+              data.subtasks.map((task: any) => <SubTask task={task} />)}
+            <AddSubTask task={data} tasks={data.subtasks} mutate={mutate} />
           </Stack>
         </div>
       ) : (
@@ -38,7 +35,7 @@ const Separate = ({ state }: any) => {
               <Text>Separate Task</Text>
               <Divider />
               <div style={{ margin: 30 }}>
-                <Text>{task.name || "select a task"}</Text>
+                <Text>{data.name || "select a task"}</Text>
               </div>
             </Stack>
           </div>

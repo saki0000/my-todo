@@ -1,35 +1,16 @@
-import {
-  ActionIcon,
-  Checkbox,
-  Divider,
-  Group,
-  Menu,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { ActionIcon, Badge, Checkbox, Group, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import { useState } from "react";
-import {
-  AiOutlineDelete,
-  AiOutlineEdit,
-  AiOutlineEnter,
-  AiOutlinePartition,
-  AiOutlineSetting,
-} from "react-icons/ai";
-import { separate } from "../../features/counterSlice";
-import useDeleteSubtask from "../hooks/DeleteSubtask";
-import useDeleteTask from "../hooks/DeleteTask";
-import useUpdateSubtask from "../hooks/UpdateSubtask";
+import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { deleteSubTask, updateTask } from "../../api";
+import { selectSeparate } from "../../features/counterSlice";
 import UpdateTask from "../templates/UpdateTask";
-import DueDate from "./DueDate";
-import Weight from "./Weight";
 
-const SubTask = (task: any) => {
-  const [tasks, setTasks] = useSetState(task.task);
-  const [menu, setMenu] = useState(false);
+const SubTask = ({ task, mutate }: any) => {
+  const taskId = useSelector(selectSeparate);
+  const [tasks, setTasks] = useSetState(task);
   const [open, setOpen] = useState(false);
-  const updateTaskApi = useUpdateSubtask();
-  const deleteTask = useDeleteSubtask();
   return (
     <>
       {open ? (
@@ -37,7 +18,7 @@ const SubTask = (task: any) => {
           task={tasks}
           setOpen={setOpen}
           setTasks={setTasks}
-          updateTaskApi={updateTaskApi}
+          updateTaskApi={updateTask}
           sub={true}
         />
       ) : (
@@ -59,37 +40,38 @@ const SubTask = (task: any) => {
               <Checkbox checked={false} onChange={() => {}} />
               <Text>{tasks?.name}</Text>
             </Group>
-            <Group>
-              <Weight weight={tasks?.weight} />
-              <DueDate dueDate={tasks?.due_date} />
-              <Menu opened={menu} onChange={setMenu}>
-                <Menu.Target>
-                  <ActionIcon>
-                    <AiOutlineSetting></AiOutlineSetting>
-                  </ActionIcon>
-                </Menu.Target>
 
-                <Menu.Dropdown>
-                  <Menu.Item
-                    onClick={() => setOpen(true)}
-                    icon={<AiOutlineEdit></AiOutlineEdit>}
-                  >
-                    Update
-                  </Menu.Item>
-                  <Divider />
-                  <Menu.Item
-                    color="red"
-                    icon={<AiOutlineDelete></AiOutlineDelete>}
-                    onClick={() => {
-                      deleteTask(tasks.id);
-                    }}
-                  >
-                    Delete
-                  </Menu.Item>
-                </Menu.Dropdown>
-              </Menu>
+            <Group>
+              <ActionIcon
+                onClick={() => {
+                  setOpen(true);
+                }}
+              >
+                <AiOutlineEdit></AiOutlineEdit>
+              </ActionIcon>
+              <ActionIcon
+                onClick={() => {
+                  mutate(deleteSubTask(taskId, task.id));
+                }}
+              >
+                <AiOutlineDelete></AiOutlineDelete>
+              </ActionIcon>
             </Group>
           </Group>
+          {tasks.weight === 0 &&
+          (tasks.due_date === "" || tasks.due_date === "期日") ? (
+            <></>
+          ) : (
+            <>
+              <Group style={{ marginLeft: 30 }}>
+                {tasks.weight !== 0 && <Badge>{tasks?.weight}</Badge>}
+                {tasks.due_date && tasks.due_date !== "期日" && (
+                  <Badge>{tasks?.due_date}</Badge>
+                )}
+              </Group>
+            </>
+          )}
+
           <Text color="gray" style={{ marginLeft: 70 }}>
             {tasks.memo}
           </Text>

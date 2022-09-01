@@ -8,12 +8,18 @@ import {
 } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import React from "react";
-import useGetDoneTask from "../hooks/GetDoneTask";
+import { useSelector } from "react-redux";
+import { getDoneTasks } from "../../api";
+import { selectUser } from "../../features/userSlice";
 import Task from "../parts/Task";
 
 const DoneTask = () => {
-  const doneTasks = useGetDoneTask();
+  // const doneTasks = useGetDoneTask();
+  const user = useSelector(selectUser);
+  const { data, isLoading, error } = getDoneTasks(user);
   const { ref, height } = useElementSize();
+  if (isLoading) return <div>Loading</div>;
+  if (error) return <div>error</div>;
   return (
     <>
       <Container style={{ height: "100%" }}>
@@ -23,9 +29,10 @@ const DoneTask = () => {
             <Divider />
             <div style={{ height: "100%" }} ref={ref}>
               <ScrollArea.Autosize maxHeight={height}>
-                {doneTasks.map((task: any) => (
-                  <Task task={task} first={true} done={true} />
-                ))}
+                {data === [] ||
+                  data.map((task: any) => (
+                    <Task task={task} first={true} done={true} />
+                  ))}
               </ScrollArea.Autosize>
             </div>
           </Stack>
