@@ -4,9 +4,10 @@ import Inbox from "./Inbox";
 import NextAction from "./NextAction";
 import Week from "./Week";
 import Calender from "./Calender";
+import { stateType } from "../../Types";
 
 const Main = () => {
-  const [state, setState] = useSetState<any>({
+  const [state, setState] = useSetState<stateType>({
     first: "inbox",
     second: "calender",
     third: "nextAction",

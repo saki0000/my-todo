@@ -1,11 +1,11 @@
 import { Text, Badge, Menu, HoverCard } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
+import React from "react";
 import { useEffect, useState } from "react";
 import { DateFormat, task } from "../../Types";
 
-// eslint-disable-next-line no-empty-pattern
-type props = { date: DateFormat | string; setAddDate: ({}: task) => void };
-const Date = ({ date, setAddDate }: props) => {
+type props = { date: DateFormat | string; setAddDate: (arg: task) => void };
+const Date = React.memo(({ date, setAddDate }: props) => {
   const [dateData, setDate] = useState<Date | null>(null);
   useEffect(() => {
     setAddDate({ date: dateData?.toJSON().split("T")[0] });
@@ -39,6 +39,6 @@ const Date = ({ date, setAddDate }: props) => {
       </HoverCard>
     </div>
   );
-};
+});
 
 export default Date;

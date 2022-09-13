@@ -1,12 +1,14 @@
-import { ActionIcon, Avatar, Button, Group, Text } from "@mantine/core";
+import { ActionIcon, Button, Group, Text } from "@mantine/core";
 import React from "react";
 import { AiOutlineBars } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../features/userSlice";
+import { user } from "../../Types";
 
-const Head = ({ setOpened, opened }: any) => {
+type props = { setOpened: (arg: boolean) => void; opened: boolean };
+const Head = ({ setOpened, opened }: props) => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const user: user = useSelector(selectUser);
   return (
     <>
       <Group

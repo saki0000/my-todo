@@ -1,16 +1,16 @@
 import { Stack, Divider, ScrollArea, Text } from "@mantine/core";
 import { useElementSize, useSetState } from "@mantine/hooks";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getDoTasks } from "../../api";
 import { selectUser } from "../../features/userSlice";
+import { stateType, user } from "../../Types";
 import Task from "../parts/Task";
 import AddTask from "./AddTask";
 
-const Calender = (state: any) => {
-  const user = useSelector(selectUser);
-  const { data, isLoading, error } = getDoTasks(user, "calender");
-  const [tasks, setTasks] = useState(data);
+const Calender = ({ state }: { state: stateType }) => {
+  const user: user = useSelector(selectUser);
+  const { data, isLoading, error, mutate } = getDoTasks(user, "calender");
   const { ref, height } = useElementSize();
   const dates = useMemo(() => {
     return [...Array(365)].map((_, index) => {
@@ -66,21 +66,14 @@ const Calender = (state: any) => {
                                 <Task
                                   task={task}
                                   first={true}
-                                  allTask={tasks}
-                                  setAllTask={setTasks}
-                                  index={index}
+                                  mutate={mutate}
                                 />
                               )}
                             </>
                           ))}
                       </div>
 
-                      <AddTask
-                        box={state.state.first}
-                        tasks={tasks}
-                        setTasks={setTasks}
-                        date={date}
-                      />
+                      <AddTask box={state.first} mutate={mutate} date={date} />
                     </div>
                   ))}
 
@@ -88,26 +81,15 @@ const Calender = (state: any) => {
                 </>
               ) : (
                 <>
-                  {tasks &&
-                    tasks.map((task: any, index: number) => (
+                  {data &&
+                    data.map((task: any, index: number) => (
                       <>
                         {dates[0] === task.date && (
-                          <Task
-                            task={task}
-                            first={true}
-                            allTask={tasks}
-                            setAllTask={setTasks}
-                            index={index}
-                          />
+                          <Task task={task} first={true} />
                         )}
                       </>
                     ))}
-                  <AddTask
-                    box={state.state.first}
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    date={dates[0]}
-                  />
+                  <AddTask box={state.first} mutate={mutate} date={dates[0]} />
                 </>
               )}
             </ScrollArea.Autosize>

@@ -5,9 +5,11 @@ import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { deleteSubTask, updateTask } from "../../api";
 import { selectSeparate } from "../../features/counterSlice";
+import { task } from "../../Types";
 import UpdateTask from "../templates/UpdateTask";
 
-const SubTask = ({ task, mutate }: any) => {
+type props = { task: task & { id: number }; mutate: any };
+const SubTask = ({ task, mutate }: props) => {
   const taskId = useSelector(selectSeparate);
   const [tasks, setTasks] = useSetState(task);
   const [open, setOpen] = useState(false);

@@ -1,14 +1,14 @@
 import { Text, Badge, Menu, HoverCard } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
+import React from "react";
 import { useEffect, useState } from "react";
 import { DateFormat, task } from "../../Types";
 type props = {
   dueDate: DateFormat | string;
-  // eslint-disable-next-line no-empty-pattern
-  setAddDate: ({}: task) => void;
+  setAddDate: (arg: task) => void;
 };
 // eslint-disable-next-line no-empty-pattern
-const DueDate = ({ dueDate, setAddDate }: props) => {
+const DueDate = React.memo(({ dueDate, setAddDate }: props) => {
   const [value, setValue] = useState<Date | null>(null);
   useEffect(() => {
     setAddDate({ due_date: value?.toJSON().split("T")[0] });
@@ -42,6 +42,6 @@ const DueDate = ({ dueDate, setAddDate }: props) => {
       </HoverCard>
     </div>
   );
-};
+});
 
 export default DueDate;

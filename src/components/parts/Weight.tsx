@@ -1,8 +1,10 @@
 import { Text, Badge, Menu, HoverCard } from "@mantine/core";
-import { useState } from "react";
+import React, { useState } from "react";
+import { task } from "../../Types";
 
-const Weight = ({ weight, setAddWeight }: any) => {
-  const [taskWeight, setTaskWeight] = useState<number>(weight);
+type props = { weight: number | string; setAddWeight: (arg: task) => void };
+const Weight = React.memo(({ weight, setAddWeight }: props) => {
+  const [taskWeight, setTaskWeight] = useState<number | string>(weight);
   return (
     <div>
       <HoverCard width={160} position="bottom" shadow="md">
@@ -34,6 +36,6 @@ const Weight = ({ weight, setAddWeight }: any) => {
       </HoverCard>
     </div>
   );
-};
+});
 
 export default Weight;

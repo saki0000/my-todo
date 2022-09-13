@@ -5,12 +5,20 @@ import Task from "../parts/Task";
 import { getDoTasks } from "../../api";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../features/userSlice";
+import { boxType, stateType, user } from "../../Types";
 
-const TaskBox = ({ state, box }: any) => {
-  const user = useSelector(selectUser);
+type props = { state: stateType; box: "inbox" | "someday" | "nextAction" };
+type boxName = Omit<
+  {
+    [attr in boxType]: string;
+  },
+  "calender"
+>;
+const TaskBox = ({ state, box }: props) => {
+  const user: user = useSelector(selectUser);
   const { data, isLoading, error, mutate } = getDoTasks(user, box);
   const { ref, height } = useElementSize();
-  const boxes: any = {
+  const boxes: boxName = {
     inbox: "Inbox",
     someday: "Someday",
     nextAction: "Next Action",
@@ -31,12 +39,7 @@ const TaskBox = ({ state, box }: any) => {
                   data.map((task: any) => (
                     <Task task={task} first={true} mutate={mutate} />
                   ))}
-                <AddTask
-                  box={state.first}
-                  tasks={data}
-                  done={true}
-                  mutate={mutate}
-                />
+                <AddTask box={state.first} mutate={mutate} />
                 <Divider />
               </ScrollArea.Autosize>
             </div>
