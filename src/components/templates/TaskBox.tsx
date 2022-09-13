@@ -8,7 +8,7 @@ import { selectUser } from "../../features/userSlice";
 import { useRecoilValue } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
 import React from "react";
-import { boxType, stateType, user } from "../../Types";
+import { boxType, user } from "../../Types";
 
 type props = { box: "inbox" | "someday" | "nextAction" };
 type boxName = Omit<
@@ -17,7 +17,7 @@ type boxName = Omit<
   },
   "calender"
 >;
-const TaskBox = ({ box }: props) => {
+const TaskBox = React.memo(({ box }: props) => {
   const user: user = useSelector(selectUser);
   const first = useRecoilValue(stateAtom);
   const { data, isLoading, error, mutate } = getDoTasks(user, box);
@@ -54,6 +54,6 @@ const TaskBox = ({ box }: props) => {
       </>
     </>
   );
-};
+});
 
 export default TaskBox;

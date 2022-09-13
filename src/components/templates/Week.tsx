@@ -4,7 +4,7 @@ import TaskBox from "./TaskBox";
 const Week = ({ state }: { state: stateType }) => {
   return (
     <>
-      <TaskBox state={state} box={"someday"} />
+      <TaskBox box={"someday"} />
     </>
   );
 };

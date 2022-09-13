@@ -7,7 +7,7 @@ import { selectSeparate } from "../../features/counterSlice";
 import SubTask from "../parts/SubTask";
 import AddSubTask from "./AddSubTask";
 
-const Separate = () => {
+const Separate = React.memo(() => {
   const { ref, height } = useElementSize();
   const id: number = useSelector(selectSeparate);
   const { data, isLoading, error, mutate } = getTask(id);
@@ -32,6 +32,6 @@ const Separate = () => {
       </div>
     </>
   );
-};
+});
 
 export default Separate;
