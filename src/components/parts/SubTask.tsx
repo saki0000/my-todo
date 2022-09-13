@@ -46,7 +46,7 @@ const SubTask = React.memo(({ task, mutate }: props) => {
               <Checkbox checked={false} onChange={() => {}} />
               <Text>{tasks?.name}</Text>
             </Group>
-            {state.first === task.box || (
+            {state.first === task.box && (
               <Group>
                 <ActionIcon
                   onClick={() => {

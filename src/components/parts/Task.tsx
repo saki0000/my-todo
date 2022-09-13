@@ -76,7 +76,7 @@ const Task = React.memo(({ task, done, mutate }: props) => {
                 opened={modal}
                 size="lg"
               >
-                <Separate />
+                <Separate dataMutate={mutate} />
               </Modal>
               <Stack>
                 <Stack

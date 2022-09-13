@@ -7,7 +7,7 @@ import { selectSeparate } from "../../features/counterSlice";
 import SubTask from "../parts/SubTask";
 import AddSubTask from "./AddSubTask";
 
-const Separate = React.memo(() => {
+const Separate = React.memo(({ dataMutate }: any) => {
   const { ref, height } = useElementSize();
   const id: number = useSelector(selectSeparate);
   const { data, isLoading, error, mutate } = getTask(id);
@@ -25,7 +25,7 @@ const Separate = React.memo(() => {
           </div>
           {data.subtasks.length === 0 ||
             data.subtasks.map((task: any) => (
-              <SubTask task={task} mutate={mutate} />
+              <SubTask task={task} mutate={dataMutate} />
             ))}
           <AddSubTask task={data} mutate={mutate} />
         </Stack>
