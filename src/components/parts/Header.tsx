@@ -6,7 +6,7 @@ import { logout, selectUser } from "../../features/userSlice";
 import { user } from "../../Types";
 
 type props = { setOpened: (arg: boolean) => void; opened: boolean };
-const Head = ({ setOpened, opened }: props) => {
+const Head = React.memo(({ setOpened, opened }: props) => {
   const dispatch = useDispatch();
   const user: user = useSelector(selectUser);
   return (
@@ -37,6 +37,6 @@ const Head = ({ setOpened, opened }: props) => {
       </Group>
     </>
   );
-};
+});
 
 export default Head;

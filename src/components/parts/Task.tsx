@@ -16,7 +16,9 @@ import {
   AiOutlinePartition,
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
+import { useRecoilValue } from "recoil";
 import { deleteTask, updateTask } from "../../api";
+import { stateAtom } from "../../atoms/stateAtom";
 import { separate } from "../../features/counterSlice";
 import { task } from "../../Types";
 import Separate from "../templates/Separate";
@@ -29,11 +31,12 @@ type props = {
   done?: boolean;
   mutate?: any;
 };
-const Task = React.memo(({ task, first, done, mutate }: props) => {
+const Task = React.memo(({ task, done, mutate }: props) => {
   const [tasks, setTasks] = useSetState<task & { id: number }>(task);
   const [open, setOpen] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
+  const state = useRecoilValue(stateAtom);
   const dispatch = useDispatch();
   useEffect(() => {
     checked &&
@@ -53,7 +56,6 @@ const Task = React.memo(({ task, first, done, mutate }: props) => {
   useEffect(() => {
     setTasks(task);
   }, [task]);
-  console.log(tasks);
   return (
     <>
       {open ? (
@@ -97,7 +99,7 @@ const Task = React.memo(({ task, first, done, mutate }: props) => {
 
                       <Text>{tasks?.name}</Text>
                     </Group>
-                    {first && (
+                    {state.first === task.box && (
                       <Group>
                         <ActionIcon
                           onClick={() => {
@@ -130,9 +132,11 @@ const Task = React.memo(({ task, first, done, mutate }: props) => {
                     <></>
                   ) : (
                     <>
-                      {first && (
+                      {state.first === task.box && (
                         <Group style={{ marginLeft: 30 }}>
-                          {tasks.weight !== 0 && <Badge>{tasks?.weight}</Badge>}
+                          {tasks.weight !== 0 && (
+                            <Badge>重さ:{tasks?.weight}/10</Badge>
+                          )}
                           {tasks.due_date && tasks.due_date !== "期日" && (
                             <Badge>期日:{tasks?.due_date}</Badge>
                           )}
@@ -145,7 +149,7 @@ const Task = React.memo(({ task, first, done, mutate }: props) => {
                   </Text>
                 </Stack>
 
-                {first &&
+                {state.first &&
                   tasks?.subtasks?.length !== 0 &&
                   tasks?.subtasks?.map((task: any) => (
                     <>
