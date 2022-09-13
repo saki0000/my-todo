@@ -13,14 +13,17 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { addTask } from "../../api";
 import { selectUser } from "../../features/userSlice";
+import { boxType, DateFormat, task, user } from "../../Types";
 import Box from "../parts/Box";
 import Date from "../parts/Date";
 import DueDate from "../parts/DueDate";
 import Weight from "../parts/Weight";
 
-const AddTask = ({ box, date, mutate }: any) => {
-  const user: any = useSelector(selectUser);
-  const [open, setOpen] = useState(true);
+type props = { box: boxType; date?: DateFormat | string; mutate?: any };
+type stateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
+const AddTask = ({ box, date, mutate }: props) => {
+  const user: user = useSelector(selectUser);
+  const [open, setOpen] = useState<boolean>(true);
   const initial = {
     user_id: user.uid,
     name: "",
@@ -32,7 +35,7 @@ const AddTask = ({ box, date, mutate }: any) => {
     statement: false,
     memo: "",
   };
-  const [addTaskData, setAddTask] = useSetState(initial);
+  const [addTaskData, setAddTask] = useSetState<stateTask>(initial);
   useEffect(() => {
     setAddTask({ box: box });
     // eslint-disable-next-line react-hooks/exhaustive-deps

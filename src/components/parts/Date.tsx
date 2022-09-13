@@ -1,9 +1,16 @@
 import { Text, Badge, Menu, HoverCard } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
-import { useState } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
+import { DateFormat, task } from "../../Types";
 
-const Date = ({ date, setAddDate }: any) => {
-  const [dateData, setDate] = useState<any>(date || "予定日");
+type props = { date: DateFormat | string; setAddDate: (arg: task) => void };
+const Date = React.memo(({ date, setAddDate }: props) => {
+  const [dateData, setDate] = useState<Date | null>(null);
+  useEffect(() => {
+    setAddDate({ date: dateData?.toJSON().split("T")[0] });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateData]);
   return (
     <div>
       <HoverCard
@@ -16,17 +23,11 @@ const Date = ({ date, setAddDate }: any) => {
         <HoverCard.Target>
           <Menu position="bottom">
             <Menu.Target>
-              <Badge>{dateData}</Badge>
+              <Badge>{date}</Badge>
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Label>
-                <Calendar
-                  value={dateData}
-                  onChange={(e) => {
-                    setDate(e?.toJSON().split("T")[0]);
-                    setAddDate({ date: e?.toJSON().split("T")[0] });
-                  }}
-                />
+                <Calendar value={dateData} onChange={setDate} />
               </Menu.Label>
             </Menu.Dropdown>
           </Menu>
@@ -38,6 +39,6 @@ const Date = ({ date, setAddDate }: any) => {
       </HoverCard>
     </div>
   );
-};
+});
 
 export default Date;

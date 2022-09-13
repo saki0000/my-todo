@@ -20,6 +20,6 @@ export const separateSlice = createSlice({
 });
 
 export const { separate } = separateSlice.actions;
-export const selectSeparate = (state: RootState) => state.separate;
+export const selectSeparate = (state: RootState) => state.separate.id;
 
 export default separateSlice.reducer;

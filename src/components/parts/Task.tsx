@@ -9,7 +9,7 @@ import {
   Text,
 } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AiOutlineDelete,
   AiOutlineEdit,
@@ -20,15 +20,22 @@ import { useRecoilValue } from "recoil";
 import { deleteTask, updateTask } from "../../api";
 import { stateAtom } from "../../atoms/stateAtom";
 import { separate } from "../../features/counterSlice";
+import { task } from "../../Types";
 import Separate from "../templates/Separate";
 import UpdateTask from "../templates/UpdateTask";
 import SubTask from "./SubTask";
 
-const Task = ({ task, done, mutate }: any) => {
-  const [tasks, setTasks] = useSetState(task);
-  const [open, setOpen] = useState(false);
-  const [checked, setChecked] = useState(false);
-  const [modal, setModal] = useState(false);
+type props = {
+  task: task & { id: number };
+  first: boolean;
+  done?: boolean;
+  mutate?: any;
+};
+const Task = React.memo(({ task, done, mutate }: props) => {
+  const [tasks, setTasks] = useSetState<task & { id: number }>(task);
+  const [open, setOpen] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(false);
+  const [modal, setModal] = useState<boolean>(false);
   const state = useRecoilValue(stateAtom);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -69,7 +76,7 @@ const Task = ({ task, done, mutate }: any) => {
                 opened={modal}
                 size="lg"
               >
-                <Separate state={{ first: "separate" }} />
+                <Separate />
               </Modal>
               <Stack>
                 <Stack
@@ -143,8 +150,8 @@ const Task = ({ task, done, mutate }: any) => {
                 </Stack>
 
                 {state.first &&
-                  tasks?.subtasks.length !== 0 &&
-                  tasks?.subtasks.map((task: any) => (
+                  tasks?.subtasks?.length !== 0 &&
+                  tasks?.subtasks?.map((task: any) => (
                     <>
                       <Stack
                         align="stretch"
@@ -163,6 +170,6 @@ const Task = ({ task, done, mutate }: any) => {
       )}
     </>
   );
-};
+});
 
 export default Task;

@@ -11,11 +11,12 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { getDoneTasks } from "../../api";
 import { selectUser } from "../../features/userSlice";
+import { user } from "../../Types";
 import Task from "../parts/Task";
 
 const DoneTask = () => {
   // const doneTasks = useGetDoneTask();
-  const user = useSelector(selectUser);
+  const user: user = useSelector(selectUser);
   const { data, isLoading, error } = getDoneTasks(user);
   const { ref, height } = useElementSize();
   if (isLoading) return <div>Loading</div>;
@@ -29,7 +30,7 @@ const DoneTask = () => {
             <Divider />
             <div style={{ height: "100%" }} ref={ref}>
               <ScrollArea.Autosize maxHeight={height}>
-                {data === [] ||
+                {data &&
                   data.map((task: any) => (
                     <Task task={task} first={true} done={true} />
                   ))}

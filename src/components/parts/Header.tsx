@@ -3,10 +3,12 @@ import React from "react";
 import { AiOutlineBars } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../features/userSlice";
+import { user } from "../../Types";
 
-const Head = React.memo(({ setOpened, opened }: any) => {
+type props = { setOpened: (arg: boolean) => void; opened: boolean };
+const Head = React.memo(({ setOpened, opened }: props) => {
   const dispatch = useDispatch();
-  const user = useSelector(selectUser);
+  const user: user = useSelector(selectUser);
   return (
     <>
       <Group

@@ -1,8 +1,12 @@
 import { HoverCard, Menu, Badge, Text } from "@mantine/core";
 import React, { useState } from "react";
+import { task } from "../../Types";
 
-const Box = ({ taskBox, setTaskBox }: any) => {
-  const [box, setBox] = useState<any>(taskBox);
+// eslint-disable-next-line no-empty-pattern
+type box = { taskBox: string; setTaskBox: (arg: task) => void };
+
+const Box = ({ taskBox, setTaskBox }: box) => {
+  const [box, setBox] = useState<string>(taskBox);
   return (
     <div>
       <HoverCard

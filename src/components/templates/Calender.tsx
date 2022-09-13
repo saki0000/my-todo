@@ -6,6 +6,7 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getDoTasks } from "../../api";
 import { selectUser } from "../../features/userSlice";
+// import { stateType, user } from "../../Types";
 import Task from "../parts/Task";
 import AddTask from "./AddTask";
 
@@ -73,7 +74,6 @@ const Calender = React.memo(() => {
                       <Divider />
                       <div style={{ margin: 5 }}>
                         {dateTask[date] &&
-                          dateTask[date] !== [] &&
                           dateTask[date].map((task: any) => (
                             <>
                               <Task task={task} first={true} mutate={mutate} />

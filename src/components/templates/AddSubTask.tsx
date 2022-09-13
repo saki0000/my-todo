@@ -13,14 +13,16 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { addSubTask } from "../../api";
 import { selectSeparate } from "../../features/counterSlice";
+import { task } from "../../Types";
 import DueDate from "../parts/DueDate";
 import Weight from "../parts/Weight";
 
-const AddSubTask = ({ task, tasks, mutate }: any) => {
-  const id = useSelector(selectSeparate);
-  const [open, setOpen] = useState(true);
-  const [addTask, setAddTask] = useSetState({
-    task_id: id.id,
+type props = { task: task; mutate: any };
+const AddSubTask = ({ task, mutate }: props) => {
+  const id: number = useSelector(selectSeparate);
+  const [open, setOpen] = useState<boolean>(true);
+  const [addTask, setAddTask] = useSetState<task & { task_id: number }>({
+    task_id: id,
     name: "",
     box: task.box,
     date: task.date,
@@ -75,7 +77,7 @@ const AddSubTask = ({ task, tasks, mutate }: any) => {
             </Button>
             <Button
               onClick={() => {
-                mutate(addSubTask(id.id, addTask));
+                mutate(addSubTask(id, addTask));
                 setOpen(true);
               }}
             >

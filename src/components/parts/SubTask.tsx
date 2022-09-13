@@ -1,5 +1,6 @@
 import { ActionIcon, Badge, Checkbox, Group, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
+import React from "react";
 import { useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
 import { useSelector } from "react-redux";
@@ -7,9 +8,11 @@ import { useRecoilValue } from "recoil";
 import { deleteSubTask, updateTask } from "../../api";
 import { stateAtom } from "../../atoms/stateAtom";
 import { selectSeparate } from "../../features/counterSlice";
+import { task } from "../../Types";
 import UpdateTask from "../templates/UpdateTask";
 
-const SubTask = ({ task, mutate }: any) => {
+type props = { task: task & { id: number }; mutate: any };
+const SubTask = React.memo(({ task, mutate }: props) => {
   const taskId = useSelector(selectSeparate);
   const [tasks, setTasks] = useSetState(task);
   const [open, setOpen] = useState(false);
@@ -83,6 +86,6 @@ const SubTask = ({ task, mutate }: any) => {
       )}
     </>
   );
-};
+});
 
 export default SubTask;

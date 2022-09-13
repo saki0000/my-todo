@@ -5,9 +5,10 @@ import React from "react";
 import TaskBox from "./TaskBox";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
+import { stateType } from "../../Types";
 
-const Main = () => {
-  const [state, setState] = useSetState<any>({
+const Main: React.FC = () => {
+  const [state, setState] = useSetState<stateType>({
     first: "inbox",
     second: "calender",
     third: "nextAction",
