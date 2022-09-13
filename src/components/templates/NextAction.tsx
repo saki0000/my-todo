@@ -4,7 +4,7 @@ import TaskBox from "./TaskBox";
 const NextAction = ({ state }: { state: stateType }) => {
   return (
     <>
-      <TaskBox state={state} box={"nextAction"} />
+      <TaskBox box={"nextAction"} />
     </>
   );
 };
