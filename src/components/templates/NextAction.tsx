@@ -1,7 +1,6 @@
-import { stateType } from "../../Types";
 import TaskBox from "./TaskBox";
 
-const NextAction = ({ state }: { state: stateType }) => {
+const NextAction: React.FC = () => {
   return (
     <>
       <TaskBox box={"nextAction"} />

@@ -7,7 +7,7 @@ import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
 import { stateType } from "../../Types";
 
-const Main = () => {
+const Main: React.FC = () => {
   const [state, setState] = useSetState<stateType>({
     first: "inbox",
     second: "calender",

@@ -1,7 +1,6 @@
-import { stateType } from "../../Types";
 import TaskBox from "./TaskBox";
 
-const Inbox = ({ state }: { state: stateType }) => {
+const Inbox: React.FC = () => {
   return (
     <>
       <TaskBox box={"inbox"} />

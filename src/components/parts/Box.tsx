@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { task } from "../../Types";
 
 // eslint-disable-next-line no-empty-pattern
-type box = { taskBox: string; setTaskBox: ({}: task) => void };
+type box = { taskBox: string; setTaskBox: (arg: task) => void };
 
 const Box = ({ taskBox, setTaskBox }: box) => {
   const [box, setBox] = useState<string>(taskBox);

@@ -1,7 +1,6 @@
-import { stateType } from "../../Types";
 import TaskBox from "./TaskBox";
 
-const Week = ({ state }: { state: stateType }) => {
+const Week = () => {
   return (
     <>
       <TaskBox box={"someday"} />
