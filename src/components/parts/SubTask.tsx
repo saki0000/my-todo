@@ -3,7 +3,9 @@ import { useSetState } from "@mantine/hooks";
 import { useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
 import { useSelector } from "react-redux";
+import { useRecoilValue } from "recoil";
 import { deleteSubTask, updateTask } from "../../api";
+import { stateAtom } from "../../atoms/stateAtom";
 import { selectSeparate } from "../../features/counterSlice";
 import UpdateTask from "../templates/UpdateTask";
 
@@ -11,6 +13,7 @@ const SubTask = ({ task, mutate }: any) => {
   const taskId = useSelector(selectSeparate);
   const [tasks, setTasks] = useSetState(task);
   const [open, setOpen] = useState(false);
+  const state = useRecoilValue(stateAtom);
   return (
     <>
       {open ? (
@@ -40,23 +43,24 @@ const SubTask = ({ task, mutate }: any) => {
               <Checkbox checked={false} onChange={() => {}} />
               <Text>{tasks?.name}</Text>
             </Group>
-
-            <Group>
-              <ActionIcon
-                onClick={() => {
-                  setOpen(true);
-                }}
-              >
-                <AiOutlineEdit></AiOutlineEdit>
-              </ActionIcon>
-              <ActionIcon
-                onClick={() => {
-                  mutate(deleteSubTask(taskId, task.id));
-                }}
-              >
-                <AiOutlineDelete></AiOutlineDelete>
-              </ActionIcon>
-            </Group>
+            {state.first === task.box || (
+              <Group>
+                <ActionIcon
+                  onClick={() => {
+                    setOpen(true);
+                  }}
+                >
+                  <AiOutlineEdit></AiOutlineEdit>
+                </ActionIcon>
+                <ActionIcon
+                  onClick={() => {
+                    mutate(deleteSubTask(taskId, task.id));
+                  }}
+                >
+                  <AiOutlineDelete></AiOutlineDelete>
+                </ActionIcon>
+              </Group>
+            )}
           </Group>
           {tasks.weight === 0 &&
           (tasks.due_date === "" || tasks.due_date === "期日") ? (

@@ -16,17 +16,20 @@ import {
   AiOutlinePartition,
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
+import { useRecoilValue } from "recoil";
 import { deleteTask, updateTask } from "../../api";
+import { stateAtom } from "../../atoms/stateAtom";
 import { separate } from "../../features/counterSlice";
 import Separate from "../templates/Separate";
 import UpdateTask from "../templates/UpdateTask";
 import SubTask from "./SubTask";
 
-const Task = ({ task, first, done, mutate }: any) => {
+const Task = ({ task, done, mutate }: any) => {
   const [tasks, setTasks] = useSetState(task);
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState(false);
   const [modal, setModal] = useState(false);
+  const state = useRecoilValue(stateAtom);
   const dispatch = useDispatch();
   useEffect(() => {
     checked &&
@@ -46,7 +49,6 @@ const Task = ({ task, first, done, mutate }: any) => {
   useEffect(() => {
     setTasks(task);
   }, [task]);
-  console.log(tasks);
   return (
     <>
       {open ? (
@@ -90,7 +92,7 @@ const Task = ({ task, first, done, mutate }: any) => {
 
                       <Text>{tasks?.name}</Text>
                     </Group>
-                    {first && (
+                    {state.first === task.box && (
                       <Group>
                         <ActionIcon
                           onClick={() => {
@@ -123,9 +125,11 @@ const Task = ({ task, first, done, mutate }: any) => {
                     <></>
                   ) : (
                     <>
-                      {first && (
+                      {state.first === task.box && (
                         <Group style={{ marginLeft: 30 }}>
-                          {tasks.weight !== 0 && <Badge>{tasks?.weight}</Badge>}
+                          {tasks.weight !== 0 && (
+                            <Badge>重さ:{tasks?.weight}/10</Badge>
+                          )}
                           {tasks.due_date && tasks.due_date !== "期日" && (
                             <Badge>期日:{tasks?.due_date}</Badge>
                           )}
@@ -138,7 +142,7 @@ const Task = ({ task, first, done, mutate }: any) => {
                   </Text>
                 </Stack>
 
-                {first &&
+                {state.first &&
                   tasks?.subtasks.length !== 0 &&
                   tasks?.subtasks.map((task: any) => (
                     <>

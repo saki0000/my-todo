@@ -8,7 +8,7 @@ import {
   Textarea,
 } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { addTask } from "../../api";

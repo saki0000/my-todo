@@ -1,10 +1,10 @@
-import { ActionIcon, Avatar, Button, Group, Text } from "@mantine/core";
+import { ActionIcon, Button, Group, Text } from "@mantine/core";
 import React from "react";
 import { AiOutlineBars } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../features/userSlice";
 
-const Head = ({ setOpened, opened }: any) => {
+const Head = React.memo(({ setOpened, opened }: any) => {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
   return (
@@ -35,6 +35,6 @@ const Head = ({ setOpened, opened }: any) => {
       </Group>
     </>
   );
-};
+});
 
 export default Head;

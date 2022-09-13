@@ -1,9 +1,10 @@
 import { Container, Grid, Paper, Stack } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
-import Inbox from "./Inbox";
-import NextAction from "./NextAction";
-import Week from "./Week";
 import Calender from "./Calender";
+import React from "react";
+import TaskBox from "./TaskBox";
+import { useSetRecoilState } from "recoil";
+import { stateAtom } from "../../atoms/stateAtom";
 
 const Main = () => {
   const [state, setState] = useSetState<any>({
@@ -12,12 +13,13 @@ const Main = () => {
     third: "nextAction",
     fourth: "someday",
   });
+  const setStates = useSetRecoilState(stateAtom);
 
   const components: any = {
-    inbox: <Inbox state={state}></Inbox>,
-    calender: <Calender state={state}></Calender>,
-    nextAction: <NextAction state={state}></NextAction>,
-    someday: <Week state={state}></Week>,
+    inbox: <TaskBox box={"inbox"} />,
+    calender: <Calender></Calender>,
+    nextAction: <TaskBox box={"nextAction"} />,
+    someday: <TaskBox box={"someday"} />,
   };
 
   return (
@@ -39,6 +41,7 @@ const Main = () => {
                       style={{ height: "30%" }}
                       onClick={() => {
                         setState({ first: key[1], [key[0]]: state.first });
+                        setStates({ first: key[1] });
                       }}
                     >
                       {components[key[1]]}

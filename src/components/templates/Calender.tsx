@@ -1,20 +1,21 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Stack, Divider, ScrollArea, Text } from "@mantine/core";
 import { useElementSize, useSetState } from "@mantine/hooks";
-import React, { useMemo, useState } from "react";
+import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getDoTasks } from "../../api";
 import { selectUser } from "../../features/userSlice";
 import Task from "../parts/Task";
 import AddTask from "./AddTask";
 
-const Calender = (state: any) => {
+const Calender = React.memo(() => {
   const user = useSelector(selectUser);
-  const { data, isLoading, error } = getDoTasks(user, "calender");
-  const [tasks, setTasks] = useState(data);
+  const { data, isLoading, error, mutate } = getDoTasks(user, "calender");
   const { ref, height } = useElementSize();
+  const today = new Date();
   const dates = useMemo(() => {
     return [...Array(365)].map((_, index) => {
-      const today = new Date();
       return new Date(
         today.getFullYear(),
         today.getMonth(),
@@ -23,13 +24,25 @@ const Calender = (state: any) => {
         .toJSON()
         .split("T")[0];
     });
-  }, []);
+  }, [today]);
+  const dateTask = useMemo(() => {
+    let calendarData: any = {};
+    dates.map((date) => {
+      data &&
+        data.map((task: any) => {
+          date in calendarData
+            ? date === task.date && calendarData[date].push(task)
+            : date === task.date
+            ? (calendarData[date] = [task])
+            : (calendarData[date] = []);
+        });
+    });
+    return calendarData;
+  }, [data, dates]);
   const [calendar, setCalendar] = useSetState({
     first: "カレンダー",
     second: "今日",
   });
-  if (isLoading) return <div>Loading</div>;
-  if (error) return <div>Error</div>;
 
   return (
     <>
@@ -59,28 +72,18 @@ const Calender = (state: any) => {
                       <Text>{date}</Text>
                       <Divider />
                       <div style={{ margin: 5 }}>
-                        {data &&
-                          data.map((task: any, index: number) => (
+                        {dateTask[date] &&
+                          dateTask[date] !== [] &&
+                          dateTask[date].map((task: any) => (
                             <>
-                              {date === task.date && (
-                                <Task
-                                  task={task}
-                                  first={true}
-                                  allTask={tasks}
-                                  setAllTask={setTasks}
-                                  index={index}
-                                />
-                              )}
+                              <Task task={task} first={true} mutate={mutate} />
                             </>
                           ))}
+                        {isLoading && <div>Loading</div>}
+                        {error && <div>error</div>}
                       </div>
 
-                      <AddTask
-                        box={state.state.first}
-                        tasks={tasks}
-                        setTasks={setTasks}
-                        date={date}
-                      />
+                      <AddTask box={"calender"} mutate={mutate} date={date} />
                     </div>
                   ))}
 
@@ -88,26 +91,14 @@ const Calender = (state: any) => {
                 </>
               ) : (
                 <>
-                  {tasks &&
-                    tasks.map((task: any, index: number) => (
+                  {dateTask[dates[0]] &&
+                    dateTask[dates[0]].map((task: any) => (
                       <>
-                        {dates[0] === task.date && (
-                          <Task
-                            task={task}
-                            first={true}
-                            allTask={tasks}
-                            setAllTask={setTasks}
-                            index={index}
-                          />
-                        )}
+                        <Task task={task} first={true} mutate={mutate} />
                       </>
                     ))}
-                  <AddTask
-                    box={state.state.first}
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    date={dates[0]}
-                  />
+                  <AddTask mutate={mutate} box={"calender"} date={dates[0]} />
+                  <Divider />
                 </>
               )}
             </ScrollArea.Autosize>
@@ -116,6 +107,6 @@ const Calender = (state: any) => {
       </>
     </>
   );
-};
+});
 
 export default Calender;

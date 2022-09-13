@@ -1,12 +1,13 @@
 import { Divider, ScrollArea, Stack, Text } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
+import React from "react";
 import { useSelector } from "react-redux";
 import { getTask } from "../../api";
 import { selectSeparate } from "../../features/counterSlice";
 import SubTask from "../parts/SubTask";
 import AddSubTask from "./AddSubTask";
 
-const Separate = ({ state }: any) => {
+const Separate = React.memo(({ state }: any) => {
   const { ref, height } = useElementSize();
   const id: any = useSelector(selectSeparate);
   const { data, isLoading, error, mutate } = getTask(id);
@@ -43,6 +44,6 @@ const Separate = ({ state }: any) => {
       )}
     </>
   );
-};
+});
 
 export default Separate;
