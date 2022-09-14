@@ -25,7 +25,7 @@ export const getDoTasks = (user: any, box: string) => {
 
 export const getTask = (id: any) => {
   const { data, error, mutate } = useSWR(
-    id.id !== 0 && `http://localhost:4000/api/v1/tasks/${id.id}`,
+    id !== 0 && `http://localhost:4000/api/v1/tasks/${id}`,
     fetcher
   );
   return { data, isLoading: !error && !data, error, mutate };
