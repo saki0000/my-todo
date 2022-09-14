@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { DateFormat, task } from "../../Types";
 type props = {
-  dueDate: DateFormat | string;
+  dueDate?: DateFormat | string;
   setAddDate: (arg: task) => void;
 };
 // eslint-disable-next-line no-empty-pattern

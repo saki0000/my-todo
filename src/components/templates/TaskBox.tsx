@@ -8,7 +8,7 @@ import { selectUser } from "../../features/userSlice";
 import { useRecoilValue } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
 import React from "react";
-import { boxType, user } from "../../Types";
+import { boxType, task, user } from "../../Types";
 
 type props = { box: "inbox" | "someday" | "nextAction" };
 type boxName = Omit<
@@ -37,7 +37,7 @@ const TaskBox = React.memo(({ box }: props) => {
           <div style={{ height: "100%" }} ref={ref}>
             <ScrollArea.Autosize maxHeight={height}>
               {data &&
-                data.map((task: any) => (
+                data.map((task: task & { id: number }) => (
                   <Task task={task} first={true} mutate={mutate} />
                 ))}
               {isLoading && <div>Loading</div>}

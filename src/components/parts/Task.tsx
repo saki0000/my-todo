@@ -25,14 +25,15 @@ import Separate from "../templates/Separate";
 import UpdateTask from "../templates/UpdateTask";
 import SubTask from "./SubTask";
 
+type taskType = task & { id: number };
 type props = {
-  task: task & { id: number };
+  task: taskType;
   first: boolean;
   done?: boolean;
   mutate?: any;
 };
 const Task = React.memo(({ task, done, mutate }: props) => {
-  const [tasks, setTasks] = useSetState<task & { id: number }>(task);
+  const [tasks, setTasks] = useSetState<taskType>(task);
   const [open, setOpen] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
   const [modal, setModal] = useState<boolean>(false);
@@ -151,7 +152,7 @@ const Task = React.memo(({ task, done, mutate }: props) => {
 
                 {state.first &&
                   tasks?.subtasks?.length !== 0 &&
-                  tasks?.subtasks?.map((task: any) => (
+                  tasks?.subtasks?.map((task: taskType) => (
                     <>
                       <Stack
                         align="stretch"

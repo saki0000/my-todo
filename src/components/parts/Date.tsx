@@ -4,7 +4,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import { DateFormat, task } from "../../Types";
 
-type props = { date: DateFormat | string; setAddDate: (arg: task) => void };
+type props = { date?: DateFormat | string; setAddDate: (arg: task) => void };
 const Date = React.memo(({ date, setAddDate }: props) => {
   const [dateData, setDate] = useState<Date | null>(null);
   useEffect(() => {

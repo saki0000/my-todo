@@ -11,7 +11,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { getDoneTasks } from "../../api";
 import { selectUser } from "../../features/userSlice";
-import { user } from "../../Types";
+import { task, user } from "../../Types";
 import Task from "../parts/Task";
 
 const DoneTask = () => {
@@ -31,7 +31,7 @@ const DoneTask = () => {
             <div style={{ height: "100%" }} ref={ref}>
               <ScrollArea.Autosize maxHeight={height}>
                 {data &&
-                  data.map((task: any) => (
+                  data.map((task: task & { id: number }) => (
                     <Task task={task} first={true} done={true} />
                   ))}
               </ScrollArea.Autosize>

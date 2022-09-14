@@ -4,6 +4,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { getTask } from "../../api";
 import { selectSeparate } from "../../features/counterSlice";
+import { task } from "../../Types";
 import SubTask from "../parts/SubTask";
 import AddSubTask from "./AddSubTask";
 
@@ -24,7 +25,7 @@ const Separate = React.memo(({ dataMutate }: any) => {
             <ScrollArea.Autosize maxHeight={height}></ScrollArea.Autosize>
           </div>
           {data.subtasks.length === 0 ||
-            data.subtasks.map((task: any) => (
+            data.subtasks.map((task: task & { id: number }) => (
               <SubTask task={task} mutate={dataMutate} />
             ))}
           <AddSubTask task={data} mutate={mutate} />

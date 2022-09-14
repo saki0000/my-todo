@@ -7,6 +7,7 @@ import {
   Textarea,
 } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useRecoilState } from "recoil";
 import { renAtom } from "../../atoms/atom";
@@ -16,8 +17,16 @@ import Box from "../parts/Box";
 import Date from "../parts/Date";
 import DueDate from "../parts/DueDate";
 import Weight from "../parts/Weight";
-type taskType = Required<task>;
-const UpdateTask = ({ task, setOpen, setTasks, updateTaskApi, sub }: any) => {
+
+type taskType = task & { id: number };
+type props = {
+  task: taskType;
+  setOpen: (arg: boolean) => void;
+  setTasks: (arg: taskType) => void;
+  updateTaskApi: any;
+  sub?: boolean;
+};
+const UpdateTask = ({ task, setOpen, setTasks, updateTaskApi, sub }: props) => {
   const [updateTask, setUpdateTask] = useSetState<taskType>(task);
   const [ren, setRen] = useRecoilState(renAtom);
   const taskId: number = useSelector(selectSeparate);
@@ -44,7 +53,7 @@ const UpdateTask = ({ task, setOpen, setTasks, updateTaskApi, sub }: any) => {
         <Textarea
           placeholder="Memo"
           value={updateTask.memo}
-          onChange={(e: any) => {
+          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
             setUpdateTask({ memo: e.currentTarget.value });
           }}
         ></Textarea>

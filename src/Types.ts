@@ -13,11 +13,9 @@ export type task = {
   weight?: number;
 };
 export type stateType = {
-  first: boxType;
-  second: boxType;
-  third: boxType;
-  fourth: boxType;
+  [k in orderType]: boxType;
 };
+export type orderType = "first" | "second" | "third" | "fourth";
 export type user = { uid: string; displayName: string };
 export type DateFormat = `${number}-${number}-${number}`;
 export type boxType = "calender" | "inbox" | "nextAction" | "someday";
