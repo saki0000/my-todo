@@ -6,16 +6,22 @@ import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 import { getDoTasks } from "../../api";
 import { selectUser } from "../../features/userSlice";
+import { DateFormat, task } from "../../Types";
 // import { stateType, user } from "../../Types";
 import Task from "../parts/Task";
 import AddTask from "./AddTask";
+
+type calendar = {
+  [attr: DateFormat | string]: taskType[];
+};
+type taskType = task & { id: number };
 
 const Calender = React.memo(() => {
   const user = useSelector(selectUser);
   const { data, isLoading, error, mutate } = getDoTasks(user, "calender");
   const { ref, height } = useElementSize();
   const today = new Date();
-  const dates = useMemo(() => {
+  const dates: DateFormat[] | string[] = useMemo(() => {
     return [...Array(365)].map((_, index) => {
       return new Date(
         today.getFullYear(),
@@ -27,10 +33,10 @@ const Calender = React.memo(() => {
     });
   }, [today]);
   const dateTask = useMemo(() => {
-    let calendarData: any = {};
+    let calendarData: calendar = {};
     dates.map((date) => {
       data &&
-        data.map((task: any) => {
+        data.map((task: taskType) => {
           date in calendarData
             ? date === task.date && calendarData[date].push(task)
             : date === task.date
@@ -68,13 +74,13 @@ const Calender = React.memo(() => {
             <ScrollArea.Autosize maxHeight={height}>
               {calendar.first === "カレンダー" ? (
                 <>
-                  {dates.map((date: any) => (
+                  {dates.map((date: string) => (
                     <div style={{ margin: 10 }}>
                       <Text>{date}</Text>
                       <Divider />
                       <div style={{ margin: 5 }}>
                         {dateTask[date] &&
-                          dateTask[date].map((task: any) => (
+                          dateTask[date].map((task: taskType) => (
                             <>
                               <Task task={task} first={true} mutate={mutate} />
                             </>
@@ -92,7 +98,7 @@ const Calender = React.memo(() => {
               ) : (
                 <>
                   {dateTask[dates[0]] &&
-                    dateTask[dates[0]].map((task: any) => (
+                    dateTask[dates[0]].map((task: taskType) => (
                       <>
                         <Task task={task} first={true} mutate={mutate} />
                       </>

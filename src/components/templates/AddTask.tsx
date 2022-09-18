@@ -76,7 +76,7 @@ const AddTask = ({ box, date, mutate }: props) => {
           <Textarea
             placeholder="Memo"
             value={addTaskData.memo}
-            onChange={(e: any) => {
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
               setAddTask({ memo: e.currentTarget.value });
             }}
           ></Textarea>

@@ -5,7 +5,11 @@ import React from "react";
 import TaskBox from "./TaskBox";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
-import { stateType } from "../../Types";
+import { boxType, stateType } from "../../Types";
+
+type componentsType = {
+  [k in boxType]: JSX.Element;
+};
 
 const Main: React.FC = () => {
   const [state, setState] = useSetState<stateType>({
@@ -16,7 +20,7 @@ const Main: React.FC = () => {
   });
   const setStates = useSetRecoilState(stateAtom);
 
-  const components: any = {
+  const components: componentsType = {
     inbox: <TaskBox box={"inbox"} />,
     calender: <Calender></Calender>,
     nextAction: <TaskBox box={"nextAction"} />,
@@ -34,7 +38,7 @@ const Main: React.FC = () => {
           </Grid.Col>
           <Grid.Col span={4}>
             <Stack justify="space-between" style={{ height: "100%" }}>
-              {Object.entries(state).map((key: any) => (
+              {Object.entries(state).map((key: [string, boxType]) => (
                 <>
                   {key[0] !== "first" ? (
                     <Paper
