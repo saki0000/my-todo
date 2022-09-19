@@ -5,10 +5,16 @@ import { useEffect, useState } from "react";
 import { DateFormat, task } from "../../Types";
 
 type props = { date?: DateFormat | string; setAddDate: (arg: task) => void };
-const Date = React.memo(({ date, setAddDate }: props) => {
+const DateSelect = React.memo(({ date, setAddDate }: props) => {
   const [dateData, setDate] = useState<Date | null>(null);
+
   useEffect(() => {
-    setAddDate({ date: dateData?.toJSON().split("T")[0] });
+    const newDate: any = dateData?.setHours(dateData?.getHours() + 12);
+    const dt = new Date(newDate);
+    dt && newDate
+      ? setAddDate({ date: dt.toJSON().split("T")[0] })
+      : setAddDate({ date: date });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateData]);
   return (
@@ -41,4 +47,4 @@ const Date = React.memo(({ date, setAddDate }: props) => {
   );
 });
 
-export default Date;
+export default DateSelect;

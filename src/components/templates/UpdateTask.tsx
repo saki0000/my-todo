@@ -14,7 +14,7 @@ import { renAtom } from "../../atoms/atom";
 import { selectSeparate } from "../../features/counterSlice";
 import { task } from "../../Types";
 import Box from "../parts/Box";
-import Date from "../parts/Date";
+import DateSelect from "../parts/Date";
 import DueDate from "../parts/DueDate";
 import Weight from "../parts/Weight";
 
@@ -46,7 +46,7 @@ const UpdateTask = ({ task, setOpen, setTasks, updateTaskApi, sub }: props) => {
           <DueDate dueDate={updateTask.due_date} setAddDate={setUpdateTask} />
           <Box taskBox={updateTask.box} setTaskBox={setUpdateTask} />
           {updateTask.box === "calender" && (
-            <Date date={updateTask.date} setAddDate={setUpdateTask} />
+            <DateSelect date={updateTask.date} setAddDate={setUpdateTask} />
           )}
         </Group>
 

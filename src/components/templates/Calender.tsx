@@ -40,7 +40,7 @@ const Calender = React.memo(() => {
               <>
                 {dateTask.map((date: string) => (
                   <div key={date}>
-                    <Text>{date}</Text>
+                    <Text style={{ marginBottom: 10 }}>{date}</Text>
                     <Divider />
                     <CalendarTask date={date} />
                   </div>

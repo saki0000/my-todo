@@ -11,7 +11,7 @@ const CalendarTask = ({ date }: { date: string }) => {
   const { data, isLoading, error, mutate } = dateTask(user, date);
   return (
     <>
-      <>
+      <div style={{ marginTop: 20 }}>
         {data &&
           data.map((task: taskType) => (
             <div key={task.id}>
@@ -21,7 +21,7 @@ const CalendarTask = ({ date }: { date: string }) => {
         {isLoading && <div>Loading</div>}
         {error && <div>error</div>}
         <AddTask box={"calender"} mutate={mutate} date={date} />
-      </>
+      </div>
     </>
   );
 };
