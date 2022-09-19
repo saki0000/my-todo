@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import axios from "axios";
 import useSWR from "swr";
+import { user } from "./Types";
 
 const URL = "https://ghd-app-1qx7.onrender.com/api/v1";
 
@@ -28,6 +29,14 @@ export const getDoTasks = (user: any, box: string) => {
 export const getTask = (id: any) => {
   const { data, error, mutate } = useSWR(
     id !== 0 && `${URL}/tasks/${id}`,
+    fetcher
+  );
+  return { data, isLoading: !error && !data, error, mutate };
+};
+
+export const dateTask = (user: user, date: string) => {
+  const { data, error, mutate } = useSWR(
+    `${URL}/date_tasks?id=${user.uid}&date=${date}`,
     fetcher
   );
   return { data, isLoading: !error && !data, error, mutate };

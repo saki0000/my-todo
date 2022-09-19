@@ -8,6 +8,7 @@ import { getDoTasks } from "../../api";
 import { selectUser } from "../../features/userSlice";
 import { DateFormat, task } from "../../Types";
 import useCalenderHook from "../hooks/CalenderHook";
+import CalendarTask from "../parts/CalendarTask";
 // import { stateType, user } from "../../Types";
 import Task from "../parts/Task";
 import AddTask from "./AddTask";
@@ -51,7 +52,15 @@ const Calender = React.memo(() => {
             <ScrollArea.Autosize maxHeight={height}>
               {calendar.first === "カレンダー" ? (
                 <>
-                  {Object.entries(dateTask).map(
+                  {
+                    dateTask.map((date: string) => (
+                      <div key={date}>
+                        <Text>{date}</Text>
+                        <Divider />
+                        <CalendarTask date={date} />
+                      </div>
+                    ))
+                    /* {Object.entries(dateTask).map(
                     (value: [string, taskType[]]) => (
                       <div key={value[0]}>
                         <Text>{value[0]}</Text>
@@ -72,12 +81,13 @@ const Calender = React.memo(() => {
                         />
                       </div>
                     )
-                  )}
+                  )} */
+                  }
                   <Divider />
                 </>
               ) : (
                 <>
-                  {dateTask[today.toJSON().split("T")[0]] &&
+                  {/* {dateTask[today.toJSON().split("T")[0]] &&
                     dateTask[today.toJSON().split("T")[0]].map(
                       (task: taskType) => (
                         <>
@@ -90,7 +100,7 @@ const Calender = React.memo(() => {
                     box={"calender"}
                     date={today.toJSON().split("T")[0]}
                   />
-                  <Divider />
+                  <Divider /> */}
                 </>
               )}
             </ScrollArea.Autosize>
