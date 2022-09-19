@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { getDoTasks } from "../../api";
 import { selectUser } from "../../features/userSlice";
 import { DateFormat, task } from "../../Types";
+import useCalenderHook from "../hooks/CalenderHook";
 // import { stateType, user } from "../../Types";
 import Task from "../parts/Task";
 import AddTask from "./AddTask";
@@ -21,31 +22,7 @@ const Calender = React.memo(() => {
   const { data, isLoading, error, mutate } = getDoTasks(user, "calender");
   const { ref, height } = useElementSize();
   const today = new Date();
-  const dates: DateFormat[] | string[] = useMemo(() => {
-    return [...Array(365)].map((_, index) => {
-      return new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() + index
-      )
-        .toJSON()
-        .split("T")[0];
-    });
-  }, [today]);
-  const dateTask = useMemo(() => {
-    let calendarData: calendar = {};
-    dates.map((date) => {
-      data &&
-        data.map((task: taskType) => {
-          date in calendarData
-            ? date === task.date && calendarData[date].push(task)
-            : date === task.date
-            ? (calendarData[date] = [task])
-            : (calendarData[date] = []);
-        });
-    });
-    return calendarData;
-  }, [data, dates]);
+  const [dateTask] = useCalenderHook(data);
   const [calendar, setCalendar] = useSetState({
     first: "カレンダー",
     second: "今日",
@@ -74,36 +51,45 @@ const Calender = React.memo(() => {
             <ScrollArea.Autosize maxHeight={height}>
               {calendar.first === "カレンダー" ? (
                 <>
-                  {dates.map((date: string) => (
-                    <div style={{ margin: 10 }}>
-                      <Text>{date}</Text>
-                      <Divider />
-                      <div style={{ margin: 5 }}>
-                        {dateTask[date] &&
-                          dateTask[date].map((task: taskType) => (
-                            <>
+                  {Object.entries(dateTask).map(
+                    (value: [string, taskType[]]) => (
+                      <div key={value[0]}>
+                        <Text>{value[0]}</Text>
+                        <Divider />
+                        <div>
+                          {value[1].map((task: taskType) => (
+                            <div key={task.id}>
                               <Task task={task} first={true} mutate={mutate} />
-                            </>
+                            </div>
                           ))}
-                        {isLoading && <div>Loading</div>}
-                        {error && <div>error</div>}
+                          {isLoading && <div>Loading</div>}
+                          {error && <div>error</div>}
+                        </div>
+                        <AddTask
+                          box={"calender"}
+                          mutate={mutate}
+                          date={value[0]}
+                        />
                       </div>
-
-                      <AddTask box={"calender"} mutate={mutate} date={date} />
-                    </div>
-                  ))}
-
+                    )
+                  )}
                   <Divider />
                 </>
               ) : (
                 <>
-                  {dateTask[dates[0]] &&
-                    dateTask[dates[0]].map((task: taskType) => (
-                      <>
-                        <Task task={task} first={true} mutate={mutate} />
-                      </>
-                    ))}
-                  <AddTask mutate={mutate} box={"calender"} date={dates[0]} />
+                  {dateTask[today.toJSON().split("T")[0]] &&
+                    dateTask[today.toJSON().split("T")[0]].map(
+                      (task: taskType) => (
+                        <>
+                          <Task task={task} first={true} mutate={mutate} />
+                        </>
+                      )
+                    )}
+                  <AddTask
+                    mutate={mutate}
+                    box={"calender"}
+                    date={today.toJSON().split("T")[0]}
+                  />
                   <Divider />
                 </>
               )}

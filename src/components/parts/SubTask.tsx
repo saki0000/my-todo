@@ -28,7 +28,7 @@ const SubTask = React.memo(({ task, mutate }: props) => {
           sub={true}
         />
       ) : (
-        <Stack>
+        <Stack key={task.id}>
           <Group
             position="apart"
             style={{
