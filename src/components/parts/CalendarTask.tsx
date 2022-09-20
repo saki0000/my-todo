@@ -1,3 +1,4 @@
+import { Loader } from "@mantine/core";
 import React from "react";
 import { useSelector } from "react-redux";
 import { dateTask } from "../../api";
@@ -15,10 +16,14 @@ const CalendarTask = ({ date }: { date: string }) => {
         {data &&
           data.map((task: taskType) => (
             <div key={task.id}>
-              <Task task={task} first={true} mutate={mutate} />
+              <Task task={task} mutate={mutate} />
             </div>
           ))}
-        {isLoading && <div>Loading</div>}
+        {isLoading && (
+          <div style={{ marginLeft: 40, marginTop: 10 }}>
+            <Loader />
+          </div>
+        )}
         {error && <div>error</div>}
         <AddTask box={"calender"} mutate={mutate} date={date} />
       </div>

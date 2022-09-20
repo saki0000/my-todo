@@ -1,4 +1,4 @@
-import { Divider, ScrollArea, Stack, Text } from "@mantine/core";
+import { Divider, Loader, ScrollArea, Stack, Text } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import AddTask from "./AddTask";
 import Task from "../parts/Task";
@@ -27,7 +27,6 @@ const TaskBox = React.memo(({ box }: props) => {
     someday: "Someday",
     nextAction: "Next Action List",
   };
-
   return (
     <>
       <>
@@ -36,11 +35,18 @@ const TaskBox = React.memo(({ box }: props) => {
           <Divider />
           <div style={{ height: "100%" }} ref={ref}>
             <ScrollArea.Autosize maxHeight={height}>
-              {data &&
+              {data && data.length !== 0 ? (
                 data.map((task: task & { id: number }) => (
-                  <Task task={task} first={true} mutate={mutate} />
-                ))}
-              {isLoading && <div>Loading</div>}
+                  <Task task={task} mutate={mutate} />
+                ))
+              ) : (
+                <>{isLoading || first.first === box || <Text>No Task</Text>}</>
+              )}
+              {isLoading && (
+                <div style={{ marginLeft: 40, marginTop: 10 }}>
+                  <Loader />
+                </div>
+              )}
               {error && <div>error</div>}
               {first.first === box && (
                 <>

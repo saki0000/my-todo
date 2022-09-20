@@ -32,7 +32,7 @@ const Main: React.FC = () => {
       <Container style={{ height: "100%" }}>
         <Grid style={{ height: "100%" }}>
           <Grid.Col span={8}>
-            <Paper p="xl" style={{ height: "100%" }}>
+            <Paper p="xl" shadow="lg" style={{ height: "100%" }}>
               {components[state.first]}
             </Paper>
           </Grid.Col>
@@ -43,6 +43,7 @@ const Main: React.FC = () => {
                   {key[0] !== "first" ? (
                     <Paper
                       p="md"
+                      shadow="lg"
                       style={{ height: "30%" }}
                       onClick={() => {
                         setState({ first: key[1], [key[0]]: state.first });
