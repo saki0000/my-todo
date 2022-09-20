@@ -67,9 +67,7 @@ const Login = () => {
           justify="center"
           style={{ height: "100%" }}
         >
-          <Text>
-            <Title>{register ? "Register" : "Login"}</Title>
-          </Text>
+          <Text className="text-6xl">{register ? "Register" : "Login"}</Text>
           {register && (
             <Autocomplete
               value={username}
