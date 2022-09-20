@@ -59,61 +59,65 @@ const Login = () => {
       });
   };
   return (
-    <Container style={{ height: "100%" }}>
-      <Stack
-        spacing="xl"
-        align="center"
-        justify="center"
-        style={{ height: "100%" }}
-      >
-        <Title>{register ? "Register" : "Login"}</Title>
-        {register && (
+    <div style={{ height: "100%" }}>
+      <Container style={{ height: "100%" }}>
+        <Stack
+          spacing="xl"
+          align="center"
+          justify="center"
+          style={{ height: "100%" }}
+        >
+          <Text>
+            <Title>{register ? "Register" : "Login"}</Title>
+          </Text>
+          {register && (
+            <Autocomplete
+              value={username}
+              onChange={setUsername}
+              placeholder="name"
+              data={[]}
+              style={{ width: 180 }}
+            />
+          )}
           <Autocomplete
-            value={username}
-            onChange={setUsername}
-            placeholder="name"
+            value={email}
+            onChange={setEmail}
+            placeholder="email"
             data={[]}
             style={{ width: 180 }}
           />
-        )}
-        <Autocomplete
-          value={email}
-          onChange={setEmail}
-          placeholder="email"
-          data={[]}
-          style={{ width: 180 }}
-        />
-        <PasswordInput
-          placeholder="Password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.currentTarget.value);
-          }}
-          required
-          style={{ width: 180 }}
-        />
-
-        {register ? (
-          <Button style={{ width: 180 }} onClick={createUserWithEmail}>
-            Register
-          </Button>
-        ) : (
-          <Button onClick={signInWithEmail} style={{ width: 180 }}>
-            Login
-          </Button>
-        )}
-
-        {register || (
-          <Text
-            onClick={() => {
-              setRegister(true);
+          <PasswordInput
+            placeholder="Password"
+            value={password}
+            onChange={(e) => {
+              setPassword(e.currentTarget.value);
             }}
-          >
-            新規登録
-          </Text>
-        )}
-      </Stack>
-    </Container>
+            required
+            style={{ width: 180 }}
+          />
+
+          {register ? (
+            <Button style={{ width: 180 }} onClick={createUserWithEmail}>
+              Register
+            </Button>
+          ) : (
+            <Button onClick={signInWithEmail} style={{ width: 180 }}>
+              Login
+            </Button>
+          )}
+
+          {register || (
+            <Text
+              onClick={() => {
+                setRegister(true);
+              }}
+            >
+              新規登録
+            </Text>
+          )}
+        </Stack>
+      </Container>
+    </div>
   );
 };
 

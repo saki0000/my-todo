@@ -28,7 +28,6 @@ import SubTask from "./SubTask";
 type taskType = task & { id: number };
 type props = {
   task: taskType;
-  first: boolean;
   done?: boolean;
   mutate?: any;
 };
@@ -171,7 +170,6 @@ const Task = React.memo(({ task, done, mutate }: props) => {
                       </Stack>
                     </>
                   ))}
-                {/* {first === true && <Divider />} */}
               </Stack>
             </>
           )}
