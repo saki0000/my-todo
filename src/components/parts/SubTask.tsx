@@ -5,7 +5,7 @@ import { useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useRecoilValue } from "recoil";
-import { deleteSubTask, updateTask } from "../../api";
+import { deleteSubTask } from "../../api";
 import { stateAtom } from "../../atoms/stateAtom";
 import { selectSeparate } from "../../features/counterSlice";
 import { task } from "../../Types";
@@ -24,7 +24,7 @@ const SubTask = React.memo(({ task, mutate }: props) => {
           task={tasks}
           setOpen={setOpen}
           setTasks={setTasks}
-          updateTaskApi={updateTask}
+          mutate={mutate}
           sub={true}
         />
       ) : (

@@ -17,16 +17,17 @@ import Box from "../parts/Box";
 import DateSelect from "../parts/Date";
 import DueDate from "../parts/DueDate";
 import Weight from "../parts/Weight";
+import { updateSubTask, updateTaskAPI } from "../../api";
 
 type taskType = task & { id: number };
 type props = {
   task: taskType;
   setOpen: (arg: boolean) => void;
   setTasks: (arg: taskType) => void;
-  updateTaskApi: any;
+  mutate?: any;
   sub?: boolean;
 };
-const UpdateTask = ({ task, setOpen, setTasks, updateTaskApi, sub }: props) => {
+const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
   const [updateTask, setUpdateTask] = useSetState<taskType>(task);
   const [ren, setRen] = useRecoilState(renAtom);
   const taskId: number = useSelector(selectSeparate);
@@ -69,8 +70,8 @@ const UpdateTask = ({ task, setOpen, setTasks, updateTaskApi, sub }: props) => {
             onClick={() => {
               setTasks(updateTask);
               sub
-                ? updateTaskApi(taskId, updateTask.id, updateTask)
-                : updateTaskApi(updateTask.id, updateTask);
+                ? mutate(updateSubTask(taskId, updateTask.id, updateTask))
+                : mutate(updateTaskAPI(updateTask.id, updateTask));
               setRen(!ren);
               setOpen(false);
             }}

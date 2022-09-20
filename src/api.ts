@@ -64,7 +64,7 @@ export const addTask = async (body: any) => {
     });
 };
 
-export const updateTask = async (id: number, body: any) => {
+export const updateTaskAPI = async (id: number, body: any) => {
   await axios
     .put(`${URL}/tasks/${id}`, body)
     .then((res) => {

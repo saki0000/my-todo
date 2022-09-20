@@ -17,7 +17,7 @@ import {
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useRecoilValue } from "recoil";
-import { deleteTask, updateTask } from "../../api";
+import { deleteTask, updateTaskAPI } from "../../api";
 import { stateAtom } from "../../atoms/stateAtom";
 import { separate } from "../../features/counterSlice";
 import { task } from "../../Types";
@@ -42,7 +42,7 @@ const Task = React.memo(({ task, done, mutate }: props) => {
   useEffect(() => {
     checked &&
       mutate(
-        updateTask(tasks.id, {
+        updateTaskAPI(tasks.id, {
           name: tasks.name,
           box: tasks.box,
           date: tasks.date,
@@ -64,7 +64,7 @@ const Task = React.memo(({ task, done, mutate }: props) => {
           task={tasks}
           setOpen={setOpen}
           setTasks={setTasks}
-          updateTaskApi={updateTask}
+          mutate={mutate}
         />
       ) : (
         <>
