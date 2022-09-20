@@ -1,6 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import axios from "axios";
 import useSWR from "swr";
+import { user } from "./Types";
 
 const URL = "https://ghd-app-1qx7.onrender.com/api/v1";
 
@@ -33,6 +34,14 @@ export const getTask = (id: any) => {
   return { data, isLoading: !error && !data, error, mutate };
 };
 
+export const dateTask = (user: user, date: string) => {
+  const { data, error, mutate } = useSWR(
+    `${URL}/date_tasks?id=${user.uid}&date=${date}`,
+    fetcher
+  );
+  return { data, isLoading: !error && !data, error, mutate };
+};
+
 export const addSubTask = async (id: number, body: any) => {
   await axios
     .post(`${URL}/tasks/${id}/subtasks`, body)
@@ -55,7 +64,7 @@ export const addTask = async (body: any) => {
     });
 };
 
-export const updateTask = async (id: number, body: any) => {
+export const updateTaskAPI = async (id: number, body: any) => {
   await axios
     .put(`${URL}/tasks/${id}`, body)
     .then((res) => {

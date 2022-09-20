@@ -15,7 +15,7 @@ import { addTask } from "../../api";
 import { selectUser } from "../../features/userSlice";
 import { boxType, DateFormat, task, user } from "../../Types";
 import Box from "../parts/Box";
-import Date from "../parts/Date";
+import DateSelect from "../parts/Date";
 import DueDate from "../parts/DueDate";
 import Weight from "../parts/Weight";
 
@@ -69,7 +69,7 @@ const AddTask = ({ box, date, mutate }: props) => {
             <DueDate dueDate={"期日"} setAddDate={setAddTask} />
             <Box taskBox={addTaskData.box} setTaskBox={setAddTask} />
             {addTaskData.box === "calender" && (
-              <Date date={addTaskData.date} setAddDate={setAddTask} />
+              <DateSelect date={addTaskData.date} setAddDate={setAddTask} />
             )}
           </Group>
 
