@@ -32,7 +32,7 @@ const TaskBox = React.memo(({ box }: props) => {
       <>
         <Stack style={{ height: "100%" }}>
           <Text size="lg">{boxes[box]}</Text>
-          <Divider />
+          <Divider className="border-indigo-100" />
           <div style={{ height: "100%" }} ref={ref}>
             <ScrollArea.Autosize maxHeight={height}>
               {data && data.length !== 0 ? (
@@ -51,7 +51,7 @@ const TaskBox = React.memo(({ box }: props) => {
               {first.first === box && (
                 <>
                   <AddTask box={box} mutate={mutate} />
-                  <Divider />
+                  <Divider className="border-indigo-100" />
                 </>
               )}
             </ScrollArea.Autosize>

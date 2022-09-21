@@ -31,6 +31,9 @@ const Head = React.memo(({ setOpened, opened }: props) => {
           onClick={() => {
             dispatch(logout());
           }}
+          variant="light"
+          color="indigo"
+          radius="md"
         >
           Logout
         </Button>

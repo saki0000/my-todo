@@ -85,6 +85,9 @@ const AddTask = ({ box, date, mutate }: props) => {
               onClick={() => {
                 setOpen(true);
               }}
+              variant="light"
+              color="red"
+              radius="md"
             >
               キャンセル
             </Button>
@@ -94,6 +97,9 @@ const AddTask = ({ box, date, mutate }: props) => {
                 mutate(addTask(addTaskData));
                 setOpen(true);
               }}
+              variant="light"
+              color="indigo"
+              radius="md"
             >
               追加
             </Button>

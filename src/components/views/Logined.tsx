@@ -46,14 +46,14 @@ const Logined = () => {
             <Head setOpened={setOpened} opened={opened}></Head>
           </Header>
         }
-        styles={(theme) => ({
-          main: {
-            backgroundColor:
-              theme.colorScheme === "dark"
-                ? theme.colors.dark[8]
-                : theme.colors.gray[0],
-          },
-        })}
+        // styles={(theme) => ({
+        //   main: {
+        //     backgroundColor:
+        //       theme.colorScheme === "dark"
+        //         ? theme.colors.dark[8]
+        //         : theme.colors.gray[0],
+        //   },
+        // })}
       >
         {page ? <Main /> : <DoneTask />}
       </AppShell>

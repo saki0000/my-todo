@@ -33,7 +33,7 @@ const Calender = React.memo(() => {
             /{calendar.second}
           </span>
         </Text>
-        <Divider />
+        <Divider className="border-indigo-100" />
         <div style={{ height: "100%" }} ref={ref}>
           <ScrollArea.Autosize maxHeight={height}>
             {calendar.first === "カレンダー" ? (
@@ -41,17 +41,17 @@ const Calender = React.memo(() => {
                 {dateTask.map((date: string) => (
                   <div key={date}>
                     <Text style={{ marginBottom: 10 }}>{date}</Text>
-                    <Divider />
+                    <Divider className="border-indigo-100" />
                     <CalendarTask date={date} />
                   </div>
                 ))}
-                <Divider />
+                <Divider className="border-indigo-100" />
               </>
             ) : (
               <>
                 <CalendarTask date={today.toJSON().split("T")[0]} />
 
-                <Divider />
+                <Divider className="border-indigo-100" />
               </>
             )}
           </ScrollArea.Autosize>

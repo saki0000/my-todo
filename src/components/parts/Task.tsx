@@ -139,10 +139,10 @@ const Task = React.memo(({ task, done, mutate }: props) => {
                     <>
                       <Group style={{ marginLeft: 30 }}>
                         {tasks.weight !== 0 && (
-                          <Badge>重さ:{tasks?.weight}/10</Badge>
+                          <Badge color="indigo">重さ:{tasks?.weight}/10</Badge>
                         )}
                         {tasks.due_date && tasks.due_date !== "期日" && (
-                          <Badge>期日:{tasks?.due_date}</Badge>
+                          <Badge color="indigo">期日:{tasks?.due_date}</Badge>
                         )}
                       </Group>
                     </>

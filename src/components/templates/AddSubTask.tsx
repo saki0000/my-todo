@@ -72,6 +72,9 @@ const AddSubTask = ({ task, mutate }: props) => {
               onClick={() => {
                 setOpen(true);
               }}
+              variant="light"
+              color="red"
+              radius="md"
             >
               キャンセル
             </Button>
@@ -80,6 +83,9 @@ const AddSubTask = ({ task, mutate }: props) => {
                 mutate(addSubTask(id, addTask));
                 setOpen(true);
               }}
+              variant="light"
+              color="indigo"
+              radius="md"
             >
               追加
             </Button>
