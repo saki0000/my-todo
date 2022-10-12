@@ -1,11 +1,10 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Stack, Divider, ScrollArea, Text } from "@mantine/core";
+import { Divider, ScrollArea, Stack, Text } from "@mantine/core";
 import { useElementSize, useSetState } from "@mantine/hooks";
 import React from "react";
 import useCalenderHook from "../hooks/CalenderHook";
 import CalendarTask from "../parts/CalendarTask";
-// import { stateType, user } from "../../Types";
 
 const Calender = React.memo(() => {
   const { ref, height } = useElementSize();

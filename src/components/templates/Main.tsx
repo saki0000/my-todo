@@ -1,11 +1,11 @@
 import { Container, Grid, Paper, Stack } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
-import Calender from "./Calender";
 import React from "react";
-import TaskBox from "./TaskBox";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
 import { boxType, stateType } from "../../Types";
+import Calender from "./Calender";
+import TaskBox from "./TaskBox";
 
 type componentsType = {
   [k in boxType]: JSX.Element;
@@ -33,8 +33,6 @@ const Main: React.FC = () => {
         <Grid style={{ height: "100%" }}>
           <Grid.Col span={8}>
             <Paper
-              withBorder
-              className="border-indigo-100"
               key={state.first}
               p="xl"
               shadow="lg"
@@ -50,8 +48,6 @@ const Main: React.FC = () => {
                 <>
                   {key[0] !== "first" ? (
                     <Paper
-                      withBorder
-                      className="border-indigo-100"
                       key={key[0]}
                       p="md"
                       shadow="sm"

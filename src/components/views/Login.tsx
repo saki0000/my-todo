@@ -11,10 +11,10 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { auth } from "../../firebase";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../features/userSlice";
+import { auth } from "../../firebase";
 import Password from "../parts/Password";
 
 const Login = () => {
@@ -63,17 +63,17 @@ const Login = () => {
       });
   };
   return (
-    <div className="bg-blue-50" style={{ height: "100%" }}>
+    <div className="bg-indigo-200" style={{ height: "100%" }}>
       <Container style={{ height: "100%" }}>
         <div className="h-full grid place-content-center">
           <Stack
             spacing="xl"
             align="center"
             justify="center"
-            className="p-40 rounded-2xl border-solid border-indigo-100 bg-slate-50"
+            className="gap-y-4 "
           >
             <Text>
-              <Title className="text-6xl">
+              <Title className="text-8xl text-white pb-10">
                 {register ? "Register" : "Login"}
               </Title>
             </Text>
@@ -83,7 +83,7 @@ const Login = () => {
                 onChange={setUsername}
                 placeholder="name"
                 data={[]}
-                className="w-50"
+                className="w-60"
               />
             )}
             <Autocomplete
@@ -91,7 +91,7 @@ const Login = () => {
               onChange={setEmail}
               placeholder="email"
               data={[]}
-              className="w-50"
+              className="w-60"
             />
             {register ? (
               <Password password={password} setPassword={setPassword} />
@@ -103,14 +103,15 @@ const Login = () => {
                   setPassword(e.currentTarget.value);
                 }}
                 required
-                style={{ width: 180 }}
+                // style={{ width:  }}
+                className="w-60"
               />
             )}
 
             {register ? (
               <Button
                 disabled={password === "" || email === "" || username === ""}
-                style={{ width: 180 }}
+                style={{ width: 240 }}
                 onClick={createUserWithEmail}
                 color="indigo"
                 variant="light"
@@ -122,9 +123,9 @@ const Login = () => {
               <Button
                 disabled={password === "" || email === ""}
                 onClick={signInWithEmail}
-                style={{ width: 180 }}
+                style={{ width: 240 }}
                 color="indigo"
-                variant="light"
+                // variant="light"
                 radius="md"
               >
                 Login
@@ -135,12 +136,23 @@ const Login = () => {
                 <Text color="red">{error}</Text>
               </>
             )}
-            {register || (
+            {register ? (
+              <>
+                <Text
+                  onClick={() => {
+                    setRegister(false);
+                  }}
+                  className="font-semibold text-white no-underline hover:underline decoration-indigo-500 cursor-pointer"
+                >
+                  ログイン画面へ
+                </Text>
+              </>
+            ) : (
               <Text
                 onClick={() => {
                   setRegister(true);
                 }}
-                className="no-underline hover:underline decoration-indigo-500 cursor-pointer"
+                className="font-semibold text-white no-underline hover:underline decoration-indigo-500 cursor-pointer"
               >
                 新規登録
               </Text>

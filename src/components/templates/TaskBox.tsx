@@ -1,14 +1,14 @@
 import { Divider, Loader, ScrollArea, Stack, Text } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
-import AddTask from "./AddTask";
-import Task from "../parts/Task";
-import { getDoTasks } from "../../api";
-import { useSelector } from "react-redux";
-import { selectUser } from "../../features/userSlice";
-import { useRecoilValue } from "recoil";
-import { stateAtom } from "../../atoms/stateAtom";
 import React from "react";
+import { useSelector } from "react-redux";
+import { useRecoilValue } from "recoil";
+import { getDoTasks } from "../../api";
+import { stateAtom } from "../../atoms/stateAtom";
+import { selectUser } from "../../features/userSlice";
 import { boxType, task, user } from "../../Types";
+import Task from "../parts/Task";
+import AddTask from "./AddTask";
 
 type props = { box: "inbox" | "someday" | "nextAction" };
 type boxName = Omit<
@@ -29,35 +29,33 @@ const TaskBox = React.memo(({ box }: props) => {
   };
   return (
     <>
-      <>
-        <Stack style={{ height: "100%" }}>
-          <Text size="lg">{boxes[box]}</Text>
-          <Divider className="border-indigo-100" />
-          <div style={{ height: "100%" }} ref={ref}>
-            <ScrollArea.Autosize maxHeight={height}>
-              {data && data.length !== 0 ? (
-                data.map((task: task & { id: number }) => (
-                  <Task task={task} mutate={mutate} />
-                ))
-              ) : (
-                <>{isLoading || first.first === box || <Text>No Task</Text>}</>
-              )}
-              {isLoading && (
-                <div style={{ marginLeft: 40, marginTop: 10 }}>
-                  <Loader />
-                </div>
-              )}
-              {error && <div>error</div>}
-              {first.first === box && (
-                <>
-                  <AddTask box={box} mutate={mutate} />
-                  <Divider className="border-indigo-100" />
-                </>
-              )}
-            </ScrollArea.Autosize>
-          </div>
-        </Stack>
-      </>
+      <Stack style={{ height: "100%" }}>
+        <Text size="lg">{boxes[box]}</Text>
+        <Divider className="border-indigo-100" />
+        <div style={{ height: "100%" }} ref={ref}>
+          <ScrollArea.Autosize maxHeight={height}>
+            {data && data.length !== 0 ? (
+              data.map((task: task & { id: number }) => (
+                <Task task={task} mutate={mutate} />
+              ))
+            ) : (
+              <>{isLoading || first.first === box || <Text>No Task</Text>}</>
+            )}
+            {isLoading && (
+              <div style={{ marginLeft: 40, marginTop: 10 }}>
+                <Loader />
+              </div>
+            )}
+            {error && <div>error</div>}
+            {first.first === box && (
+              <>
+                <AddTask box={box} mutate={mutate} />
+                <Divider className="border-indigo-100" />
+              </>
+            )}
+          </ScrollArea.Autosize>
+        </div>
+      </Stack>
     </>
   );
 });

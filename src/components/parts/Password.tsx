@@ -1,5 +1,5 @@
-import { Box, PasswordInput, Popover, Progress, Text } from "@mantine/core";
-import React, { useState } from "react";
+import { Box, PasswordInput, Popover, Text } from "@mantine/core";
+import { useState } from "react";
 import { AiOutlineCheck, AiOutlineClose } from "react-icons/ai";
 
 type props = {
@@ -42,12 +42,11 @@ const Password = ({ password, setPassword }: props) => {
                 setPassword(e.currentTarget.value);
               }}
               required
-              style={{ width: 180 }}
+              style={{ width: 240 }}
             />
           </div>
         </Popover.Target>
         <Popover.Dropdown>
-          {/* <Progress color={color} value={strength} size={5} style={{ marginBottom: 10 }} /> */}
           <PasswordRequirement
             label="Includes at least 6 characters"
             meets={password.length > 5}
