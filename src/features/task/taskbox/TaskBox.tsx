@@ -32,7 +32,7 @@ const TaskBox = React.memo(({ box }: props) => {
     <>
       <Separate dataMutate={mutate} />
       <Stack style={{ height: "100%" }}>
-        <Text size="lg">{boxes[box]}</Text>
+        <p className="text-xl  my-2">{boxes[box]}</p>
         <Divider className="border-indigo-100" />
         <div style={{ height: "100%" }} ref={ref}>
           <ScrollArea.Autosize maxHeight={height} className="h-full">

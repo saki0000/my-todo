@@ -63,11 +63,12 @@ const Task = React.memo(({ task, mutate }: props) => {
               <Stack key={task.id}>
                 <Stack
                   style={{
-                    marginRight: 30,
-                    marginLeft: 30,
-                    marginTop: 20,
-                    marginBottom: 20,
+                    marginRight: 28,
+                    marginLeft: 28,
+                    marginTop: 12,
+                    marginBottom: 0,
                   }}
+                  spacing={0}
                 >
                   <Group position="apart">
                     <Group>
@@ -110,27 +111,24 @@ const Task = React.memo(({ task, mutate }: props) => {
                   </Group>
 
                   {/* badges */}
-                  {state.first === task.box &&
-                  tasks.weight !== 0 &&
-                  tasks.due_date !== "" &&
-                  tasks.due_date !== "期日" ? (
-                    <>
-                      <Group style={{ marginLeft: 30 }}>
-                        {tasks.weight !== 0 && (
-                          <Badge color="indigo">優先度:{tasks?.weight}</Badge>
-                        )}
-                        {tasks.due_date && tasks.due_date !== "期日" && (
-                          <Badge color="indigo">期日:{tasks?.due_date}</Badge>
-                        )}
-                      </Group>
-                    </>
-                  ) : (
-                    <></>
-                  )}
+                  <>
+                    <Group style={{ marginLeft: 28 }} className="pt-2">
+                      {tasks.weight !== 0 && (
+                        <Badge color="indigo">優先度:{tasks?.weight}</Badge>
+                      )}
+                      {tasks.due_date && tasks.due_date !== "期日" && (
+                        <Badge color="indigo">期日:{tasks?.due_date}</Badge>
+                      )}
+                    </Group>
+                  </>
 
                   {/* memo */}
                   {tasks.memo && (
-                    <Text color="gray" style={{ marginLeft: 30 }}>
+                    <Text
+                      color="gray"
+                      style={{ marginLeft: 28 }}
+                      className="mt-2"
+                    >
                       {tasks?.memo}
                     </Text>
                   )}

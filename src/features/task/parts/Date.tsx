@@ -1,4 +1,4 @@
-import { Badge, HoverCard, Menu, Text } from "@mantine/core";
+import { Badge, HoverCard, Modal, Text } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
 import React, { useEffect, useState } from "react";
 import { DateFormat, task } from "../../../Types";
@@ -6,7 +6,7 @@ import { DateFormat, task } from "../../../Types";
 type props = { date?: DateFormat | string; setAddDate: (arg: task) => void };
 const DateSelect = React.memo(({ date, setAddDate }: props) => {
   const [dateData, setDate] = useState<Date | null>(null);
-
+  const [open, setOpen] = useState<boolean>(false);
   useEffect(() => {
     const newDate: any = dateData?.setHours(dateData?.getHours() + 12);
     const dt = new Date(newDate);
@@ -18,6 +18,17 @@ const DateSelect = React.memo(({ date, setAddDate }: props) => {
   }, [dateData]);
   return (
     <div>
+      <Modal
+        opened={open}
+        onClose={() => {
+          setOpen(false);
+        }}
+        size="xs"
+      >
+        <div>
+          <Calendar value={dateData} onChange={setDate} className="mx-auto" />
+        </div>
+      </Modal>
       <HoverCard
         width={160}
         position="top"
@@ -26,16 +37,9 @@ const DateSelect = React.memo(({ date, setAddDate }: props) => {
         zIndex={1}
       >
         <HoverCard.Target>
-          <Menu position="bottom">
-            <Menu.Target>
-              <Badge>{date || "日付"}</Badge>
-            </Menu.Target>
-            <Menu.Dropdown>
-              <Menu.Label>
-                <Calendar value={dateData} onChange={setDate} />
-              </Menu.Label>
-            </Menu.Dropdown>
-          </Menu>
+          <Badge color="indigo" onClick={() => setOpen(true)}>
+            {date || "日付"}
+          </Badge>
         </HoverCard.Target>
 
         <HoverCard.Dropdown sx={{ pointerEvents: "none" }}>

@@ -9,7 +9,7 @@ import {
 import { useSetState } from "@mantine/hooks";
 import React from "react";
 import { useSelector } from "react-redux";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { updateSubTask, updateTaskAPI } from "../../../../api";
 import { renAtom } from "../../../../atoms/atom";
 import { separateAtom } from "../../../../atoms/openAtom";
@@ -31,7 +31,7 @@ type props = {
 const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
   const [updateTask, setUpdateTask] = useSetState<taskType>(task);
   const [ren, setRen] = useRecoilState(renAtom);
-  const [modal, setModal] = useRecoilState(separateAtom);
+  const setModal = useSetRecoilState(separateAtom);
   const taskId: number = useSelector(selectSeparate);
   return (
     <div style={{ margin: 30 }}>
@@ -65,6 +65,9 @@ const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
             onClick={() => {
               setOpen(false);
             }}
+            variant="light"
+            color="red"
+            radius="md"
           >
             キャンセル
           </Button>
@@ -80,6 +83,9 @@ const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
               setRen(!ren);
               setOpen(false);
             }}
+            variant="light"
+            color="indigo"
+            radius="md"
           >
             変更
           </Button>

@@ -22,8 +22,8 @@ import Weight from "../parts/Weight";
 type props = { box: boxType; date?: DateFormat | string; mutate?: any };
 type stateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
 const AddTask = ({ box, date, mutate }: props) => {
-  const user: user = useSelector(selectUser);
   const [open, setOpen] = useState<boolean>(true);
+  const user: user = useSelector(selectUser);
   const initial = {
     user_id: user.uid,
     name: "",
