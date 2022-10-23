@@ -8,12 +8,10 @@ import {
 } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import React from "react";
-import { useSelector } from "react-redux";
 import { useRecoilState } from "recoil";
 import { updateSubTask, updateTaskAPI } from "../../../../api";
 import { renAtom } from "../../../../atoms/atom";
 import { separateAtom } from "../../../../atoms/openAtom";
-import { selectSeparate } from "../../../../redux/counterSlice";
 import { task } from "../../../../Types";
 import Box from "../../parts/Box";
 import DateSelect from "../../parts/Date";
@@ -32,7 +30,7 @@ const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
   const [updateTask, setUpdateTask] = useSetState<taskType>(task);
   const [ren, setRen] = useRecoilState(renAtom);
   const [modal, setModal] = useRecoilState(separateAtom);
-  const taskId: number = useSelector(selectSeparate);
+
   return (
     <div style={{ margin: 30 }}>
       <Stack>
@@ -65,21 +63,28 @@ const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
             onClick={() => {
               setOpen(false);
             }}
+            variant="light"
+            color="red"
+            radius="md"
           >
             キャンセル
           </Button>
           <Button
             onClick={() => {
+              sub
+                ? mutate(updateSubTask(task.id, updateTask.id, updateTask))
+                : mutate(updateTaskAPI(updateTask.id, updateTask));
               task.box === "inbox" &&
                 updateTask.box === "nextAction" &&
                 setModal({ id: task.id, open: true });
               setTasks(updateTask);
-              sub
-                ? mutate(updateSubTask(taskId, updateTask.id, updateTask))
-                : mutate(updateTaskAPI(updateTask.id, updateTask));
+
               setRen(!ren);
               setOpen(false);
             }}
+            variant="light"
+            color="indigo"
+            radius="md"
           >
             変更
           </Button>

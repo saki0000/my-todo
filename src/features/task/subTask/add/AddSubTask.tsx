@@ -56,7 +56,7 @@ const AddSubTask = ({ task, mutate }: props) => {
               data={[]}
             ></Autocomplete>
             <Group>
-              <Weight weight={"重さ"} setAddWeight={setAddTask} />
+              <Weight setAddWeight={setAddTask} />
               <DueDate dueDate={"期日"} setAddDate={setAddTask} />
             </Group>
           </Group>

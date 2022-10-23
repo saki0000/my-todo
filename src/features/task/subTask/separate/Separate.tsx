@@ -1,4 +1,4 @@
-import { Divider, Loader, Modal, ScrollArea, Stack, Text } from "@mantine/core";
+import { Divider, Modal, ScrollArea, Stack } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import React from "react";
 import { useRecoilState } from "recoil";
@@ -13,12 +13,7 @@ const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
   const [modal, setOpen] = useRecoilState(separateAtom);
   const { data, isLoading, error, mutate } = getTask(modal.id);
 
-  if (isLoading)
-    return (
-      <div>
-        <Loader />
-      </div>
-    );
+  if (isLoading) return <div></div>;
   if (error) return <div>error</div>;
   return (
     <>
@@ -31,7 +26,7 @@ const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
         size="lg"
       >
         <Stack>
-          <Text>{data.name}</Text>
+          <p className="text-xl ml-4">{data.name}</p>
 
           <Divider />
           <div style={{ height: "100%" }} ref={ref}>
@@ -39,7 +34,7 @@ const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
           </div>
           {data.subtasks.length === 0 ||
             data.subtasks.map((task: task & { id: number }) => (
-              <SubTask task={task} mutate={dataMutate} />
+              <SubTask id={modal.id} task={task} mutate={dataMutate} />
             ))}
           <AddSubTask task={data} mutate={mutate} />
         </Stack>
