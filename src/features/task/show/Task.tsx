@@ -144,7 +144,7 @@ const Task = React.memo(({ task, mutate }: props) => {
                         justify=""
                         style={{ width: "100%" }}
                       >
-                        <SubTask task={task} mutate={mutate} />
+                        <SubTask id={tasks.id} task={task} mutate={mutate} />
                       </Stack>
                     </>
                   ))}

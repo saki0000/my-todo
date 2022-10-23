@@ -34,7 +34,7 @@ const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
           </div>
           {data.subtasks.length === 0 ||
             data.subtasks.map((task: task & { id: number }) => (
-              <SubTask task={task} mutate={dataMutate} />
+              <SubTask id={modal.id} task={task} mutate={dataMutate} />
             ))}
           <AddSubTask task={data} mutate={mutate} />
         </Stack>
