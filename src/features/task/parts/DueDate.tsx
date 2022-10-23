@@ -10,7 +10,10 @@ type props = {
 const DueDate = React.memo(({ dueDate, setAddDate }: props) => {
   const [value, setValue] = useState<Date | null>(null);
   useEffect(() => {
-    setAddDate({ due_date: value?.toJSON().split("T")[0] });
+    const newDate: any = value?.setHours(value?.getHours() + 12);
+    const dt = new Date(newDate);
+    dt && newDate && setAddDate({ due_date: dt.toJSON().split("T")[0] });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [value]);
   return (

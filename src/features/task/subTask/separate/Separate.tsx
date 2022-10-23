@@ -1,4 +1,4 @@
-import { Divider, Loader, Modal, ScrollArea, Stack, Text } from "@mantine/core";
+import { Divider, Modal, ScrollArea, Stack, Text } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import React from "react";
 import { useRecoilState } from "recoil";
@@ -13,12 +13,7 @@ const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
   const [modal, setOpen] = useRecoilState(separateAtom);
   const { data, isLoading, error, mutate } = getTask(modal.id);
 
-  if (isLoading)
-    return (
-      <div>
-        <Loader />
-      </div>
-    );
+  if (isLoading) return <div></div>;
   if (error) return <div>error</div>;
   return (
     <>

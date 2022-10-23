@@ -41,7 +41,7 @@ const AddTask = ({ box, date, mutate }: props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [box]);
   return (
-    <div style={{ margin: 30 }}>
+    <div style={{ margin: 30 }} className="h-full">
       {open ? (
         <Group>
           <ActionIcon
@@ -65,8 +65,8 @@ const AddTask = ({ box, date, mutate }: props) => {
             style={{ width: "auto" }}
           ></Autocomplete>
           <Group>
-            <Weight weight={"重さ"} setAddWeight={setAddTask} />
-            <DueDate dueDate={"期日"} setAddDate={setAddTask} />
+            <Weight weight={addTaskData.weight} setAddWeight={setAddTask} />
+            <DueDate dueDate={addTaskData.due_date} setAddDate={setAddTask} />
             <Box taskBox={addTaskData.box} setTaskBox={setAddTask} />
             {addTaskData.box === "calender" && (
               <DateSelect date={addTaskData.date} setAddDate={setAddTask} />

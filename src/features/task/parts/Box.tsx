@@ -1,12 +1,10 @@
 import { Badge, HoverCard, Menu, Text } from "@mantine/core";
-import { useState } from "react";
 import { boxType, task } from "../../../Types";
 
 // eslint-disable-next-line no-empty-pattern
 type box = { taskBox?: boxType; setTaskBox: (arg: task) => void };
 
 const Box = ({ taskBox, setTaskBox }: box) => {
-  const [box, setBox] = useState<boxType>(taskBox || "inbox");
   return (
     <div>
       <HoverCard
@@ -19,12 +17,11 @@ const Box = ({ taskBox, setTaskBox }: box) => {
         <HoverCard.Target>
           <Menu position="bottom">
             <Menu.Target>
-              <Badge>{box}</Badge>
+              <Badge>{taskBox || "inbox"}</Badge>
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item
                 onClick={() => {
-                  setBox("inbox");
                   setTaskBox({ box: "inbox" });
                 }}
               >
@@ -32,7 +29,6 @@ const Box = ({ taskBox, setTaskBox }: box) => {
               </Menu.Item>
               <Menu.Item
                 onClick={() => {
-                  setBox("nextAction");
                   setTaskBox({ box: "nextAction" });
                 }}
               >
@@ -40,7 +36,6 @@ const Box = ({ taskBox, setTaskBox }: box) => {
               </Menu.Item>
               <Menu.Item
                 onClick={() => {
-                  setBox("calender");
                   setTaskBox({ box: "calender" });
                 }}
               >

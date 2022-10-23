@@ -7,30 +7,26 @@ import {
   AiOutlineEdit,
   AiOutlinePartition,
 } from "react-icons/ai";
-import { useDispatch } from "react-redux";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { deleteTask, updateTaskAPI } from "../../../api";
 import { separateAtom } from "../../../atoms/openAtom";
 import { stateAtom } from "../../../atoms/stateAtom";
-import { separate } from "../../../redux/counterSlice";
 import { task } from "../../../Types";
-import Separate from "../subTask/separate/Separate";
 import SubTask from "../subTask/show/SubTask";
 import UpdateTask from "../update/layout/UpdateTask";
 
 type taskType = task & { id: number };
 type props = {
   task: taskType;
-  done?: boolean;
   mutate?: any;
 };
-const Task = React.memo(({ task, done, mutate }: props) => {
+const Task = React.memo(({ task, mutate }: props) => {
   const [tasks, setTasks] = useSetState<taskType>(task);
   const [open, setOpen] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
-  const [modal, setModal] = useRecoilState(separateAtom);
+  const setModal = useSetRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);
-  const dispatch = useDispatch();
+
   useEffect(() => {
     checked &&
       mutate(
@@ -52,18 +48,18 @@ const Task = React.memo(({ task, done, mutate }: props) => {
   return (
     <>
       {open ? (
-        <UpdateTask
-          task={tasks}
-          setOpen={setOpen}
-          setTasks={setTasks}
-          mutate={mutate}
-        />
+        <div className="h-full">
+          <UpdateTask
+            task={tasks}
+            setOpen={setOpen}
+            setTasks={setTasks}
+            mutate={mutate}
+          />
+        </div>
       ) : (
         <>
           {tasks === undefined || checked || (
             <>
-              <Separate dataMutate={mutate} />
-
               <Stack key={task.id}>
                 <Stack
                   style={{
@@ -75,18 +71,12 @@ const Task = React.memo(({ task, done, mutate }: props) => {
                 >
                   <Group position="apart">
                     <Group>
-                      {done ? (
-                        <>
-                          <div style={{ marginLeft: 20 }}></div>
-                        </>
-                      ) : (
-                        <Checkbox
-                          checked={checked}
-                          onChange={(e) => {
-                            setChecked(e.currentTarget.checked);
-                          }}
-                        />
-                      )}
+                      <Checkbox
+                        checked={checked}
+                        onChange={(e) => {
+                          setChecked(e.currentTarget.checked);
+                        }}
+                      />
 
                       <Text>{tasks?.name}</Text>
                     </Group>
@@ -96,8 +86,7 @@ const Task = React.memo(({ task, done, mutate }: props) => {
                       <Group>
                         <ActionIcon
                           onClick={() => {
-                            dispatch(separate(tasks.id));
-                            setModal({ ...modal, open: true });
+                            setModal({ id: task.id, open: true });
                           }}
                         >
                           <AiOutlinePartition></AiOutlinePartition>

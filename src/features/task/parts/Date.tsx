@@ -28,7 +28,7 @@ const DateSelect = React.memo(({ date, setAddDate }: props) => {
         <HoverCard.Target>
           <Menu position="bottom">
             <Menu.Target>
-              <Badge>{date}</Badge>
+              <Badge>{date || "日付"}</Badge>
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Label>
