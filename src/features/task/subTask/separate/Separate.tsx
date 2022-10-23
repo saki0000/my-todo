@@ -1,4 +1,4 @@
-import { Divider, Modal, ScrollArea, Stack, Text } from "@mantine/core";
+import { Divider, Modal, ScrollArea, Stack } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
 import React from "react";
 import { useRecoilState } from "recoil";
@@ -26,7 +26,7 @@ const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
         size="lg"
       >
         <Stack>
-          <Text>{data.name}</Text>
+          <p className="text-xl ml-4">{data.name}</p>
 
           <Divider />
           <div style={{ height: "100%" }} ref={ref}>
