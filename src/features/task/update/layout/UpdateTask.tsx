@@ -8,7 +8,7 @@ import {
 } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import React from "react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { updateSubTask, updateTaskAPI } from "../../../../api";
 import { renAtom } from "../../../../atoms/atom";
 import { separateAtom } from "../../../../atoms/openAtom";
@@ -25,12 +25,13 @@ type props = {
   setTasks: (arg: taskType) => void;
   mutate?: any;
   sub?: boolean;
+  id?: number;
 };
-const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
+const UpdateTask = ({ task, setOpen, setTasks, mutate, sub, id }: props) => {
   const [updateTask, setUpdateTask] = useSetState<taskType>(task);
   const [ren, setRen] = useRecoilState(renAtom);
-  const [modal, setModal] = useRecoilState(separateAtom);
-
+  const setModal = useSetRecoilState(separateAtom);
+  console.log(task);
   return (
     <div style={{ margin: 30 }}>
       <Stack>
@@ -46,7 +47,7 @@ const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
           <Weight weight={updateTask.weight} setAddWeight={setUpdateTask} />
           <DueDate dueDate={updateTask.due_date} setAddDate={setUpdateTask} />
           <Box taskBox={updateTask.box} setTaskBox={setUpdateTask} />
-          {updateTask.box === "calender" && (
+          {updateTask.box === "calender" && !sub && (
             <DateSelect date={updateTask.date} setAddDate={setUpdateTask} />
           )}
         </Group>
@@ -71,8 +72,8 @@ const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
           </Button>
           <Button
             onClick={() => {
-              sub
-                ? mutate(updateSubTask(task.id, updateTask.id, updateTask))
+              sub && id
+                ? mutate(updateSubTask(id, updateTask.id, updateTask))
                 : mutate(updateTaskAPI(updateTask.id, updateTask));
               task.box === "inbox" &&
                 updateTask.box === "nextAction" &&

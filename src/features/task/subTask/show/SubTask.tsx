@@ -46,16 +46,17 @@ const SubTask = React.memo(({ task, mutate, id }: props) => {
               setTasks={setTasks}
               mutate={mutate}
               sub={true}
+              id={id}
             />
           ) : (
             <>
               {
-                <Stack key={task.id}>
+                <Stack spacing={0} key={task.id}>
                   <Group
                     position="apart"
                     style={{
-                      marginTop: 10,
-                      // marginBottom: 10,
+                      marginTop: 0,
+                      marginBottom: 8,
                       marginRight: 30,
                       marginLeft: 40,
                     }}
@@ -92,23 +93,23 @@ const SubTask = React.memo(({ task, mutate, id }: props) => {
                       </Group>
                     )}
                   </Group>
-                  {tasks.weight === 0 &&
-                  (tasks.due_date === "" || tasks.due_date === "期日") ? (
-                    <></>
-                  ) : (
-                    <>
-                      <Group style={{ marginLeft: 30 }}>
-                        {tasks.weight !== 0 && <Badge>{tasks?.weight}</Badge>}
-                        {tasks.due_date && tasks.due_date !== "期日" && (
-                          <Badge>{tasks?.due_date}</Badge>
-                        )}
-                      </Group>
-                    </>
-                  )}
 
-                  <Text color="gray" style={{ marginLeft: 70 }}>
-                    {tasks.memo}
-                  </Text>
+                  <>
+                    <Group style={{ marginLeft: 100 }}>
+                      {tasks.weight !== 0 && (
+                        <Badge color="indigo">{tasks?.weight}</Badge>
+                      )}
+                      {tasks.due_date && tasks.due_date !== "期日" && (
+                        <Badge color="indigo">{tasks?.due_date}</Badge>
+                      )}
+                    </Group>
+                  </>
+
+                  {tasks.memo && (
+                    <Text color="gray" style={{ marginLeft: 70 }}>
+                      {tasks.memo}
+                    </Text>
+                  )}
                 </Stack>
               }
             </>
