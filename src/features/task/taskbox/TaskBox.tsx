@@ -3,12 +3,12 @@ import { useElementSize } from "@mantine/hooks";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useRecoilValue } from "recoil";
-import { getDoTasks } from "../../api";
-import { stateAtom } from "../../atoms/stateAtom";
-import { selectUser } from "../../redux/userSlice";
-import { boxType, task, user } from "../../Types";
-import AddTask from "../task/add/AddTask";
-import Task from "../task/show/Task";
+import { getDoTasks } from "../../../api";
+import { stateAtom } from "../../../atoms/stateAtom";
+import { selectUser } from "../../../redux/userSlice";
+import { boxType, task, user } from "../../../Types";
+import AddTask from "../add/AddTask";
+import Task from "../show/Task";
 
 type props = { box: "inbox" | "someday" | "nextAction" };
 type boxName = Omit<

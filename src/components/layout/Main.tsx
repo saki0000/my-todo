@@ -4,7 +4,7 @@ import React from "react";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
 import Calender from "../../features/calendar/Calender";
-import TaskBox from "../../features/taskbox/TaskBox";
+import TaskBox from "../../features/task/taskbox/TaskBox";
 import { boxType, stateType } from "../../Types";
 
 type componentsType = {
@@ -29,7 +29,7 @@ const Main: React.FC = () => {
 
   return (
     <>
-      <Container style={{ height: "100%" }}>
+      <Container className="pt-5" style={{ height: "100%" }}>
         <Grid style={{ height: "100%" }}>
           <Grid.Col span={8}>
             <Paper

@@ -10,14 +10,15 @@ import { useSetState } from "@mantine/hooks";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useRecoilState } from "recoil";
-import { updateSubTask, updateTaskAPI } from "../../api";
-import { renAtom } from "../../atoms/atom";
-import { selectSeparate } from "../../redux/counterSlice";
-import { task } from "../../Types";
-import Box from "./Box";
-import DateSelect from "./Date";
-import DueDate from "./DueDate";
-import Weight from "./Weight";
+import { updateSubTask, updateTaskAPI } from "../../../../api";
+import { renAtom } from "../../../../atoms/atom";
+import { separateAtom } from "../../../../atoms/openAtom";
+import { selectSeparate } from "../../../../redux/counterSlice";
+import { task } from "../../../../Types";
+import Box from "../../parts/Box";
+import DateSelect from "../../parts/Date";
+import DueDate from "../../parts/DueDate";
+import Weight from "../../parts/Weight";
 
 type taskType = task & { id: number };
 type props = {
@@ -30,6 +31,7 @@ type props = {
 const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
   const [updateTask, setUpdateTask] = useSetState<taskType>(task);
   const [ren, setRen] = useRecoilState(renAtom);
+  const [modal, setModal] = useRecoilState(separateAtom);
   const taskId: number = useSelector(selectSeparate);
   return (
     <div style={{ margin: 30 }}>
@@ -68,6 +70,9 @@ const UpdateTask = ({ task, setOpen, setTasks, mutate, sub }: props) => {
           </Button>
           <Button
             onClick={() => {
+              task.box === "inbox" &&
+                updateTask.box === "nextAction" &&
+                setModal({ id: task.id, open: true });
               setTasks(updateTask);
               sub
                 ? mutate(updateSubTask(taskId, updateTask.id, updateTask))

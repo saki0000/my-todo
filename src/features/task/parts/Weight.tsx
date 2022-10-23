@@ -1,6 +1,6 @@
-import { Text, Badge, Menu, HoverCard } from "@mantine/core";
+import { Badge, HoverCard, Menu, Text } from "@mantine/core";
 import React, { useState } from "react";
-import { task } from "../../Types";
+import { task } from "../../../Types";
 
 type props = { weight?: number | string; setAddWeight: (arg: task) => void };
 const Weight = React.memo(({ weight, setAddWeight }: props) => {

@@ -14,10 +14,10 @@ import { useSelector } from "react-redux";
 import { addTask } from "../../../api";
 import { selectUser } from "../../../redux/userSlice";
 import { boxType, DateFormat, task, user } from "../../../Types";
-import Box from "../../updateTask/Box";
-import DateSelect from "../../updateTask/Date";
-import DueDate from "../../updateTask/DueDate";
-import Weight from "../../updateTask/Weight";
+import Box from "../parts/Box";
+import DateSelect from "../parts/Date";
+import DueDate from "../parts/DueDate";
+import Weight from "../parts/Weight";
 
 type props = { box: boxType; date?: DateFormat | string; mutate?: any };
 type stateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;

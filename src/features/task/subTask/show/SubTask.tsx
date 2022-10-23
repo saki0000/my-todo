@@ -2,17 +2,16 @@ import { ActionIcon, Badge, Checkbox, Group, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import React, { useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
-import { useSelector } from "react-redux";
 import { useRecoilValue } from "recoil";
-import { deleteSubTask } from "../../api";
-import { stateAtom } from "../../atoms/stateAtom";
-import { selectSeparate } from "../../redux/counterSlice";
-import { task } from "../../Types";
-import UpdateTask from "../updateTask/UpdateTask";
+import { deleteSubTask } from "../../../../api";
+import { separateAtom } from "../../../../atoms/openAtom";
+import { stateAtom } from "../../../../atoms/stateAtom";
+import { task } from "../../../../Types";
+import UpdateTask from "../../update/layout/UpdateTask";
 
 type props = { task: task & { id: number }; mutate: any };
 const SubTask = React.memo(({ task, mutate }: props) => {
-  const taskId = useSelector(selectSeparate);
+  const modalValue = useRecoilValue(separateAtom);
   const [tasks, setTasks] = useSetState(task);
   const [open, setOpen] = useState(false);
   const state = useRecoilValue(stateAtom);
@@ -56,7 +55,7 @@ const SubTask = React.memo(({ task, mutate }: props) => {
                 </ActionIcon>
                 <ActionIcon
                   onClick={() => {
-                    mutate(deleteSubTask(taskId, task.id));
+                    mutate(deleteSubTask(modalValue.id, task.id));
                   }}
                 >
                   <AiOutlineDelete></AiOutlineDelete>

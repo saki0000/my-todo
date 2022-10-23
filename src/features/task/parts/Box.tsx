@@ -1,6 +1,6 @@
-import { HoverCard, Menu, Badge, Text } from "@mantine/core";
-import React, { useState } from "react";
-import { boxType, task } from "../../Types";
+import { Badge, HoverCard, Menu, Text } from "@mantine/core";
+import { useState } from "react";
+import { boxType, task } from "../../../Types";
 
 // eslint-disable-next-line no-empty-pattern
 type box = { taskBox?: boxType; setTaskBox: (arg: task) => void };
