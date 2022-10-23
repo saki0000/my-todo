@@ -135,19 +135,15 @@ const Task = React.memo(({ task, mutate }: props) => {
                 </Stack>
 
                 {/* subtask */}
-                {state.first &&
-                  tasks?.subtasks?.length !== 0 &&
-                  tasks?.subtasks?.map((task: taskType) => (
-                    <>
-                      <Stack
-                        align="stretch"
-                        justify=""
-                        style={{ width: "100%" }}
-                      >
+                {state.first && tasks?.subtasks?.length !== 0 && (
+                  <Stack align="stretch" justify="" style={{ width: "100%" }}>
+                    {tasks?.subtasks?.map((task: taskType) => (
+                      <>
                         <SubTask id={tasks.id} task={task} mutate={mutate} />
-                      </Stack>
-                    </>
-                  ))}
+                      </>
+                    ))}
+                  </Stack>
+                )}
               </Stack>
             </>
           )}
