@@ -1,8 +1,7 @@
-import { Text, Badge, Menu, HoverCard } from "@mantine/core";
+import { Badge, HoverCard, Menu, Text } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
-import React from "react";
-import { useEffect, useState } from "react";
-import { DateFormat, task } from "../../Types";
+import React, { useEffect, useState } from "react";
+import { DateFormat, task } from "../../../Types";
 type props = {
   dueDate?: DateFormat | string;
   setAddDate: (arg: task) => void;
@@ -26,7 +25,7 @@ const DueDate = React.memo(({ dueDate, setAddDate }: props) => {
         <HoverCard.Target>
           <Menu position="bottom">
             <Menu.Target>
-              <Badge>{dueDate}</Badge>
+              <Badge>{dueDate || "期日"}</Badge>
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Label>

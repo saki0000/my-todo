@@ -1,13 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import {
-  ActionIcon,
-  Badge,
-  Checkbox,
-  Group,
-  Modal,
-  Stack,
-  Text,
-} from "@mantine/core";
+import { ActionIcon, Badge, Checkbox, Group, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import {
@@ -16,14 +8,15 @@ import {
   AiOutlinePartition,
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
-import { useRecoilValue } from "recoil";
-import { deleteTask, updateTaskAPI } from "../../api";
-import { stateAtom } from "../../atoms/stateAtom";
-import { separate } from "../../features/counterSlice";
-import { task } from "../../Types";
-import Separate from "../templates/Separate";
-import UpdateTask from "../templates/UpdateTask";
-import SubTask from "./SubTask";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { deleteTask, updateTaskAPI } from "../../../api";
+import { separateAtom } from "../../../atoms/openAtom";
+import { stateAtom } from "../../../atoms/stateAtom";
+import { separate } from "../../../redux/counterSlice";
+import { task } from "../../../Types";
+import Separate from "../subTask/separate/Separate";
+import SubTask from "../subTask/show/SubTask";
+import UpdateTask from "../update/layout/UpdateTask";
 
 type taskType = task & { id: number };
 type props = {
@@ -35,7 +28,7 @@ const Task = React.memo(({ task, done, mutate }: props) => {
   const [tasks, setTasks] = useSetState<taskType>(task);
   const [open, setOpen] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
-  const [modal, setModal] = useState<boolean>(false);
+  const [modal, setModal] = useRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -69,15 +62,8 @@ const Task = React.memo(({ task, done, mutate }: props) => {
         <>
           {tasks === undefined || checked || (
             <>
-              <Modal
-                onClose={() => {
-                  setModal(false);
-                }}
-                opened={modal}
-                size="lg"
-              >
-                <Separate dataMutate={mutate} />
-              </Modal>
+              <Separate dataMutate={mutate} />
+
               <Stack key={task.id}>
                 <Stack
                   style={{
@@ -104,12 +90,14 @@ const Task = React.memo(({ task, done, mutate }: props) => {
 
                       <Text>{tasks?.name}</Text>
                     </Group>
+
+                    {/* buttons */}
                     {state.first === task.box && (
                       <Group>
                         <ActionIcon
                           onClick={() => {
                             dispatch(separate(tasks.id));
-                            setModal(true);
+                            setModal({ ...modal, open: true });
                           }}
                         >
                           <AiOutlinePartition></AiOutlinePartition>
@@ -132,6 +120,7 @@ const Task = React.memo(({ task, done, mutate }: props) => {
                     )}
                   </Group>
 
+                  {/* badges */}
                   {state.first === task.box &&
                   tasks.weight !== 0 &&
                   tasks.due_date !== "" &&
@@ -139,10 +128,10 @@ const Task = React.memo(({ task, done, mutate }: props) => {
                     <>
                       <Group style={{ marginLeft: 30 }}>
                         {tasks.weight !== 0 && (
-                          <Badge>重さ:{tasks?.weight}/10</Badge>
+                          <Badge color="indigo">優先度:{tasks?.weight}</Badge>
                         )}
                         {tasks.due_date && tasks.due_date !== "期日" && (
-                          <Badge>期日:{tasks?.due_date}</Badge>
+                          <Badge color="indigo">期日:{tasks?.due_date}</Badge>
                         )}
                       </Group>
                     </>
@@ -150,6 +139,7 @@ const Task = React.memo(({ task, done, mutate }: props) => {
                     <></>
                   )}
 
+                  {/* memo */}
                   {tasks.memo && (
                     <Text color="gray" style={{ marginLeft: 30 }}>
                       {tasks?.memo}
@@ -157,6 +147,7 @@ const Task = React.memo(({ task, done, mutate }: props) => {
                   )}
                 </Stack>
 
+                {/* subtask */}
                 {state.first &&
                   tasks?.subtasks?.length !== 0 &&
                   tasks?.subtasks?.map((task: taskType) => (

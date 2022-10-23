@@ -11,9 +11,9 @@ import { useSetState } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import { addTask } from "../../api";
-import { selectUser } from "../../features/userSlice";
-import { boxType, DateFormat, task, user } from "../../Types";
+import { addTask } from "../../../api";
+import { selectUser } from "../../../redux/userSlice";
+import { boxType, DateFormat, task, user } from "../../../Types";
 import Box from "../parts/Box";
 import DateSelect from "../parts/Date";
 import DueDate from "../parts/DueDate";
@@ -85,6 +85,9 @@ const AddTask = ({ box, date, mutate }: props) => {
               onClick={() => {
                 setOpen(true);
               }}
+              variant="light"
+              color="red"
+              radius="md"
             >
               キャンセル
             </Button>
@@ -94,6 +97,9 @@ const AddTask = ({ box, date, mutate }: props) => {
                 mutate(addTask(addTaskData));
                 setOpen(true);
               }}
+              variant="light"
+              color="indigo"
+              radius="md"
             >
               追加
             </Button>

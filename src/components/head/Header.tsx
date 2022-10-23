@@ -1,12 +1,10 @@
-import { ActionIcon, Button, Group, Text } from "@mantine/core";
+import { Button, Group, Text } from "@mantine/core";
 import React from "react";
-import { AiOutlineBars } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
-import { logout, selectUser } from "../../features/userSlice";
+import { logout, selectUser } from "../../redux/userSlice";
 import { user } from "../../Types";
 
-type props = { setOpened: (arg: boolean) => void; opened: boolean };
-const Head = React.memo(({ setOpened, opened }: props) => {
+const Head = React.memo(() => {
   const dispatch = useDispatch();
   const user: user = useSelector(selectUser);
   return (
@@ -15,22 +13,19 @@ const Head = React.memo(({ setOpened, opened }: props) => {
         align="center"
         position="apart"
         style={{ marginRight: 30, marginLeft: 30, height: 70 }}
+        className="bg-indigo-200"
       >
         <Group>
-          <ActionIcon
-            onClick={() => {
-              setOpened(!opened);
-            }}
-          >
-            <AiOutlineBars></AiOutlineBars>
-          </ActionIcon>
-
+          <p className="font-bold text-2xl text-white">GHD APP</p>
           <Text>{user.displayName}</Text>
         </Group>
         <Button
           onClick={() => {
             dispatch(logout());
           }}
+          variant="light"
+          color="indigo"
+          radius="md"
         >
           Logout
         </Button>

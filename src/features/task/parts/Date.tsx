@@ -1,8 +1,7 @@
-import { Text, Badge, Menu, HoverCard } from "@mantine/core";
+import { Badge, HoverCard, Menu, Text } from "@mantine/core";
 import { Calendar } from "@mantine/dates";
-import React from "react";
-import { useEffect, useState } from "react";
-import { DateFormat, task } from "../../Types";
+import React, { useEffect, useState } from "react";
+import { DateFormat, task } from "../../../Types";
 
 type props = { date?: DateFormat | string; setAddDate: (arg: task) => void };
 const DateSelect = React.memo(({ date, setAddDate }: props) => {

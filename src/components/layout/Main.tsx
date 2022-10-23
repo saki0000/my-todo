@@ -1,10 +1,10 @@
 import { Container, Grid, Paper, Stack } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
-import Calender from "./Calender";
 import React from "react";
-import TaskBox from "./TaskBox";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
+import Calender from "../../features/calendar/Calender";
+import TaskBox from "../../features/task/taskbox/TaskBox";
 import { boxType, stateType } from "../../Types";
 
 type componentsType = {
@@ -29,10 +29,16 @@ const Main: React.FC = () => {
 
   return (
     <>
-      <Container style={{ height: "100%" }}>
+      <Container className="pt-5" style={{ height: "100%" }}>
         <Grid style={{ height: "100%" }}>
           <Grid.Col span={8}>
-            <Paper p="xl" shadow="lg" style={{ height: "100%" }}>
+            <Paper
+              key={state.first}
+              p="xl"
+              shadow="lg"
+              style={{ height: "100%" }}
+              radius="md"
+            >
               {components[state.first]}
             </Paper>
           </Grid.Col>
@@ -42,9 +48,11 @@ const Main: React.FC = () => {
                 <>
                   {key[0] !== "first" ? (
                     <Paper
+                      key={key[0]}
                       p="md"
-                      shadow="lg"
+                      shadow="sm"
                       style={{ height: "30%" }}
+                      radius="md"
                       onClick={() => {
                         setState({ first: key[1], [key[0]]: state.first });
                         setStates({ first: key[1] });

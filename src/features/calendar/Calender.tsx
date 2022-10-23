@@ -1,11 +1,10 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Stack, Divider, ScrollArea, Text } from "@mantine/core";
+import { Divider, ScrollArea, Stack, Text } from "@mantine/core";
 import { useElementSize, useSetState } from "@mantine/hooks";
 import React from "react";
-import useCalenderHook from "../hooks/CalenderHook";
-import CalendarTask from "../parts/CalendarTask";
-// import { stateType, user } from "../../Types";
+import CalendarTask from "./CalendarTask";
+import useCalenderHook from "./hooks/CalenderHook";
 
 const Calender = React.memo(() => {
   const { ref, height } = useElementSize();
@@ -33,7 +32,7 @@ const Calender = React.memo(() => {
             /{calendar.second}
           </span>
         </Text>
-        <Divider />
+        <Divider className="border-indigo-100" />
         <div style={{ height: "100%" }} ref={ref}>
           <ScrollArea.Autosize maxHeight={height}>
             {calendar.first === "カレンダー" ? (
@@ -41,17 +40,17 @@ const Calender = React.memo(() => {
                 {dateTask.map((date: string) => (
                   <div key={date}>
                     <Text style={{ marginBottom: 10 }}>{date}</Text>
-                    <Divider />
+                    <Divider className="border-indigo-100" />
                     <CalendarTask date={date} />
                   </div>
                 ))}
-                <Divider />
+                <Divider className="border-indigo-100" />
               </>
             ) : (
               <>
                 <CalendarTask date={today.toJSON().split("T")[0]} />
 
-                <Divider />
+                <Divider className="border-indigo-100" />
               </>
             )}
           </ScrollArea.Autosize>
