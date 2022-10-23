@@ -1,10 +1,9 @@
 import { MantineProvider } from "@mantine/core";
-import React from "react";
 import { useSelector } from "react-redux";
 import "./App.css";
-import Login from "./components/views/Login";
-import Logined from "./components/views/Logined";
-import { selectUser } from "./features/userSlice";
+import Logined from "./components/layout/Logined";
+import Login from "./features/login/Login";
+import { selectUser } from "./redux/userSlice";
 
 function App() {
   const user = useSelector(selectUser);

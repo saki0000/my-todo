@@ -13,9 +13,9 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../../features/userSlice";
 import { auth } from "../../firebase";
-import Password from "../parts/Password";
+import { login } from "../../redux/userSlice";
+import Password from "./Password";
 
 const Login = () => {
   const [register, setRegister] = useState<boolean>(false);

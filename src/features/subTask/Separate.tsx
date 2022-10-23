@@ -3,10 +3,10 @@ import { useElementSize } from "@mantine/hooks";
 import React from "react";
 import { useSelector } from "react-redux";
 import { getTask } from "../../api";
-import { selectSeparate } from "../../features/counterSlice";
+import { selectSeparate } from "../../redux/counterSlice";
 import { task } from "../../Types";
-import SubTask from "../parts/SubTask";
 import AddSubTask from "./AddSubTask";
+import SubTask from "./SubTask";
 
 const Separate = React.memo(({ dataMutate }: any) => {
   const { ref, height } = useElementSize();

@@ -10,14 +10,14 @@ import { useSetState } from "@mantine/hooks";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useRecoilState } from "recoil";
-import { renAtom } from "../../atoms/atom";
-import { selectSeparate } from "../../features/counterSlice";
-import { task } from "../../Types";
-import Box from "../parts/Box";
-import DateSelect from "../parts/Date";
-import DueDate from "../parts/DueDate";
-import Weight from "../parts/Weight";
 import { updateSubTask, updateTaskAPI } from "../../api";
+import { renAtom } from "../../atoms/atom";
+import { selectSeparate } from "../../redux/counterSlice";
+import { task } from "../../Types";
+import Box from "./Box";
+import DateSelect from "./Date";
+import DueDate from "./DueDate";
+import Weight from "./Weight";
 
 type taskType = task & { id: number };
 type props = {

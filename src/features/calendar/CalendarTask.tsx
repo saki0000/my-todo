@@ -1,11 +1,10 @@
 import { Loader } from "@mantine/core";
-import React from "react";
 import { useSelector } from "react-redux";
 import { dateTask } from "../../api";
-import { selectUser } from "../../features/userSlice";
+import { selectUser } from "../../redux/userSlice";
 import { task } from "../../Types";
-import AddTask from "../templates/AddTask";
-import Task from "./Task";
+import AddTask from "../task/add/AddTask";
+import Task from "../task/show/Task";
 type taskType = task & { id: number };
 const CalendarTask = ({ date }: { date: string }) => {
   const user = useSelector(selectUser);

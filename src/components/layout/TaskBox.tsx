@@ -5,10 +5,10 @@ import { useSelector } from "react-redux";
 import { useRecoilValue } from "recoil";
 import { getDoTasks } from "../../api";
 import { stateAtom } from "../../atoms/stateAtom";
-import { selectUser } from "../../features/userSlice";
+import AddTask from "../../features/task/add/AddTask";
+import Task from "../../features/task/show/Task";
+import { selectUser } from "../../redux/userSlice";
 import { boxType, task, user } from "../../Types";
-import Task from "../parts/Task";
-import AddTask from "./AddTask";
 
 type props = { box: "inbox" | "someday" | "nextAction" };
 type boxName = Omit<

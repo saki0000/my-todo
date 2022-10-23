@@ -3,8 +3,8 @@ import { useSetState } from "@mantine/hooks";
 import React from "react";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
+import Calender from "../../features/calendar/Calender";
 import { boxType, stateType } from "../../Types";
-import Calender from "./Calender";
 import TaskBox from "./TaskBox";
 
 type componentsType = {

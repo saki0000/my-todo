@@ -12,10 +12,10 @@ import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { addSubTask } from "../../api";
-import { selectSeparate } from "../../features/counterSlice";
+import { selectSeparate } from "../../redux/counterSlice";
 import { task } from "../../Types";
-import DueDate from "../parts/DueDate";
-import Weight from "../parts/Weight";
+import DueDate from "../updateTask/DueDate";
+import Weight from "../updateTask/Weight";
 
 type props = { task: task; mutate: any };
 const AddSubTask = ({ task, mutate }: props) => {

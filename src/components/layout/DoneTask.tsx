@@ -7,12 +7,11 @@ import {
   Text,
 } from "@mantine/core";
 import { useElementSize } from "@mantine/hooks";
-import React from "react";
 import { useSelector } from "react-redux";
 import { getDoneTasks } from "../../api";
-import { selectUser } from "../../features/userSlice";
+import Task from "../../features/task/show/Task";
+import { selectUser } from "../../redux/userSlice";
 import { task, user } from "../../Types";
-import Task from "../parts/Task";
 
 const DoneTask = () => {
   // const doneTasks = useGetDoneTask();

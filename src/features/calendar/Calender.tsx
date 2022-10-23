@@ -3,8 +3,8 @@
 import { Divider, ScrollArea, Stack, Text } from "@mantine/core";
 import { useElementSize, useSetState } from "@mantine/hooks";
 import React from "react";
-import useCalenderHook from "../hooks/CalenderHook";
-import CalendarTask from "../parts/CalendarTask";
+import CalendarTask from "./CalendarTask";
+import useCalenderHook from "./hooks/CalenderHook";
 
 const Calender = React.memo(() => {
   const { ref, height } = useElementSize();

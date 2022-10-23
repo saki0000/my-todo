@@ -17,13 +17,13 @@ import {
 } from "react-icons/ai";
 import { useDispatch } from "react-redux";
 import { useRecoilValue } from "recoil";
-import { deleteTask, updateTaskAPI } from "../../api";
-import { stateAtom } from "../../atoms/stateAtom";
-import { separate } from "../../features/counterSlice";
-import { task } from "../../Types";
-import Separate from "../templates/Separate";
-import UpdateTask from "../templates/UpdateTask";
-import SubTask from "./SubTask";
+import { deleteTask, updateTaskAPI } from "../../../api";
+import { stateAtom } from "../../../atoms/stateAtom";
+import { separate } from "../../../redux/counterSlice";
+import { task } from "../../../Types";
+import Separate from "../../subTask/Separate";
+import SubTask from "../../subTask/SubTask";
+import UpdateTask from "../../updateTask/UpdateTask";
 
 type taskType = task & { id: number };
 type props = {

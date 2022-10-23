@@ -1,15 +1,14 @@
 import { ActionIcon, Badge, Checkbox, Group, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
 import { useSelector } from "react-redux";
 import { useRecoilValue } from "recoil";
 import { deleteSubTask } from "../../api";
 import { stateAtom } from "../../atoms/stateAtom";
-import { selectSeparate } from "../../features/counterSlice";
+import { selectSeparate } from "../../redux/counterSlice";
 import { task } from "../../Types";
-import UpdateTask from "../templates/UpdateTask";
+import UpdateTask from "../updateTask/UpdateTask";
 
 type props = { task: task & { id: number }; mutate: any };
 const SubTask = React.memo(({ task, mutate }: props) => {
