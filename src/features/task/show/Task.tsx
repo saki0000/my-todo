@@ -62,7 +62,7 @@ const Task = React.memo(({ task, mutate }: props) => {
         <>
           {tasks === undefined || checked || (
             <>
-              <Separate />
+              <Separate dataMutate={mutate} />
               <Stack key={task.id}>
                 <Stack
                   style={{
