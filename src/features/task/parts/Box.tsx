@@ -41,6 +41,13 @@ const Box = ({ taskBox, setTaskBox }: box) => {
               >
                 <Text>カレンダー</Text>
               </Menu.Item>
+              <Menu.Item
+                onClick={() => {
+                  setTaskBox({ box: "someday" });
+                }}
+              >
+                <Text>Someday</Text>
+              </Menu.Item>
             </Menu.Dropdown>
           </Menu>
         </HoverCard.Target>

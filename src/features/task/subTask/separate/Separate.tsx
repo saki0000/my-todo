@@ -1,5 +1,4 @@
-import { Divider, Modal, ScrollArea, Stack } from "@mantine/core";
-import { useElementSize } from "@mantine/hooks";
+import { Divider, Modal, Stack, useMantineTheme } from "@mantine/core";
 import React from "react";
 import { useRecoilState } from "recoil";
 import { getTask } from "../../../../api";
@@ -9,9 +8,9 @@ import AddSubTask from "../add/AddSubTask";
 import SubTask from "../show/SubTask";
 
 const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
-  const { ref, height } = useElementSize();
   const [modal, setOpen] = useRecoilState(separateAtom);
   const { data, isLoading, error, mutate } = getTask(modal.id);
+  const theme = useMantineTheme();
 
   if (isLoading) return <div></div>;
   if (error) return <div>error</div>;
@@ -24,14 +23,18 @@ const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
         }}
         opened={modal.open}
         size="lg"
+        overlayColor={
+          theme.colorScheme === "dark"
+            ? theme.colors.dark[9]
+            : theme.colors.gray[2]
+        }
+        overlayOpacity={0.2}
+        overlayBlur={1}
       >
         <Stack>
           <p className="text-xl ml-4">{data.name}</p>
 
           <Divider />
-          <div style={{ height: "100%" }} ref={ref}>
-            <ScrollArea.Autosize maxHeight={height}></ScrollArea.Autosize>
-          </div>
           {data.subtasks.length === 0 ||
             data.subtasks.map((task: task & { id: number }) => (
               <SubTask id={modal.id} task={task} mutate={dataMutate} />
