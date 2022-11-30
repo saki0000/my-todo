@@ -9,7 +9,6 @@ import { selectUser } from "../../../redux/userSlice";
 import { boxType, task, user } from "../../../Types";
 import AddTask from "../add/AddTask";
 import Task from "../show/Task";
-import Separate from "../subTask/separate/Separate";
 
 type props = { box: "inbox" | "someday" | "nextAction" };
 type boxName = Omit<
@@ -30,7 +29,7 @@ const TaskBox = React.memo(({ box }: props) => {
   };
   return (
     <>
-      <Separate dataMutate={mutate} />
+      {/* <Separate dataMutate={mutate} /> */}
       <Stack style={{ height: "100%" }}>
         <p className="text-xl  my-2">{boxes[box]}</p>
         <Divider className="border-indigo-100" />
