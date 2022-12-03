@@ -14,6 +14,7 @@ const Weight = React.memo(({ weight, setAddWeight }: props) => {
             </Menu.Target>
             <Menu.Dropdown>
               <NativeSelect
+                value={weight}
                 onChange={(e) => {
                   setAddWeight({ weight: e.currentTarget.value });
                 }}
