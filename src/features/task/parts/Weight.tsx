@@ -1,8 +1,8 @@
-import { Badge, HoverCard, Menu, NumberInput, Text } from "@mantine/core";
+import { Badge, HoverCard, Menu, NativeSelect, Text } from "@mantine/core";
 import React from "react";
 import { task } from "../../../Types";
 
-type props = { weight?: number; setAddWeight: (arg: task) => void };
+type props = { weight?: string | number; setAddWeight: (arg: task) => void };
 const Weight = React.memo(({ weight, setAddWeight }: props) => {
   return (
     <div>
@@ -13,11 +13,11 @@ const Weight = React.memo(({ weight, setAddWeight }: props) => {
               <Badge color="indigo">{weight || "priority"}</Badge>
             </Menu.Target>
             <Menu.Dropdown>
-              <NumberInput
-                value={weight}
-                onChange={(val) => setAddWeight({ weight: val })}
-                max={10}
-                min={0}
+              <NativeSelect
+                onChange={(e) => {
+                  setAddWeight({ weight: e.currentTarget.value });
+                }}
+                data={["高", "中", "低"]}
               />
             </Menu.Dropdown>
           </Menu>
