@@ -4,8 +4,8 @@ import React from "react";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
 import Calender from "../../features/calendar/Calender";
-import TaskBox from "../../features/task/taskbox/TaskBox";
 import { boxType, stateType } from "../../Types";
+import TaskBox from "./taskbox/TaskBox";
 
 type componentsType = {
   [k in boxType]: JSX.Element;

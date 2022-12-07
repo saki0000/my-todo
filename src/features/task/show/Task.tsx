@@ -23,6 +23,7 @@ type props = {
 };
 const Task = React.memo(({ task, mutate }: props) => {
   const [tasks, setTasks] = useSetState<taskType>(task);
+  const [diffDay, setDiffDay] = useState<Number>();
   const [open, setOpen] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
   const setModal = useSetRecoilState(separateAtom);
@@ -44,7 +45,12 @@ const Task = React.memo(({ task, mutate }: props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked]);
   useEffect(() => {
-    setTasks(task);
+    if (task.created_at) {
+      const createdAtDate = new Date(task.created_at);
+      const today = new Date();
+      const diffTime = today.getTime() - createdAtDate.getTime();
+      setDiffDay(Math.floor(diffTime / (1000 * 60 * 60 * 24)));
+    }
   }, [task]);
   return (
     <>
@@ -116,7 +122,7 @@ const Task = React.memo(({ task, mutate }: props) => {
                   {/* badges */}
                   <>
                     <Group style={{ marginLeft: 28 }} className="pt-2">
-                      {tasks.weight !== 0 && (
+                      {tasks.weight && (
                         <Badge color="indigo">優先度:{tasks?.weight}</Badge>
                       )}
                       {tasks.due_date && tasks.due_date !== "期日" && (
@@ -146,6 +152,13 @@ const Task = React.memo(({ task, mutate }: props) => {
                       </>
                     ))}
                   </Stack>
+                )}
+                {tasks.box === "inbox" && diffDay && diffDay > 14 ? (
+                  <>
+                    <Badge color="red">タスクを振り分けてください</Badge>
+                  </>
+                ) : (
+                  <></>
                 )}
               </Stack>
             </>

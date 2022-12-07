@@ -30,7 +30,7 @@ const AddTask = ({ box, date, mutate }: props) => {
     box: box,
     date: date || "",
     due_date: "期日",
-    weight: 0,
+    weight: "",
     subtasks: [],
     statement: false,
     memo: "",
