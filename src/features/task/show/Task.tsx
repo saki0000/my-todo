@@ -12,7 +12,6 @@ import { deleteTask, updateTaskAPI } from "../../../api";
 import { separateAtom } from "../../../atoms/openAtom";
 import { stateAtom } from "../../../atoms/stateAtom";
 import { task } from "../../../Types";
-import Separate from "../subTask/separate/Separate";
 import SubTask from "../subTask/show/SubTask";
 import UpdateTask from "../update/layout/UpdateTask";
 
@@ -68,7 +67,7 @@ const Task = React.memo(({ task, mutate }: props) => {
         <>
           {tasks === undefined || checked || (
             <>
-              <Separate dataMutate={mutate} />
+              {/* <Separate dataMutate={mutate} /> */}
               <Stack key={task.id}>
                 <Stack
                   style={{

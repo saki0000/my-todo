@@ -1,4 +1,4 @@
-import { Divider, Modal, Stack, useMantineTheme } from "@mantine/core";
+import { Divider, Modal, Stack } from "@mantine/core";
 import React from "react";
 import { useRecoilState } from "recoil";
 import { getTask } from "../../../../api";
@@ -10,7 +10,6 @@ import SubTask from "../show/SubTask";
 const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
   const [modal, setOpen] = useRecoilState(separateAtom);
   const { data, isLoading, error, mutate } = getTask(modal.id);
-  const theme = useMantineTheme();
 
   if (isLoading) return <div></div>;
   if (error) return <div>error</div>;
@@ -23,11 +22,6 @@ const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
         }}
         opened={modal.open}
         size="lg"
-        overlayColor={
-          theme.colorScheme === "dark"
-            ? theme.colors.dark[9]
-            : theme.colors.gray[2]
-        }
         overlayOpacity={0.2}
         overlayBlur={1}
       >
