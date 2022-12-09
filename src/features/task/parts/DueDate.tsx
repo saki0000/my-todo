@@ -38,7 +38,7 @@ const DueDate = React.memo(({ dueDate, setAddDate }: props) => {
         zIndex={1}
       >
         <HoverCard.Target>
-          <Badge color="indigo" onClick={() => setOpen(true)}>
+          <Badge color="brown" onClick={() => setOpen(true)}>
             {dueDate || "期日"}
           </Badge>
         </HoverCard.Target>

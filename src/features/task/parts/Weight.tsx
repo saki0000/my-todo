@@ -10,7 +10,7 @@ const Weight = React.memo(({ weight, setAddWeight }: props) => {
         <HoverCard.Target>
           <Menu>
             <Menu.Target>
-              <Badge color="indigo">{weight || "priority"}</Badge>
+              <Badge color="brown">{weight || "priority"}</Badge>
             </Menu.Target>
             <Menu.Dropdown>
               <NativeSelect

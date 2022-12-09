@@ -37,7 +37,7 @@ const DateSelect = React.memo(({ date, setAddDate }: props) => {
         zIndex={1}
       >
         <HoverCard.Target>
-          <Badge color="indigo" onClick={() => setOpen(true)}>
+          <Badge color="brown" onClick={() => setOpen(true)}>
             {date || "日付"}
           </Badge>
         </HoverCard.Target>

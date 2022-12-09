@@ -32,7 +32,7 @@ const TaskBox = React.memo(({ box }: props) => {
       {/* <Separate dataMutate={mutate} /> */}
       <Stack style={{ height: "100%" }}>
         <p className="text-xl  my-2">{boxes[box]}</p>
-        <Divider className="border-indigo-100" />
+        <Divider className="border-brown" />
         <div style={{ height: "100%" }} ref={ref}>
           <ScrollArea.Autosize maxHeight={height} className="h-full">
             {data && data.length !== 0 ? (
@@ -42,7 +42,9 @@ const TaskBox = React.memo(({ box }: props) => {
                 </div>
               ))
             ) : (
-              <>{isLoading || first.first === box || <Text>No Task</Text>}</>
+              <div className="my-4">
+                {isLoading || first.first === box || <Text>No Task</Text>}
+              </div>
             )}
             {isLoading && (
               <div style={{ marginLeft: 40, marginTop: 10 }}>
@@ -50,10 +52,10 @@ const TaskBox = React.memo(({ box }: props) => {
               </div>
             )}
             {error && <div>error</div>}
-            {first.first === box && (
+            {(box === "inbox" || first.first === box) && (
               <>
                 <AddTask box={box} mutate={mutate} />
-                <Divider className="border-indigo-100" />
+                {/* <Divider className="border-brown" /> */}
               </>
             )}
           </ScrollArea.Autosize>

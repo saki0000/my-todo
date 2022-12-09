@@ -17,7 +17,7 @@ const Box = ({ taskBox, setTaskBox }: box) => {
         <HoverCard.Target>
           <Menu position="bottom">
             <Menu.Target>
-              <Badge color="indigo">{taskBox || "inbox"}</Badge>
+              <Badge color="brown">{taskBox || "inbox"}</Badge>
             </Menu.Target>
             <Menu.Dropdown>
               <Menu.Item

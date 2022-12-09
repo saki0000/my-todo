@@ -84,7 +84,7 @@ const UpdateTask = ({ task, setOpen, setTasks, mutate, sub, id }: props) => {
               setOpen(false);
             }}
             variant="light"
-            color="indigo"
+            color="brown"
             radius="md"
           >
             変更

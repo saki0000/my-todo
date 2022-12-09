@@ -91,7 +91,7 @@ const Task = React.memo(({ task, mutate }: props) => {
                     </Group>
 
                     {/* buttons */}
-                    {state.first === task.box && (
+                    {(task.box === "inbox" || state.first === task.box) && (
                       <Group>
                         <ActionIcon
                           onClick={() => {
@@ -122,10 +122,10 @@ const Task = React.memo(({ task, mutate }: props) => {
                   <>
                     <Group style={{ marginLeft: 28 }} className="pt-2">
                       {tasks.weight && (
-                        <Badge color="indigo">優先度:{tasks?.weight}</Badge>
+                        <Badge color="brown">優先度:{tasks?.weight}</Badge>
                       )}
                       {tasks.due_date && tasks.due_date !== "期日" && (
-                        <Badge color="indigo">期日:{tasks?.due_date}</Badge>
+                        <Badge color="brown">期日:{tasks?.due_date}</Badge>
                       )}
                     </Group>
                   </>
@@ -133,7 +133,7 @@ const Task = React.memo(({ task, mutate }: props) => {
                   {/* memo */}
                   {tasks.memo && (
                     <Text
-                      color="gray"
+                      color="brown"
                       style={{ marginLeft: 28 }}
                       className="mt-2"
                     >

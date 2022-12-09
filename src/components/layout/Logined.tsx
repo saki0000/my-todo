@@ -1,4 +1,4 @@
-import { AppShell, Header } from "@mantine/core";
+import { AppShell, Header, MantineProvider } from "@mantine/core";
 import { RecoilRoot } from "recoil";
 import Head from "../head/Header";
 import Main from "./Main";
@@ -6,16 +6,35 @@ import Main from "./Main";
 const Logined = () => {
   return (
     <RecoilRoot>
-      <AppShell
-        header={
-          <Header height={70} className="bg-indigo-200 border-none">
-            <Head></Head>
-          </Header>
-        }
-        className="bg-indigo-200"
+      <MantineProvider
+        theme={{
+          colors: {
+            brown: [
+              "#E0E0E0",
+              "#CCCCCC",
+              "#B8B8B8",
+              "#A3A3A3",
+              "#8F8F8F",
+              "#7A7A7A",
+              "#666666",
+              "#595959",
+              "#4D4D4D",
+              "#404040",
+            ],
+          },
+        }}
       >
-        <Main />
-      </AppShell>
+        <AppShell
+          header={
+            <Header height={70} className="bg-darkBlue">
+              <Head></Head>
+            </Header>
+          }
+          className="bg-darkBlue"
+        >
+          <Main />
+        </AppShell>
+      </MantineProvider>
     </RecoilRoot>
   );
 };

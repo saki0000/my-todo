@@ -98,7 +98,7 @@ const AddTask = ({ box, date, mutate }: props) => {
                 setOpen(true);
               }}
               variant="light"
-              color="indigo"
+              color="brown"
               radius="md"
             >
               追加
