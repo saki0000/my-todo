@@ -63,7 +63,7 @@ const Login = () => {
       });
   };
   return (
-    <div className="bg-indigo-200" style={{ height: "100%" }}>
+    <div className="bg-darkBlue" style={{ height: "100%" }}>
       <Container style={{ height: "100%" }}>
         <div className="h-full grid place-content-center">
           <Stack
@@ -113,7 +113,7 @@ const Login = () => {
                 disabled={password === "" || email === "" || username === ""}
                 style={{ width: 240 }}
                 onClick={createUserWithEmail}
-                color="indigo"
+                color="dark"
                 variant="light"
                 radius="md"
               >
@@ -124,7 +124,7 @@ const Login = () => {
                 disabled={password === "" || email === ""}
                 onClick={signInWithEmail}
                 style={{ width: 240 }}
-                color="indigo"
+                color="dark"
                 // variant="light"
                 radius="md"
               >
@@ -142,7 +142,7 @@ const Login = () => {
                   onClick={() => {
                     setRegister(false);
                   }}
-                  className="font-semibold text-white no-underline hover:underline decoration-indigo-500 cursor-pointer"
+                  className="font-semibold text-white no-underline hover:underline decoration-white cursor-pointer"
                 >
                   ログイン画面へ
                 </Text>
@@ -152,7 +152,7 @@ const Login = () => {
                 onClick={() => {
                   setRegister(true);
                 }}
-                className="font-semibold text-white no-underline hover:underline decoration-indigo-500 cursor-pointer"
+                className="font-semibold text-white no-underline hover:underline decoration-white cursor-pointer"
               >
                 新規登録
               </Text>

@@ -39,16 +39,16 @@ const Main: React.FC = () => {
       {/* <Container className="pt-5" style={{ height: "100%" }}> */}
       <Separate />
       <Grid style={{ height: "100%" }}>
-        <Grid.Col span={1} className="grid content-center">
+        <Grid.Col span={2} className="grid content-center">
           <div>
             <p
-              className="font-bold  text-xl text-white"
+              className="font-bold  text-2xl text-white"
               onClick={() => setPage(true)}
             >
               Inbox
             </p>
             <p
-              className="font-bold  text-xl text-white"
+              className="font-bold  text-2xl text-white"
               onClick={() => setPage(false)}
             >
               Tasks
@@ -57,7 +57,7 @@ const Main: React.FC = () => {
         </Grid.Col>
 
         {page ? (
-          <Grid.Col span={11}>
+          <Grid.Col span={10}>
             <Paper
               key={state.first}
               p="xl"
@@ -70,7 +70,7 @@ const Main: React.FC = () => {
           </Grid.Col>
         ) : (
           <>
-            <Grid.Col span={8}>
+            <Grid.Col span={7}>
               <Paper
                 key={state.first}
                 p="xl"
