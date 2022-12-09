@@ -35,20 +35,24 @@ const Main: React.FC = () => {
   };
 
   return (
-    <div className=" h-full mx-16">
+    <div className=" h-full mx-16 pt-4">
       {/* <Container className="pt-5" style={{ height: "100%" }}> */}
       <Separate />
       <Grid style={{ height: "100%" }}>
         <Grid.Col span={2} className="grid content-center">
           <div>
             <p
-              className="font-bold  text-2xl text-white"
+              className={`font-bold  text-2xl text-white  ${
+                page && "underline"
+              } hover:underline decoration-white cursor-pointer`}
               onClick={() => setPage(true)}
             >
               Inbox
             </p>
             <p
-              className="font-bold  text-2xl text-white"
+              className={`font-bold  text-2xl text-white  ${
+                page || "underline"
+              } hover:underline decoration-white cursor-pointer`}
               onClick={() => setPage(false)}
             >
               Tasks

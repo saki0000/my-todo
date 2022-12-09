@@ -18,7 +18,7 @@ const Calender = React.memo(() => {
   return (
     <>
       <Stack style={{ height: "100%" }}>
-        <Text size="lg">
+        <p className="text-xl  my-2">
           {calendar.first}
           <span
             onClick={() => {
@@ -31,7 +31,7 @@ const Calender = React.memo(() => {
           >
             /{calendar.second}
           </span>
-        </Text>
+        </p>
         <Divider className="border-brown" />
         <div style={{ height: "100%" }} ref={ref}>
           <ScrollArea.Autosize maxHeight={height}>
