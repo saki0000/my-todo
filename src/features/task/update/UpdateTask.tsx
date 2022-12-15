@@ -20,13 +20,13 @@ type taskType = task & { id: number };
 type props = {
   task: taskType;
   setOpen: (arg: boolean) => void;
-  setTasks: (arg: taskType) => void;
+  setTasks?: (arg: taskType) => void;
   mutate?: any;
   sub?: boolean;
   id?: number;
 };
 type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
-const UpdateTask = ({ task, setOpen, setTasks, mutate, sub, id }: props) => {
+const UpdateTask = ({ task, setOpen, mutate, sub, id }: props) => {
   const setModal = useSetRecoilState(separateAtom);
   const {
     control,
@@ -42,18 +42,18 @@ const UpdateTask = ({ task, setOpen, setTasks, mutate, sub, id }: props) => {
     task.box === "inbox" &&
       data.box === "nextAction" &&
       setModal({ id: task.id, open: true });
+    console.log(data);
     setOpen(false);
   };
   return (
-    <div style={{ margin: 30 }}>
+    <div className="mx-4">
       <form onSubmit={handleSubmit(onSubmit)}>
-        {" "}
         <Stack>
           <TextInput placeholder="Name" {...register("name")}></TextInput>
           <Group>
             <Weight control={control} />
             <DueDate control={control} />
-            <Box control={control} />
+            {!sub && <Box control={control} />}
             {watch().box === "calender" && !sub && (
               <DateSelect control={control} />
             )}

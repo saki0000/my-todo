@@ -1,6 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ActionIcon, Badge, Checkbox, Group, Stack, Text } from "@mantine/core";
-import { useSetState } from "@mantine/hooks";
+import { ActionIcon, Badge, Checkbox, Group, Text } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import {
   AiOutlineDelete,
@@ -12,7 +11,7 @@ import { deleteTask, updateTaskAPI } from "../../api";
 import { separateAtom } from "../../atoms/openAtom";
 import { stateAtom } from "../../atoms/stateAtom";
 import { task } from "../../Types";
-import SubTask from "../subTask/show/SubTask";
+import SubTask from "../subTask/SubTask";
 import UpdateTask from "./update/UpdateTask";
 
 type taskType = task & { id: number };
@@ -21,7 +20,7 @@ type props = {
   mutate?: any;
 };
 const Task = React.memo(({ task, mutate }: props) => {
-  const [tasks, setTasks] = useSetState<taskType>(task);
+  // const [tasks, setTasks] = useSetState<taskType>(task);
   const [diffDay, setDiffDay] = useState<Number>();
   const [open, setOpen] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(false);
@@ -41,28 +40,15 @@ const Task = React.memo(({ task, mutate }: props) => {
     <>
       {open ? (
         <div className="h-full">
-          <UpdateTask
-            task={tasks}
-            setOpen={setOpen}
-            setTasks={setTasks}
-            mutate={mutate}
-          />
+          <UpdateTask task={task} setOpen={setOpen} mutate={mutate} />
         </div>
       ) : (
         <>
-          {tasks === undefined || checked || (
+          {task === undefined || checked || (
             <>
               {/* <Separate dataMutate={mutate} /> */}
-              <Stack key={task.id}>
-                <Stack
-                  style={{
-                    marginRight: 28,
-                    marginLeft: 28,
-                    marginTop: 12,
-                    marginBottom: 0,
-                  }}
-                  spacing={0}
-                >
+              <div>
+                <div className="py-2 px-4">
                   <Group position="apart">
                     <Group>
                       <Checkbox
@@ -70,20 +56,20 @@ const Task = React.memo(({ task, mutate }: props) => {
                         onChange={(e) => {
                           setChecked(e.currentTarget.checked);
                           mutate(
-                            updateTaskAPI(tasks.id, {
-                              name: tasks.name,
-                              box: tasks.box,
-                              date: tasks.date,
-                              due_date: tasks.due_date,
-                              weight: tasks.weight,
+                            updateTaskAPI(task.id, {
+                              name: task.name,
+                              box: task.box,
+                              date: task.date,
+                              due_date: task.due_date,
+                              weight: task.weight,
                               statement: true,
-                              memo: tasks.memo,
+                              memo: task.memo,
                             })
                           );
                         }}
                       />
 
-                      <Text>{tasks?.name}</Text>
+                      <Text>{task?.name}</Text>
                     </Group>
 
                     {/* buttons */}
@@ -115,47 +101,42 @@ const Task = React.memo(({ task, mutate }: props) => {
                   </Group>
 
                   {/* badges */}
-                  <>
-                    <Group style={{ marginLeft: 28 }} className="pt-2">
-                      {tasks.weight && (
-                        <Badge color="brown">優先度:{tasks?.weight}</Badge>
-                      )}
-                      {tasks.due_date && tasks.due_date !== "期日" && (
-                        <Badge color="brown">期日:{tasks?.due_date}</Badge>
-                      )}
-                    </Group>
-                  </>
+
+                  <Group className="mx-8 mt-1">
+                    {task.weight && (
+                      <Badge color="brown">優先度:{task?.weight}</Badge>
+                    )}
+                    {task.due_date && task.due_date !== "期日" && (
+                      <Badge color="brown">期日:{task?.due_date}</Badge>
+                    )}
+                  </Group>
 
                   {/* memo */}
-                  {tasks.memo && (
-                    <Text
-                      color="brown"
-                      style={{ marginLeft: 28 }}
-                      className="mt-2"
-                    >
-                      {tasks?.memo}
+                  {task.memo && (
+                    <Text color="brown" className="ml-9 mt-1">
+                      {task?.memo}
                     </Text>
                   )}
-                </Stack>
+                </div>
 
                 {/* subtask */}
-                {state.first && tasks?.subtasks?.length !== 0 && (
-                  <Stack align="stretch" justify="" style={{ width: "100%" }}>
-                    {tasks?.subtasks?.map((task: taskType) => (
+                {state.first && task?.subtasks?.length !== 0 && (
+                  <div className="my-1 mx-4">
+                    {task?.subtasks?.map((task: taskType) => (
                       <>
-                        <SubTask id={tasks.id} task={task} mutate={mutate} />
+                        <SubTask id={task.id} task={task} mutate={mutate} />
                       </>
                     ))}
-                  </Stack>
+                  </div>
                 )}
-                {tasks.box === "inbox" && diffDay && diffDay > 14 ? (
+                {task.box === "inbox" && diffDay && diffDay > 14 ? (
                   <>
                     <Badge color="red">タスクを振り分けてください</Badge>
                   </>
                 ) : (
                   <></>
                 )}
-              </Stack>
+              </div>
             </>
           )}
         </>

@@ -5,7 +5,7 @@ import { getTask } from "../../../api";
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
 import AddSubTask from "../add/AddSubTask";
-import SubTask from "../show/SubTask";
+import SubTask from "../SubTask";
 
 const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
   const [modal, setOpen] = useRecoilState(separateAtom);
@@ -25,7 +25,7 @@ const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
         overlayOpacity={0.2}
         overlayBlur={1}
       >
-        <Stack>
+        <Stack className="mx-8">
           <p className="text-xl ml-4">{data.name}</p>
 
           <Divider />

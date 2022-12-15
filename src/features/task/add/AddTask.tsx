@@ -10,7 +10,7 @@ const AddTask = ({ box, date, mutate }: Props) => {
   const [open, setOpen] = useState<boolean>(true);
 
   return (
-    <div style={{ margin: 30 }} className="h-full">
+    <div className="h-full mx-4">
       {open ? (
         <Group>
           <ActionIcon

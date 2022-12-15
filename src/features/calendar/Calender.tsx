@@ -24,7 +24,7 @@ const Calender = React.memo(({ onClick }: { onClick?: () => void }) => {
         onClick={onClick}
         className="h-full"
       >
-        <Stack style={{ height: "100%" }} key="calendar">
+        <Stack className="h-full" key="calendar">
           <p className="text-xl  my-2">
             {calendar.first}
             <span
@@ -34,7 +34,7 @@ const Calender = React.memo(({ onClick }: { onClick?: () => void }) => {
                   second: calendar.first,
                 });
               }}
-              style={{ color: "gray", fontSize: 16, cursor: "pointer" }}
+              className="text-gray-400 cursor text-lg cursor-pointer"
             >
               /{calendar.second}
             </span>
@@ -45,7 +45,7 @@ const Calender = React.memo(({ onClick }: { onClick?: () => void }) => {
               <>
                 {dateTask.map((date: string) => (
                   <div key={date}>
-                    <Text style={{ marginBottom: 10 }}>{date}</Text>
+                    <Text className="mb-2">{date}</Text>
                     <Divider className="border-brown" />
                     <CalendarTask date={date} />
                   </div>

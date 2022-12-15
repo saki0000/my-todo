@@ -1,13 +1,13 @@
-import { ActionIcon, Badge, Checkbox, Group, Stack, Text } from "@mantine/core";
+import { ActionIcon, Badge, Checkbox, Group, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
-import { deleteSubTask, updateSubTask } from "../../../api";
-import { separateAtom } from "../../../atoms/openAtom";
-import { stateAtom } from "../../../atoms/stateAtom";
-import { task } from "../../../Types";
-import UpdateTask from "../../task/update/UpdateTask";
+import { deleteSubTask, updateSubTask } from "../../api";
+import { separateAtom } from "../../atoms/openAtom";
+import { stateAtom } from "../../atoms/stateAtom";
+import { task } from "../../Types";
+import UpdateTask from "../task/update/UpdateTask";
 
 type props = {
   task: task & { id: number };
@@ -51,17 +51,8 @@ const SubTask = React.memo(({ task, mutate, id }: props) => {
           ) : (
             <>
               {
-                <Stack spacing={0} key={task.id}>
-                  <Group
-                    position="apart"
-                    style={{
-                      marginTop: 0,
-                      marginBottom: 8,
-                      marginRight: 30,
-                      marginLeft: 40,
-                    }}
-                    key={tasks.id}
-                  >
+                <div className="ml-2 mt-1" key={task.id}>
+                  <Group position="apart" key={tasks.id}>
                     <Group>
                       <AiOutlineEnter
                         style={{ transform: "scale(-1,1)" }}
@@ -94,23 +85,21 @@ const SubTask = React.memo(({ task, mutate, id }: props) => {
                     )}
                   </Group>
 
-                  <>
-                    <Group style={{ marginLeft: 100 }}>
-                      {tasks.weight !== 0 && (
-                        <Badge color="indigo">{tasks?.weight}</Badge>
-                      )}
-                      {tasks.due_date && tasks.due_date !== "期日" && (
-                        <Badge color="indigo">{tasks?.due_date}</Badge>
-                      )}
-                    </Group>
-                  </>
+                  <Group>
+                    {tasks.weight && (
+                      <Badge color="indigo">{tasks?.weight}</Badge>
+                    )}
+                    {tasks.due_date && tasks.due_date !== "期日" && (
+                      <Badge color="indigo">{tasks?.due_date}</Badge>
+                    )}
+                  </Group>
 
                   {tasks.memo && (
-                    <Text color="gray" style={{ marginLeft: 70 }}>
+                    <Text color="gray" className="ml-16 mt-1">
                       {tasks.memo}
                     </Text>
                   )}
-                </Stack>
+                </div>
               }
             </>
           )}

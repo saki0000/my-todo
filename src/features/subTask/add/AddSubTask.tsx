@@ -8,7 +8,7 @@ type props = { task: task; mutate: any };
 const AddSubTask = ({ task, mutate }: props) => {
   const [open, setOpen] = useState<boolean>(true);
   return (
-    <div style={{ margin: 30 }}>
+    <div className="mx-4 my-6">
       {open ? (
         <Group>
           <ActionIcon

@@ -11,7 +11,7 @@ const CalendarTask = ({ date }: { date: string }) => {
   const { data, isLoading, error, mutate } = dateTask(user, date);
   return (
     <>
-      <div style={{ marginTop: 20 }}>
+      <div className="my-6">
         {data &&
           data.map((task: taskType) => (
             <div key={task.id}>
@@ -19,7 +19,7 @@ const CalendarTask = ({ date }: { date: string }) => {
             </div>
           ))}
         {isLoading && (
-          <div style={{ marginLeft: 40, marginTop: 10 }}>
+          <div className="ml-10">
             <Loader />
           </div>
         )}

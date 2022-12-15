@@ -11,7 +11,7 @@ const DueDate = React.forwardRef(({ control }: props) => {
   return (
     <div>
       <Controller
-        name="dueDate"
+        name="due_date"
         control={control}
         render={({ field }) => (
           <>

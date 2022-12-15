@@ -34,7 +34,7 @@ const TasksPage = () => {
         {components[state.first]}
       </Grid.Col>
       <Grid.Col span={3} className="h-full">
-        <Stack justify="space-between" style={{ height: "100%" }}>
+        <Stack justify="space-between" className="h-full">
           {Object.entries(state).map((key: [string, NewBoxType]) => (
             <>
               {key[0] !== "first" ? (

@@ -33,11 +33,11 @@ const TaskBox = React.memo(({ box, onClick }: props) => {
       <Paper
         p="xl"
         shadow="lg"
-        style={{ height: "100%" }}
+        className="h-full"
         radius="md"
         onClick={onClick}
       >
-        <Stack style={{ height: "100%" }} key={box}>
+        <Stack className="h-full" key={box}>
           <p className="text-xl  my-2">{boxes[box]}</p>
           <Divider className="border-brown" />
           <div className="h-full overflow-auto">
@@ -62,9 +62,9 @@ const TaskBox = React.memo(({ box, onClick }: props) => {
               )}
               {error && <div>error</div>}
               {(box === "inbox" || first.first === box) && (
-                <>
+                <div className="mt-4">
                   <AddTask box={box} mutate={mutate} />
-                </>
+                </div>
               )}
             </div>
           </div>

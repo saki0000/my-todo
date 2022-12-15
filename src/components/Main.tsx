@@ -12,7 +12,7 @@ const Main: React.FC = () => {
   return (
     <div className=" h-full mx-16 pt-4">
       <Separate />
-      <Grid style={{ height: "100%" }}>
+      <Grid className="h-full">
         <Grid.Col span={2} className="grid content-center">
           <div>
             <p
