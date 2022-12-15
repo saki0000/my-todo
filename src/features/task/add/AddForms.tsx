@@ -71,17 +71,7 @@ const AddForms = ({ box, date, setOpen, mutate }: Props) => {
             >
               キャンセル
             </Button>
-            <Button
-              type="submit"
-              variant="light"
-              color="brown"
-              radius="md"
-              // onClick={() => {
-              //   // setAddTask(initial);
-              //   // mutate(addTask(addTaskData));
-              //   setOpen(true);
-              // }}
-            >
+            <Button type="submit" variant="light" color="brown" radius="md">
               追加
             </Button>
           </Group>
