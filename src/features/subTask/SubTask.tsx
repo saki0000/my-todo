@@ -1,5 +1,4 @@
 import { ActionIcon, Badge, Checkbox, Group, Text } from "@mantine/core";
-import { useSetState } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
@@ -16,43 +15,43 @@ type props = {
 };
 const SubTask = React.memo(({ task, mutate, id }: props) => {
   const modalValue = useRecoilValue(separateAtom);
-  const [tasks, setTasks] = useSetState(task);
+
   const [open, setOpen] = useState(false);
   const [checked, setChecked] = useState<boolean | undefined>(false);
   const state = useRecoilValue(stateAtom);
   useEffect(() => {
     checked &&
       mutate(
-        updateSubTask(id, tasks.id, {
-          name: tasks.name,
-          box: tasks.box,
-          date: tasks.date,
-          due_date: tasks.due_date,
-          weight: tasks.weight,
+        updateSubTask(id, task.id, {
+          name: task.name,
+          box: task.box,
+          date: task.date,
+          due_date: task.due_date,
+          weight: task.weight,
           statement: true,
-          memo: tasks.memo,
+          memo: task.memo,
         })
       );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [checked]);
+  console.log(id);
   return (
     <>
       {task && !task.statement && (
         <>
           {open ? (
             <UpdateTask
-              task={tasks}
+              task={task}
               setOpen={setOpen}
-              setTasks={setTasks}
               mutate={mutate}
               sub={true}
-              id={id}
+              id={modalValue.id}
             />
           ) : (
             <>
               {
-                <div className="ml-2 mt-1" key={task.id}>
-                  <Group position="apart" key={tasks.id}>
+                <div key={task.id}>
+                  <Group position="apart" key={task.id}>
                     <Group>
                       <AiOutlineEnter
                         style={{ transform: "scale(-1,1)" }}
@@ -63,7 +62,7 @@ const SubTask = React.memo(({ task, mutate, id }: props) => {
                           setChecked(e.currentTarget.checked);
                         }}
                       />
-                      <Text>{tasks?.name}</Text>
+                      <Text>{task?.name}</Text>
                     </Group>
                     {state.first === task.box && (
                       <Group>
@@ -85,18 +84,16 @@ const SubTask = React.memo(({ task, mutate, id }: props) => {
                     )}
                   </Group>
 
-                  <Group>
-                    {tasks.weight && (
-                      <Badge color="indigo">{tasks?.weight}</Badge>
-                    )}
-                    {tasks.due_date && tasks.due_date !== "期日" && (
-                      <Badge color="indigo">{tasks?.due_date}</Badge>
+                  <Group className="ml-16 mt-2">
+                    {task.weight && <Badge color="brown">{task?.weight}</Badge>}
+                    {task.due_date && task.due_date !== "期日" && (
+                      <Badge color="brown">{task?.due_date}</Badge>
                     )}
                   </Group>
 
-                  {tasks.memo && (
+                  {task.memo && (
                     <Text color="gray" className="ml-16 mt-1">
-                      {tasks.memo}
+                      {task.memo}
                     </Text>
                   )}
                 </div>

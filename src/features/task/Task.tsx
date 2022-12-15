@@ -35,7 +35,7 @@ const Task = React.memo(({ task, mutate }: props) => {
       setDiffDay(Math.floor(diffTime / (1000 * 60 * 60 * 24)));
     }
   }, []);
-  console.log(task.name);
+  console.log(task.id);
   return (
     <>
       {open ? (
@@ -47,8 +47,8 @@ const Task = React.memo(({ task, mutate }: props) => {
           {task === undefined || checked || (
             <>
               {/* <Separate dataMutate={mutate} /> */}
-              <div>
-                <div className="py-2 px-4">
+              <div className="pt-2">
+                <div className="pt-2 px-4">
                   <Group position="apart">
                     <Group>
                       <Checkbox
@@ -102,7 +102,7 @@ const Task = React.memo(({ task, mutate }: props) => {
 
                   {/* badges */}
 
-                  <Group className="mx-8 mt-1">
+                  <Group className="mx-8 mt-2">
                     {task.weight && (
                       <Badge color="brown">優先度:{task?.weight}</Badge>
                     )}
@@ -113,7 +113,7 @@ const Task = React.memo(({ task, mutate }: props) => {
 
                   {/* memo */}
                   {task.memo && (
-                    <Text color="brown" className="ml-9 mt-1">
+                    <Text color="brown" className="ml-9 mt-2">
                       {task?.memo}
                     </Text>
                   )}
@@ -121,11 +121,11 @@ const Task = React.memo(({ task, mutate }: props) => {
 
                 {/* subtask */}
                 {state.first && task?.subtasks?.length !== 0 && (
-                  <div className="my-1 mx-4">
+                  <div className="my-2 mx-4">
                     {task?.subtasks?.map((task: taskType) => (
-                      <>
+                      <div className="my-3">
                         <SubTask id={task.id} task={task} mutate={mutate} />
-                      </>
+                      </div>
                     ))}
                   </div>
                 )}

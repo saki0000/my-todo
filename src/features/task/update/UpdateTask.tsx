@@ -42,7 +42,6 @@ const UpdateTask = ({ task, setOpen, mutate, sub, id }: props) => {
     task.box === "inbox" &&
       data.box === "nextAction" &&
       setModal({ id: task.id, open: true });
-    console.log(data);
     setOpen(false);
   };
   return (

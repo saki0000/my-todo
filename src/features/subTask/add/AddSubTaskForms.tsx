@@ -21,7 +21,7 @@ const AddSubTaskForms = ({ taskValue, setOpen, mutate }: any) => {
       box: taskValue.box,
       date: taskValue.date,
       due_date: "期日",
-      weight: 0,
+      weight: "",
       statement: false,
       memo: "",
     },
