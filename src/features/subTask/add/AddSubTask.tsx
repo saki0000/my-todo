@@ -14,8 +14,6 @@ import { useRecoilValue } from "recoil";
 import { addSubTask } from "../../../api";
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
-import DueDate from "../../task/edit/DueDate";
-import Weight from "../../task/edit/Weight";
 
 type props = { task: task; mutate: any };
 const AddSubTask = ({ task, mutate }: props) => {
@@ -56,8 +54,8 @@ const AddSubTask = ({ task, mutate }: props) => {
               data={[]}
             ></Autocomplete>
             <Group>
-              <Weight setAddWeight={setAddTask} />
-              <DueDate dueDate={"期日"} setAddDate={setAddTask} />
+              {/* <Weight setAddWeight={setAddTask} />
+              <DueDate dueDate={"期日"} setAddDate={setAddTask} /> */}
             </Group>
           </Group>
           <Textarea

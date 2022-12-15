@@ -16,6 +16,6 @@ export type stateType = {
   [k in orderType]: boxType;
 };
 export type orderType = "first" | "second" | "third" | "fourth";
-export type user = { uid: string; displayName: string };
+export type User = { uid: string; displayName: string };
 export type DateFormat = `${number}-${number}-${number}`;
 export type boxType = "calender" | "inbox" | "nextAction" | "someday";

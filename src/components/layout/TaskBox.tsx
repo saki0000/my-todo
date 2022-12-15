@@ -1,5 +1,4 @@
-import { Divider, Loader, Paper, ScrollArea, Stack, Text } from "@mantine/core";
-import { useElementSize } from "@mantine/hooks";
+import { Divider, Loader, Paper, Stack, Text } from "@mantine/core";
 import React from "react";
 import { useSelector } from "react-redux";
 import { useRecoilValue } from "recoil";
@@ -7,7 +6,7 @@ import { getDoTasks } from "../../api";
 import { stateAtom } from "../../atoms/stateAtom";
 import AddTask from "../../features/task/add/AddTask";
 import { selectUser } from "../../redux/userSlice";
-import { boxType, task, user } from "../../Types";
+import { boxType, task, User } from "../../Types";
 import Task from "./Task";
 
 type props = { box: "inbox" | "someday" | "nextAction"; onClick?: () => void };
@@ -24,14 +23,11 @@ const boxes: boxName = {
 };
 
 const TaskBox = React.memo(({ box, onClick }: props) => {
-  const user: user = useSelector(selectUser);
+  const user: User = useSelector(selectUser);
   const first = useRecoilValue(stateAtom);
   const { data, isLoading, error, mutate } = getDoTasks(user, box);
-  const { ref, height } = useElementSize();
-  console.log(box, "rendering");
-  // useEffect(() => {
-  //   console.log("data");
-  // }, [data]);
+
+  console.log(box, "box", "rendering");
   return (
     <>
       <Paper
@@ -41,11 +37,11 @@ const TaskBox = React.memo(({ box, onClick }: props) => {
         radius="md"
         onClick={onClick}
       >
-        <Stack style={{ height: "100%" }}>
+        <Stack style={{ height: "100%" }} key={box}>
           <p className="text-xl  my-2">{boxes[box]}</p>
           <Divider className="border-brown" />
-          <div style={{ height: "100%" }} ref={ref}>
-            <ScrollArea.Autosize maxHeight={height} className="h-full">
+          <div className="h-full overflow-auto">
+            <div>
               {data && data.length !== 0 ? (
                 data.map((task: task & { id: number }) => (
                   <div key={task.id}>
@@ -53,8 +49,10 @@ const TaskBox = React.memo(({ box, onClick }: props) => {
                   </div>
                 ))
               ) : (
-                <div className="my-4 mr-20">
-                  {isLoading || first.first === box || <Text>No Task</Text>}
+                <div className="my-4 ml-10">
+                  {first.first === box || first.first === "inbox" || (
+                    <Text>No Task</Text>
+                  )}
                 </div>
               )}
               {isLoading && (
@@ -66,10 +64,9 @@ const TaskBox = React.memo(({ box, onClick }: props) => {
               {(box === "inbox" || first.first === box) && (
                 <>
                   <AddTask box={box} mutate={mutate} />
-                  {/* <Divider className="border-brown" /> */}
                 </>
               )}
-            </ScrollArea.Autosize>
+            </div>
           </div>
         </Stack>
       </Paper>

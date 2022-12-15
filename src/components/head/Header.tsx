@@ -2,11 +2,11 @@ import { Button, Group, Text } from "@mantine/core";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout, selectUser } from "../../redux/userSlice";
-import { user } from "../../Types";
+import { User } from "../../Types";
 
 const Head = React.memo(() => {
   const dispatch = useDispatch();
-  const user: user = useSelector(selectUser);
+  const user: User = useSelector(selectUser);
   return (
     <>
       <Group align="center" position="apart" className="bg-darkBlue mx-16">

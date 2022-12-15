@@ -30,9 +30,14 @@ const Logined = () => {
               <Head></Head>
             </Header>
           }
-          className="bg-darkBlue"
+          className="bg-darkBlue h-screen"
+          styles={(theme) => ({
+            body: { height: "100%" },
+          })}
         >
-          <Main />
+          <div className="h-full">
+            <Main />
+          </div>
         </AppShell>
       </MantineProvider>
     </RecoilRoot>

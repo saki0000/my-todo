@@ -1,30 +1,30 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Divider, Paper, ScrollArea, Stack, Text } from "@mantine/core";
-import { useElementSize, useSetState } from "@mantine/hooks";
+import { Divider, Paper, Stack, Text } from "@mantine/core";
+import { useSetState } from "@mantine/hooks";
 import React from "react";
 import CalendarTask from "../../features/calendar/CalendarTask";
 import useCalenderHook from "../../features/calendar/hooks/CalenderHook";
 
 const Calender = React.memo(({ onClick }: { onClick?: () => void }) => {
-  const { ref, height } = useElementSize();
   const today = new Date();
   const [dateTask] = useCalenderHook();
   const [calendar, setCalendar] = useSetState({
     first: "カレンダー",
     second: "今日",
   });
+  console.log("calendar box rendering");
 
   return (
     <>
       <Paper
         p="xl"
         shadow="lg"
-        style={{ height: "100%" }}
         radius="md"
         onClick={onClick}
+        className="h-full"
       >
-        <Stack style={{ height: "100%" }}>
+        <Stack style={{ height: "100%" }} key="calendar">
           <p className="text-xl  my-2">
             {calendar.first}
             <span
@@ -40,27 +40,25 @@ const Calender = React.memo(({ onClick }: { onClick?: () => void }) => {
             </span>
           </p>
           <Divider className="border-brown" />
-          <div style={{ height: "100%" }} ref={ref}>
-            <ScrollArea.Autosize maxHeight={height}>
-              {calendar.first === "カレンダー" ? (
-                <>
-                  {dateTask.map((date: string) => (
-                    <div key={date}>
-                      <Text style={{ marginBottom: 10 }}>{date}</Text>
-                      <Divider className="border-brown" />
-                      <CalendarTask date={date} />
-                    </div>
-                  ))}
-                  <Divider className="border-brown" />
-                </>
-              ) : (
-                <>
-                  <CalendarTask date={today.toJSON().split("T")[0]} />
+          <div className="h-full overflow-auto">
+            {calendar.first === "カレンダー" ? (
+              <>
+                {dateTask.map((date: string) => (
+                  <div key={date}>
+                    <Text style={{ marginBottom: 10 }}>{date}</Text>
+                    <Divider className="border-brown" />
+                    <CalendarTask date={date} />
+                  </div>
+                ))}
+                <Divider className="border-brown" />
+              </>
+            ) : (
+              <>
+                <CalendarTask date={today.toJSON().split("T")[0]} />
 
-                  <Divider className="border-brown" />
-                </>
-              )}
-            </ScrollArea.Autosize>
+                <Divider className="border-brown" />
+              </>
+            )}
           </div>
         </Stack>
       </Paper>

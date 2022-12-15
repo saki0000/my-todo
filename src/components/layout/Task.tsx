@@ -35,8 +35,8 @@ const Task = React.memo(({ task, mutate }: props) => {
       const diffTime = today.getTime() - createdAtDate.getTime();
       setDiffDay(Math.floor(diffTime / (1000 * 60 * 60 * 24)));
     }
-    console.log("time");
   }, []);
+  console.log(task.name);
   return (
     <>
       {open ? (

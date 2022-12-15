@@ -1,16 +1,14 @@
 import {
-  Autocomplete,
   Button,
   Divider,
   Group,
   Stack,
   Textarea,
+  TextInput,
 } from "@mantine/core";
-import { useSetState } from "@mantine/hooks";
-import React from "react";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useSetRecoilState } from "recoil";
 import { updateSubTask, updateTaskAPI } from "../../../api";
-import { renAtom } from "../../../atoms/atom";
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
 import Box from "../edit/Box";
@@ -27,71 +25,60 @@ type props = {
   sub?: boolean;
   id?: number;
 };
+type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
 const UpdateTask = ({ task, setOpen, setTasks, mutate, sub, id }: props) => {
-  const [updateTask, setUpdateTask] = useSetState<taskType>(task);
-  const [ren, setRen] = useRecoilState(renAtom);
   const setModal = useSetRecoilState(separateAtom);
-  console.log(task);
+  const {
+    control,
+    register,
+    handleSubmit,
+    watch,
+    // formState: { errors },
+  } = useForm<StateTask>({ defaultValues: task });
+  const onSubmit: SubmitHandler<StateTask> = (data) => {
+    sub && id
+      ? mutate(updateSubTask(id, task.id, data))
+      : mutate(updateTaskAPI(task.id, data));
+    task.box === "inbox" &&
+      data.box === "nextAction" &&
+      setModal({ id: task.id, open: true });
+    setOpen(false);
+  };
   return (
     <div style={{ margin: 30 }}>
-      <Stack>
-        <Autocomplete
-          placeholder="Name"
-          value={updateTask.name}
-          onChange={(e) => {
-            setUpdateTask({ name: e });
-          }}
-          data={[]}
-        ></Autocomplete>
-        <Group>
-          <Weight weight={updateTask.weight} setAddWeight={setUpdateTask} />
-          <DueDate dueDate={updateTask.due_date} setAddDate={setUpdateTask} />
-          <Box taskBox={updateTask.box} />
-          {updateTask.box === "calender" && !sub && (
-            <DateSelect date={updateTask.date} setAddDate={setUpdateTask} />
-          )}
-        </Group>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {" "}
+        <Stack>
+          <TextInput placeholder="Name" {...register("name")}></TextInput>
+          <Group>
+            <Weight control={control} />
+            <DueDate control={control} />
+            <Box control={control} />
+            {watch().box === "calender" && !sub && (
+              <DateSelect control={control} />
+            )}
+          </Group>
 
-        <Textarea
-          placeholder="Memo"
-          value={updateTask.memo}
-          onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            setUpdateTask({ memo: e.currentTarget.value });
-          }}
-        ></Textarea>
-        <Group>
-          <Button
-            onClick={() => {
-              setOpen(false);
-            }}
-            variant="light"
-            color="red"
-            radius="md"
-          >
-            キャンセル
-          </Button>
-          <Button
-            onClick={() => {
-              sub && id
-                ? mutate(updateSubTask(id, updateTask.id, updateTask))
-                : mutate(updateTaskAPI(updateTask.id, updateTask));
-              task.box === "inbox" &&
-                updateTask.box === "nextAction" &&
-                setModal({ id: task.id, open: true });
-              setTasks(updateTask);
-
-              setRen(!ren);
-              setOpen(false);
-            }}
-            variant="light"
-            color="brown"
-            radius="md"
-          >
-            変更
-          </Button>
-        </Group>
-        <Divider />
-      </Stack>
+          <Textarea placeholder="Memo" {...register("memo")}></Textarea>
+          <Group>
+            <Button
+              onClick={() => {
+                setOpen(false);
+              }}
+              variant="light"
+              color="red"
+              radius="md"
+              type="button"
+            >
+              キャンセル
+            </Button>
+            <Button type="submit" variant="light" color="brown" radius="md">
+              変更
+            </Button>
+          </Group>
+          <Divider />
+        </Stack>
+      </form>
     </div>
   );
 };
