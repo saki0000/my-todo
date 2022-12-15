@@ -9,14 +9,14 @@ import {
 import { useSetState } from "@mantine/hooks";
 import React from "react";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { updateSubTask, updateTaskAPI } from "../../../../api";
-import { renAtom } from "../../../../atoms/atom";
-import { separateAtom } from "../../../../atoms/openAtom";
-import { task } from "../../../../Types";
-import Box from "../../parts/Box";
-import DateSelect from "../../parts/Date";
-import DueDate from "../../parts/DueDate";
-import Weight from "../../parts/Weight";
+import { updateSubTask, updateTaskAPI } from "../../../api";
+import { renAtom } from "../../../atoms/atom";
+import { separateAtom } from "../../../atoms/openAtom";
+import { task } from "../../../Types";
+import Box from "../edit/Box";
+import DateSelect from "../edit/Date";
+import DueDate from "../edit/DueDate";
+import Weight from "../edit/Weight";
 
 type taskType = task & { id: number };
 type props = {
@@ -46,7 +46,7 @@ const UpdateTask = ({ task, setOpen, setTasks, mutate, sub, id }: props) => {
         <Group>
           <Weight weight={updateTask.weight} setAddWeight={setUpdateTask} />
           <DueDate dueDate={updateTask.due_date} setAddDate={setUpdateTask} />
-          <Box taskBox={updateTask.box} setTaskBox={setUpdateTask} />
+          <Box taskBox={updateTask.box} />
           {updateTask.box === "calender" && !sub && (
             <DateSelect date={updateTask.date} setAddDate={setUpdateTask} />
           )}

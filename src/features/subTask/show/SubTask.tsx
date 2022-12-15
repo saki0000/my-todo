@@ -3,11 +3,11 @@ import { useSetState } from "@mantine/hooks";
 import React, { useEffect, useState } from "react";
 import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
-import { deleteSubTask, updateSubTask } from "../../../../api";
-import { separateAtom } from "../../../../atoms/openAtom";
-import { stateAtom } from "../../../../atoms/stateAtom";
-import { task } from "../../../../Types";
-import UpdateTask from "../../update/layout/UpdateTask";
+import { deleteSubTask, updateSubTask } from "../../../api";
+import { separateAtom } from "../../../atoms/openAtom";
+import { stateAtom } from "../../../atoms/stateAtom";
+import { task } from "../../../Types";
+import UpdateTask from "../../task/update/UpdateTask";
 
 type props = {
   task: task & { id: number };

@@ -11,11 +11,11 @@ import { useSetState } from "@mantine/hooks";
 import React, { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
-import { addSubTask } from "../../../../api";
-import { separateAtom } from "../../../../atoms/openAtom";
-import { task } from "../../../../Types";
-import DueDate from "../../parts/DueDate";
-import Weight from "../../parts/Weight";
+import { addSubTask } from "../../../api";
+import { separateAtom } from "../../../atoms/openAtom";
+import { task } from "../../../Types";
+import DueDate from "../../task/edit/DueDate";
+import Weight from "../../task/edit/Weight";
 
 type props = { task: task; mutate: any };
 const AddSubTask = ({ task, mutate }: props) => {

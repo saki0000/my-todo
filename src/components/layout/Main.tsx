@@ -1,12 +1,12 @@
-import { Grid, Paper, Stack } from "@mantine/core";
+import { Grid, Stack } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import React, { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../atoms/stateAtom";
-import Calender from "../../features/calendar/Calender";
-import Separate from "../../features/task/subTask/separate/Separate";
+import Separate from "../../features/subTask/separate/Separate";
 import { boxType, orderType } from "../../Types";
-import TaskBox from "./taskbox/TaskBox";
+import Calender from "./Calender";
+import TaskBox from "./TaskBox";
 
 type NewBoxType = Exclude<boxType, "inbox">;
 type NewOrderType = Exclude<orderType, "fourth">;
@@ -19,7 +19,6 @@ type stateType = {
 
 const Main: React.FC = () => {
   const [state, setState] = useSetState<stateType>({
-    // first: "inbox",
     first: "nextAction",
     second: "calender",
     third: "someday",
@@ -28,15 +27,14 @@ const Main: React.FC = () => {
   const setStates = useSetRecoilState(stateAtom);
 
   const components: componentsType = {
-    // inbox: <TaskBox box={"inbox"} />,
     calender: <Calender></Calender>,
     nextAction: <TaskBox box={"nextAction"} />,
     someday: <TaskBox box={"someday"} />,
   };
+  console.log("main");
 
   return (
     <div className=" h-full mx-16 pt-4">
-      {/* <Container className="pt-5" style={{ height: "100%" }}> */}
       <Separate />
       <Grid style={{ height: "100%" }}>
         <Grid.Col span={2} className="grid content-center">
@@ -62,47 +60,26 @@ const Main: React.FC = () => {
 
         {page ? (
           <Grid.Col span={10}>
-            <Paper
-              key={state.first}
-              p="xl"
-              shadow="lg"
-              style={{ height: "100%" }}
-              radius="md"
-            >
-              <TaskBox box={"inbox"} />
-            </Paper>
+            <TaskBox box={"inbox"} />
           </Grid.Col>
         ) : (
           <>
-            <Grid.Col span={7}>
-              <Paper
-                key={state.first}
-                p="xl"
-                shadow="lg"
-                style={{ height: "100%" }}
-                radius="md"
-              >
-                {components[state.first]}
-              </Paper>
-            </Grid.Col>
+            <Grid.Col span={7}>{components[state.first]}</Grid.Col>
             <Grid.Col span={3}>
               <Stack justify="space-between" style={{ height: "100%" }}>
                 {Object.entries(state).map((key: [string, NewBoxType]) => (
                   <>
                     {key[0] !== "first" ? (
-                      <Paper
+                      <div
                         key={key[0]}
-                        p="md"
-                        shadow="sm"
                         style={{ height: "49%" }}
-                        radius="md"
                         onClick={() => {
                           setState({ first: key[1], [key[0]]: state.first });
                           setStates({ first: key[1] });
                         }}
                       >
                         {components[key[1]]}
-                      </Paper>
+                      </div>
                     ) : (
                       <></>
                     )}
@@ -113,8 +90,6 @@ const Main: React.FC = () => {
           </>
         )}
       </Grid>
-
-      {/* </Container> */}
     </div>
   );
 };

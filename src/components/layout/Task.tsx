@@ -8,12 +8,12 @@ import {
   AiOutlinePartition,
 } from "react-icons/ai";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { deleteTask, updateTaskAPI } from "../../../api";
-import { separateAtom } from "../../../atoms/openAtom";
-import { stateAtom } from "../../../atoms/stateAtom";
-import { task } from "../../../Types";
-import SubTask from "../subTask/show/SubTask";
-import UpdateTask from "../update/layout/UpdateTask";
+import { deleteTask, updateTaskAPI } from "../../api";
+import { separateAtom } from "../../atoms/openAtom";
+import { stateAtom } from "../../atoms/stateAtom";
+import SubTask from "../../features/subTask/show/SubTask";
+import UpdateTask from "../../features/task/update/UpdateTask";
+import { task } from "../../Types";
 
 type taskType = task & { id: number };
 type props = {
@@ -29,31 +29,16 @@ const Task = React.memo(({ task, mutate }: props) => {
   const state = useRecoilValue(stateAtom);
 
   useEffect(() => {
-    checked &&
-      mutate(
-        updateTaskAPI(tasks.id, {
-          name: tasks.name,
-          box: tasks.box,
-          date: tasks.date,
-          due_date: tasks.due_date,
-          weight: tasks.weight,
-          statement: true,
-          memo: tasks.memo,
-        })
-      );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checked]);
-  useEffect(() => {
     if (task.created_at) {
       const createdAtDate = new Date(task.created_at);
       const today = new Date();
       const diffTime = today.getTime() - createdAtDate.getTime();
       setDiffDay(Math.floor(diffTime / (1000 * 60 * 60 * 24)));
     }
-  }, [task]);
+    console.log("time");
+  }, []);
   return (
     <>
-      {/* <Separate dataMutate={mutate} /> */}
       {open ? (
         <div className="h-full">
           <UpdateTask
@@ -84,6 +69,17 @@ const Task = React.memo(({ task, mutate }: props) => {
                         checked={checked}
                         onChange={(e) => {
                           setChecked(e.currentTarget.checked);
+                          mutate(
+                            updateTaskAPI(tasks.id, {
+                              name: tasks.name,
+                              box: tasks.box,
+                              date: tasks.date,
+                              due_date: tasks.due_date,
+                              weight: tasks.weight,
+                              statement: true,
+                              memo: tasks.memo,
+                            })
+                          );
                         }}
                       />
 

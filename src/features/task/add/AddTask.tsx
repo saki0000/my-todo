@@ -1,30 +1,27 @@
 import {
   ActionIcon,
-  Autocomplete,
   Button,
   Group,
   Stack,
   Text,
   Textarea,
+  TextInput,
 } from "@mantine/core";
-import { useSetState } from "@mantine/hooks";
-import React, { useEffect, useState } from "react";
+
+import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useSelector } from "react-redux";
-import { addTask } from "../../../api";
 import { selectUser } from "../../../redux/userSlice";
 import { boxType, DateFormat, task, user } from "../../../Types";
-import Box from "../parts/Box";
-import DateSelect from "../parts/Date";
-import DueDate from "../parts/DueDate";
-import Weight from "../parts/Weight";
+import Box from "../edit/Box";
 
-type props = { box: boxType; date?: DateFormat | string; mutate?: any };
-type stateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
-const AddTask = ({ box, date, mutate }: props) => {
+type Props = { box: boxType; date?: DateFormat | string; mutate?: any };
+type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
+const AddTask = ({ box, date, mutate }: Props) => {
   const [open, setOpen] = useState<boolean>(true);
   const user: user = useSelector(selectUser);
-  const initial = {
+  const initialValue = {
     user_id: user.uid,
     name: "",
     box: box,
@@ -35,11 +32,15 @@ const AddTask = ({ box, date, mutate }: props) => {
     statement: false,
     memo: "",
   };
-  const [addTaskData, setAddTask] = useSetState<stateTask>(initial);
-  useEffect(() => {
-    setAddTask({ box: box });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [box]);
+  const {
+    control,
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<StateTask>({ defaultValues: initialValue });
+  const onSubmit: SubmitHandler<StateTask> = (data) => console.log(data);
+  // const [addTaskData, setAddTask] = useSetState<stateTask>(initial);
   return (
     <div style={{ margin: 30 }} className="h-full">
       {open ? (
@@ -55,55 +56,49 @@ const AddTask = ({ box, date, mutate }: props) => {
         </Group>
       ) : (
         <Stack>
-          <Autocomplete
-            placeholder="Name"
-            value={addTaskData.name}
-            onChange={(e) => {
-              setAddTask({ name: e });
-            }}
-            data={[]}
-            style={{ width: "auto" }}
-          ></Autocomplete>
-          <Group>
-            <Weight weight={addTaskData.weight} setAddWeight={setAddTask} />
-            <DueDate dueDate={addTaskData.due_date} setAddDate={setAddTask} />
-            <Box taskBox={addTaskData.box} setTaskBox={setAddTask} />
-            {addTaskData.box === "calender" && (
-              <DateSelect date={addTaskData.date} setAddDate={setAddTask} />
-            )}
-          </Group>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <TextInput
+              placeholder="Name"
+              {...register("name")}
+              style={{ width: "auto" }}
+            />
+            <Group>
+              {/* <Weight weight={watch().weight} setAddWeight={setAddTask} /> */}
+              {/* <DueDate dueDate={watch().due_date} setAddDate={setAddTask} /> */}
+              <Box taskBox={watch().box} control={control} />
+              {/* {watch().box === "calender" && (
+                <DateSelect date={watch.date} setAddDate={setAddTask} />
+              )} */}
+            </Group>
 
-          <Textarea
-            placeholder="Memo"
-            value={addTaskData.memo}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-              setAddTask({ memo: e.currentTarget.value });
-            }}
-          ></Textarea>
-          <Group>
-            <Button
-              onClick={() => {
-                setOpen(true);
-              }}
-              variant="light"
-              color="red"
-              radius="md"
-            >
-              キャンセル
-            </Button>
-            <Button
-              onClick={() => {
-                setAddTask(initial);
-                mutate(addTask(addTaskData));
-                setOpen(true);
-              }}
-              variant="light"
-              color="brown"
-              radius="md"
-            >
-              追加
-            </Button>
-          </Group>
+            <Textarea placeholder="Memo" {...register("memo")}></Textarea>
+            <Group>
+              <Button
+                onClick={() => {
+                  setOpen(true);
+                }}
+                variant="light"
+                color="red"
+                radius="md"
+                type="button"
+              >
+                キャンセル
+              </Button>
+              <Button
+                type="submit"
+                variant="light"
+                color="brown"
+                radius="md"
+                // onClick={() => {
+                //   // setAddTask(initial);
+                //   // mutate(addTask(addTaskData));
+                //   setOpen(true);
+                // }}
+              >
+                追加
+              </Button>
+            </Group>
+          </form>
         </Stack>
       )}
     </div>
