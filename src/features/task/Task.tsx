@@ -11,9 +11,9 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { deleteTask, updateTaskAPI } from "../../api";
 import { separateAtom } from "../../atoms/openAtom";
 import { stateAtom } from "../../atoms/stateAtom";
-import SubTask from "../../features/subTask/show/SubTask";
-import UpdateTask from "../../features/task/update/UpdateTask";
 import { task } from "../../Types";
+import SubTask from "../subTask/show/SubTask";
+import UpdateTask from "./update/UpdateTask";
 
 type taskType = task & { id: number };
 type props = {

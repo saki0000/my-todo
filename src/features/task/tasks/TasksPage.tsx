@@ -2,9 +2,9 @@ import { Grid, Stack } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../../atoms/stateAtom";
-import Calender from "../../../components/layout/Calender";
 import TaskBox from "../../../components/layout/TaskBox";
 import { boxType, orderType } from "../../../Types";
+import Calender from "../../calendar/Calender";
 
 type NewBoxType = Exclude<boxType, "inbox">;
 type NewOrderType = Exclude<orderType, "fourth">;

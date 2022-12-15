@@ -1,8 +1,8 @@
 import { MantineProvider } from "@mantine/core";
 import { useSelector } from "react-redux";
 import "./App.css";
-import Logined from "./components/layout/Logined";
 import Login from "./features/login/Login";
+import Logined from "./features/login/Logined";
 import { selectUser } from "./redux/userSlice";
 
 function App() {

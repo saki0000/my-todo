@@ -1,7 +1,7 @@
 import { AppShell, Header, MantineProvider } from "@mantine/core";
 import { RecoilRoot } from "recoil";
-import Head from "../head/Header";
-import Main from "./Main";
+import Head from "../../components/head/Header";
+import Main from "../../components/Main";
 
 const Logined = () => {
   return (

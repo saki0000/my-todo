@@ -3,8 +3,8 @@
 import { Divider, Paper, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import React from "react";
-import CalendarTask from "../../features/calendar/CalendarTask";
-import useCalenderHook from "../../features/calendar/hooks/CalenderHook";
+import CalendarTask from "./CalendarTask";
+import useCalenderHook from "./hooks/CalenderHook";
 
 const Calender = React.memo(({ onClick }: { onClick?: () => void }) => {
   const today = new Date();

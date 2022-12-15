@@ -5,9 +5,9 @@ import { useRecoilValue } from "recoil";
 import { getDoTasks } from "../../api";
 import { stateAtom } from "../../atoms/stateAtom";
 import AddTask from "../../features/task/add/AddTask";
+import Task from "../../features/task/Task";
 import { selectUser } from "../../redux/userSlice";
 import { boxType, task, User } from "../../Types";
-import Task from "./Task";
 
 type props = { box: "inbox" | "someday" | "nextAction"; onClick?: () => void };
 type boxName = Omit<
