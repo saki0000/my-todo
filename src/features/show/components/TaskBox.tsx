@@ -4,7 +4,7 @@ import { useRecoilValue } from "recoil";
 import { stateAtom } from "../../../atoms/stateAtom";
 import { boxType, task } from "../../../Types";
 import AddTask from "../../add/components/AddTask";
-import { useFetchTasks } from "../hooks/fetchTask";
+import { useFetchTasks } from "../hooks/useFetchTask";
 import Task from "./Task";
 
 type props = { box: "inbox" | "someday" | "nextAction"; onClick?: () => void };
