@@ -3,13 +3,14 @@ import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
-import { addTask } from "../../api";
-import { selectUser } from "../../redux/userSlice";
-import { boxType, DateFormat, task, User } from "../../Types";
-import Box from "../edit/Box";
-import DateSelect from "../edit/Date";
-import DueDate from "../edit/DueDate";
-import Weight from "../edit/Weight";
+import { selectUser } from "../../../redux/userSlice";
+import { boxType, DateFormat, task, User } from "../../../Types";
+
+import Box from "../../update/components/Box";
+import DateSelect from "../../update/components/Date";
+import DueDate from "../../update/components/DueDate";
+import Weight from "../../update/components/Weight";
+import { addTask } from "../api/AddApi";
 
 type Props = {
   box: boxType;

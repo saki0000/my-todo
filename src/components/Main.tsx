@@ -1,7 +1,7 @@
 import { Grid } from "@mantine/core";
 import React, { useState } from "react";
 import Separate from "../features/separate/Separate";
-import TaskBox from "../features/show/TaskBox";
+import TaskBox from "../features/show/components/TaskBox";
 import TasksPage from "./layout/tasks/TasksPage";
 
 const Main: React.FC = () => {

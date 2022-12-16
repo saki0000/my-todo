@@ -3,12 +3,12 @@
 import { Divider, Paper, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import React from "react";
+import useGetDateOfYear from "../hooks/CalenderHook";
 import CalendarTask from "./CalendarTask";
-import useCalenderHook from "./hooks/CalenderHook";
 
 const Calender = React.memo(({ onClick }: { onClick?: () => void }) => {
   const today = new Date();
-  const [dateTask] = useCalenderHook();
+  const [dateTask] = useGetDateOfYear();
   const [calendar, setCalendar] = useSetState({
     first: "カレンダー",
     second: "今日",

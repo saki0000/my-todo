@@ -1,41 +1,29 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ActionIcon, Badge, Checkbox, Group, Text } from "@mantine/core";
-import React, { useEffect, useState } from "react";
-import {
-  AiOutlineDelete,
-  AiOutlineEdit,
-  AiOutlinePartition,
-} from "react-icons/ai";
+import { Badge, Checkbox, Group, Text } from "@mantine/core";
+import React, { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { deleteTask, updateTaskAPI } from "../../api";
-import { separateAtom } from "../../atoms/openAtom";
-import { stateAtom } from "../../atoms/stateAtom";
-import { task } from "../../Types";
-import UpdateTask from "../update/UpdateTask";
+import { separateAtom } from "../../../atoms/openAtom";
+import { stateAtom } from "../../../atoms/stateAtom";
+import { task } from "../../../Types";
+import { deleteTask } from "../../delete/api/DeleteApi";
+import DeleteButton from "../../delete/components/DeleteButton";
+import SeparateButton from "../../separate/SeparateButton";
+import EditButton from "../../update/components/EditButton";
+import UpdateTask from "../../update/components/UpdateTask";
+import PromptBadge from "./PromptBadge";
 import SubTask from "./SubTask";
 
-type taskType = task & { id: number };
+type TaskType = task & { id: number };
 type props = {
-  task: taskType;
+  task: TaskType;
   mutate?: any;
 };
 const Task = React.memo(({ task, mutate }: props) => {
-  // const [tasks, setTasks] = useSetState<taskType>(task);
-  const [diffDay, setDiffDay] = useState<Number>();
   const [open, setOpen] = useState<boolean>(false);
-  const [checked, setChecked] = useState<boolean>(false);
   const setModal = useSetRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);
 
-  useEffect(() => {
-    if (task.created_at) {
-      const createdAtDate = new Date(task.created_at);
-      const today = new Date();
-      const diffTime = today.getTime() - createdAtDate.getTime();
-      setDiffDay(Math.floor(diffTime / (1000 * 60 * 60 * 24)));
-    }
-  }, []);
-  console.log(task.id);
+  console.log(task.name);
   return (
     <>
       {open ? (
@@ -44,28 +32,17 @@ const Task = React.memo(({ task, mutate }: props) => {
         </div>
       ) : (
         <>
-          {task === undefined || checked || (
+          {task === undefined || (
             <>
-              {/* <Separate dataMutate={mutate} /> */}
               <div className="pt-2">
                 <div className="pt-2 px-4">
                   <Group position="apart">
                     <Group>
                       <Checkbox
-                        checked={checked}
+                        checked={false}
                         onChange={(e) => {
-                          setChecked(e.currentTarget.checked);
-                          mutate(
-                            updateTaskAPI(task.id, {
-                              name: task.name,
-                              box: task.box,
-                              date: task.date,
-                              due_date: task.due_date,
-                              weight: task.weight,
-                              statement: true,
-                              memo: task.memo,
-                            })
-                          );
+                          e.preventDefault();
+                          deleteTask(task.id);
                         }}
                       />
 
@@ -75,27 +52,22 @@ const Task = React.memo(({ task, mutate }: props) => {
                     {/* buttons */}
                     {(task.box === "inbox" || state.first === task.box) && (
                       <Group>
-                        <ActionIcon
+                        <SeparateButton
                           onClick={() => {
                             setModal({ id: task.id, open: true });
                           }}
-                        >
-                          <AiOutlinePartition></AiOutlinePartition>
-                        </ActionIcon>
-                        <ActionIcon
+                        />
+
+                        <EditButton
                           onClick={() => {
                             setOpen(true);
                           }}
-                        >
-                          <AiOutlineEdit></AiOutlineEdit>
-                        </ActionIcon>
-                        <ActionIcon
+                        />
+                        <DeleteButton
                           onClick={() => {
                             mutate(deleteTask(task.id));
                           }}
-                        >
-                          <AiOutlineDelete></AiOutlineDelete>
-                        </ActionIcon>
+                        />
                       </Group>
                     )}
                   </Group>
@@ -122,20 +94,14 @@ const Task = React.memo(({ task, mutate }: props) => {
                 {/* subtask */}
                 {state.first && task?.subtasks?.length !== 0 && (
                   <div className="my-2 mx-4">
-                    {task?.subtasks?.map((task: taskType) => (
+                    {task?.subtasks?.map((task: TaskType) => (
                       <div className="my-3">
                         <SubTask id={task.id} task={task} mutate={mutate} />
                       </div>
                     ))}
                   </div>
                 )}
-                {task.box === "inbox" && diffDay && diffDay > 14 ? (
-                  <>
-                    <Badge color="red">タスクを振り分けてください</Badge>
-                  </>
-                ) : (
-                  <></>
-                )}
+                <PromptBadge task={task} />
               </div>
             </>
           )}

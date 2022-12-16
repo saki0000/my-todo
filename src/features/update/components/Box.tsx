@@ -1,7 +1,7 @@
 import { Badge, HoverCard, Menu, Select, Text } from "@mantine/core";
 import React from "react";
 import { Controller } from "react-hook-form";
-import { boxType } from "../../Types";
+import { boxType } from "../../../Types";
 
 // eslint-disable-next-line no-empty-pattern
 type box = { taskBox?: boxType; control?: any };

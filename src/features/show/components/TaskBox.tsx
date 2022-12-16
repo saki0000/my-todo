@@ -1,12 +1,10 @@
 import { Divider, Loader, Paper, Stack, Text } from "@mantine/core";
 import React from "react";
-import { useSelector } from "react-redux";
 import { useRecoilValue } from "recoil";
-import { getDoTasks } from "../../api";
-import { stateAtom } from "../../atoms/stateAtom";
-import { selectUser } from "../../redux/userSlice";
-import { boxType, task, User } from "../../Types";
-import AddTask from "../add/AddTask";
+import { stateAtom } from "../../../atoms/stateAtom";
+import { boxType, task } from "../../../Types";
+import AddTask from "../../add/components/AddTask";
+import { useFetchTasks } from "../hooks/fetchTask";
 import Task from "./Task";
 
 type props = { box: "inbox" | "someday" | "nextAction"; onClick?: () => void };
@@ -23,9 +21,8 @@ const boxes: boxName = {
 };
 
 const TaskBox = React.memo(({ box, onClick }: props) => {
-  const user: User = useSelector(selectUser);
   const first = useRecoilValue(stateAtom);
-  const { data, isLoading, error, mutate } = getDoTasks(user, box);
+  const { data, isLoading, error, mutate } = useFetchTasks(box);
 
   console.log(box, "box", "rendering");
   return (
@@ -50,7 +47,7 @@ const TaskBox = React.memo(({ box, onClick }: props) => {
                 ))
               ) : (
                 <div className="my-4 ml-10">
-                  {first.first === box || first.first === "inbox" || (
+                  {isLoading || first.first === box || box === "inbox" || (
                     <Text>No Task</Text>
                   )}
                 </div>

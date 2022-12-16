@@ -1,12 +1,14 @@
 import { ActionIcon, Badge, Checkbox, Group, Text } from "@mantine/core";
 import React, { useEffect, useState } from "react";
-import { AiOutlineDelete, AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
+import { AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
-import { deleteSubTask, updateSubTask } from "../../api";
-import { separateAtom } from "../../atoms/openAtom";
-import { stateAtom } from "../../atoms/stateAtom";
-import { task } from "../../Types";
-import UpdateTask from "../update/UpdateTask";
+import { separateAtom } from "../../../atoms/openAtom";
+import { stateAtom } from "../../../atoms/stateAtom";
+import { task } from "../../../Types";
+import { deleteSubTask } from "../../delete/api/DeleteApi";
+import DeleteButton from "../../delete/components/DeleteButton";
+import { updateSubTask } from "../../update/api/UpdateApi";
+import UpdateTask from "../../update/components/UpdateTask";
 
 type props = {
   task: task & { id: number };
@@ -73,13 +75,11 @@ const SubTask = React.memo(({ task, mutate, id }: props) => {
                         >
                           <AiOutlineEdit></AiOutlineEdit>
                         </ActionIcon>
-                        <ActionIcon
+                        <DeleteButton
                           onClick={() => {
                             mutate(deleteSubTask(modalValue.id, task.id));
                           }}
-                        >
-                          <AiOutlineDelete></AiOutlineDelete>
-                        </ActionIcon>
+                        />
                       </Group>
                     )}
                   </Group>
