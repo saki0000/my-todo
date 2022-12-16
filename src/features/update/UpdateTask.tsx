@@ -8,9 +8,9 @@ import {
 } from "@mantine/core";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
-import { updateSubTask, updateTaskAPI } from "../../../api";
-import { separateAtom } from "../../../atoms/openAtom";
-import { task } from "../../../Types";
+import { updateSubTask, updateTaskAPI } from "../../api";
+import { separateAtom } from "../../atoms/openAtom";
+import { task } from "../../Types";
 import Box from "../edit/Box";
 import DateSelect from "../edit/Date";
 import DueDate from "../edit/DueDate";

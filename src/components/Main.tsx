@@ -1,8 +1,8 @@
 import { Grid } from "@mantine/core";
 import React, { useState } from "react";
-import Separate from "../features/subTask/separate/Separate";
-import TasksPage from "../features/task/tasks/TasksPage";
-import TaskBox from "./layout/TaskBox";
+import Separate from "../features/separate/Separate";
+import TaskBox from "../features/show/TaskBox";
+import TasksPage from "./layout/tasks/TasksPage";
 
 const Main: React.FC = () => {
   const [page, setPage] = useState<boolean>(true);

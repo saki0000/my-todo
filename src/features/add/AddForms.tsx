@@ -3,9 +3,9 @@ import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 
-import { addTask } from "../../../api";
-import { selectUser } from "../../../redux/userSlice";
-import { boxType, DateFormat, task, User } from "../../../Types";
+import { addTask } from "../../api";
+import { selectUser } from "../../redux/userSlice";
+import { boxType, DateFormat, task, User } from "../../Types";
 import Box from "../edit/Box";
 import DateSelect from "../edit/Date";
 import DueDate from "../edit/DueDate";

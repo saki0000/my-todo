@@ -6,7 +6,7 @@ import { deleteSubTask, updateSubTask } from "../../api";
 import { separateAtom } from "../../atoms/openAtom";
 import { stateAtom } from "../../atoms/stateAtom";
 import { task } from "../../Types";
-import UpdateTask from "../task/update/UpdateTask";
+import UpdateTask from "../update/UpdateTask";
 
 type props = {
   task: task & { id: number };

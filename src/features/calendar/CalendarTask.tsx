@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { dateTask } from "../../api";
 import { selectUser } from "../../redux/userSlice";
 import { task } from "../../Types";
-import AddTask from "../task/add/AddTask";
-import Task from "../task/Task";
+import AddTask from "../add/AddTask";
+import Task from "../show/Task";
 type taskType = task & { id: number };
 const CalendarTask = ({ date }: { date: string }) => {
   const user = useSelector(selectUser);

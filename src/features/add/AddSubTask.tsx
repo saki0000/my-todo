@@ -1,16 +1,14 @@
 import { ActionIcon, Group, Text } from "@mantine/core";
-
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { boxType, DateFormat } from "../../../Types";
-import AddForms from "./AddForms";
+import { task } from "../../Types";
+import AddSubTaskForms from "./AddSubTaskForms";
 
-type Props = { box: boxType; date?: DateFormat | string; mutate?: any };
-const AddTask = ({ box, date, mutate }: Props) => {
+type props = { task: task; mutate: any };
+const AddSubTask = ({ task, mutate }: props) => {
   const [open, setOpen] = useState<boolean>(true);
-
   return (
-    <div className="h-full mx-4">
+    <div className="mx-4 my-6">
       {open ? (
         <Group>
           <ActionIcon
@@ -23,10 +21,10 @@ const AddTask = ({ box, date, mutate }: Props) => {
           <Text>タスクを追加</Text>
         </Group>
       ) : (
-        <AddForms box={box} date={date} setOpen={setOpen} mutate={mutate} />
+        <AddSubTaskForms taskValue={task} setOpen={setOpen} mutate={mutate} />
       )}
     </div>
   );
 };
 
-export default AddTask;
+export default AddSubTask;
