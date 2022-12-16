@@ -1,13 +1,13 @@
-import { ActionIcon, Badge, Checkbox, Group, Text } from "@mantine/core";
-import React, { useEffect, useState } from "react";
-import { AiOutlineEdit, AiOutlineEnter } from "react-icons/ai";
+import { Badge, Checkbox, Group, Text } from "@mantine/core";
+import React, { useState } from "react";
+import { AiOutlineEnter } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
 import { stateAtom } from "../../../atoms/stateAtom";
 import { task } from "../../../Types";
 import { deleteSubTask } from "../../delete/api/DeleteApi";
 import DeleteButton from "../../delete/components/DeleteButton";
-import { updateSubTask } from "../../update/api/UpdateApi";
+import EditButton from "../../update/components/EditButton";
 import UpdateTask from "../../update/components/UpdateTask";
 
 type props = {
@@ -17,26 +17,10 @@ type props = {
 };
 const SubTask = React.memo(({ task, mutate, id }: props) => {
   const modalValue = useRecoilValue(separateAtom);
-
   const [open, setOpen] = useState(false);
-  const [checked, setChecked] = useState<boolean | undefined>(false);
   const state = useRecoilValue(stateAtom);
-  useEffect(() => {
-    checked &&
-      mutate(
-        updateSubTask(id, task.id, {
-          name: task.name,
-          box: task.box,
-          date: task.date,
-          due_date: task.due_date,
-          weight: task.weight,
-          statement: true,
-          memo: task.memo,
-        })
-      );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [checked]);
-  console.log(id);
+
+  console.log();
   return (
     <>
       {task && !task.statement && (
@@ -59,22 +43,21 @@ const SubTask = React.memo(({ task, mutate, id }: props) => {
                         style={{ transform: "scale(-1,1)" }}
                       ></AiOutlineEnter>
                       <Checkbox
-                        checked={checked}
+                        checked={false}
                         onChange={(e) => {
-                          setChecked(e.currentTarget.checked);
+                          e.preventDefault();
+                          deleteSubTask(modalValue.id, task.id);
                         }}
                       />
                       <Text>{task?.name}</Text>
                     </Group>
                     {state.first === task.box && (
                       <Group>
-                        <ActionIcon
+                        <EditButton
                           onClick={() => {
                             setOpen(true);
                           }}
-                        >
-                          <AiOutlineEdit></AiOutlineEdit>
-                        </ActionIcon>
+                        />
                         <DeleteButton
                           onClick={() => {
                             mutate(deleteSubTask(modalValue.id, task.id));

@@ -1,6 +1,6 @@
 import { Grid } from "@mantine/core";
 import React, { useState } from "react";
-import Separate from "../features/separate/Separate";
+import Separate from "../features/separate/components/Separate";
 import TaskBox from "../features/show/components/TaskBox";
 import TasksPage from "./layout/tasks/TasksPage";
 

@@ -1,11 +1,11 @@
 import { Divider, Modal, Stack } from "@mantine/core";
 import React from "react";
 import { useRecoilState } from "recoil";
-import { separateAtom } from "../../atoms/openAtom";
-import { task } from "../../Types";
-import AddSubTask from "../add/components/AddSubTask";
-import SubTask from "../show/components/SubTask";
-import useFetchTask from "./hooks/fetchTask";
+import { separateAtom } from "../../../atoms/openAtom";
+import { task } from "../../../Types";
+import AddSubTask from "../../add/components/AddSubTask";
+import SubTask from "../../show/components/SubTask";
+import useFetchTask from "../hooks/fetchTask";
 
 const Separate = React.memo(({ dataMutate }: { dataMutate?: any }) => {
   const [modal, setOpen] = useRecoilState(separateAtom);

@@ -7,7 +7,7 @@ import { stateAtom } from "../../../atoms/stateAtom";
 import { task } from "../../../Types";
 import { deleteTask } from "../../delete/api/DeleteApi";
 import DeleteButton from "../../delete/components/DeleteButton";
-import SeparateButton from "../../separate/SeparateButton";
+import SeparateButton from "../../separate/components/SeparateButton";
 import EditButton from "../../update/components/EditButton";
 import UpdateTask from "../../update/components/UpdateTask";
 import PromptBadge from "./PromptBadge";
