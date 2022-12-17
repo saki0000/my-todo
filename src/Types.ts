@@ -1,5 +1,5 @@
 export type task = {
-  box?: boxType;
+  box: boxType;
   created_at?: Date;
   date?: DateFormat | string;
   due_date?: DateFormat | string;

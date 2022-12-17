@@ -29,9 +29,10 @@ const TaskBox = ({ box, onClick }: props) => {
     if (box === "inbox" && data) {
       setInboxNumber(data.length);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  console.log(box, "box", "rendering");
+  console.log(data);
   return (
     <>
       <Paper
@@ -47,9 +48,9 @@ const TaskBox = ({ box, onClick }: props) => {
           <div className="h-full overflow-auto">
             <div>
               {data && data.length !== 0 ? (
-                data.map((task: task & { id: number }) => (
+                data.map((task: task & { id: number }, index: number) => (
                   <div key={task.id}>
-                    <Task task={task} mutate={mutate} />
+                    <Task task={task} mutate={mutate} index={index} />
                   </div>
                 ))
               ) : (

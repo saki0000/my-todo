@@ -46,7 +46,7 @@ const SubTask = ({ task, mutate, id }: props) => {
                         checked={false}
                         onChange={(e) => {
                           e.preventDefault();
-                          deleteSubTask(modalValue.id, task.id);
+                          mutate(deleteSubTask(modalValue.id, task.id));
                         }}
                       />
                       <Text>{task?.name}</Text>
