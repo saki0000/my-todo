@@ -30,7 +30,7 @@ const Task = ({ task, mutate, index }: props) => {
     <>
       {open ? (
         <div className="h-full" key={task.id}>
-          <UpdateTask task={task} setOpen={setOpen} mutate={mutate} />
+          <UpdateTask task={task} setOpen={setOpen} index={index} />
         </div>
       ) : (
         <>
