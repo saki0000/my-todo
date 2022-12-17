@@ -8,13 +8,15 @@ import {
 } from "@mantine/core";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
-import { updateSubTask, updateTaskAPI } from "../../../api";
+
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
-import Box from "../edit/Box";
-import DateSelect from "../edit/Date";
-import DueDate from "../edit/DueDate";
-import Weight from "../edit/Weight";
+import { updateSubTask, updateTaskAPI } from "../api/UpdateApi";
+
+import Box from "./Box";
+import DateSelect from "./Date";
+import DueDate from "./DueDate";
+import Weight from "./Weight";
 
 type taskType = task & { id: number };
 type props = {

@@ -1,11 +1,12 @@
 import { Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
-import { addSubTask } from "../../../api";
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
-import DueDate from "../../task/edit/DueDate";
-import Weight from "../../task/edit/Weight";
+import DueDate from "../../update/components/DueDate";
+import Weight from "../../update/components/Weight";
+
+import { addSubTask } from "../api/AddApi";
 
 const AddSubTaskForms = ({ taskValue, setOpen, mutate }: any) => {
   const modalValue = useRecoilValue(separateAtom);

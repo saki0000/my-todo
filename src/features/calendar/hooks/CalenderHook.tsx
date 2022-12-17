@@ -1,8 +1,7 @@
 import { useMemo } from "react";
 
-const useCalenderHook = () => {
+const useGetDateOfYear = (today: Date) => {
   const dateTask = useMemo(() => {
-    const today = new Date();
     return [...Array(365)].map((_, index) => {
       return new Date(
         today.getFullYear(),
@@ -12,8 +11,8 @@ const useCalenderHook = () => {
         .toJSON()
         .split("T")[0];
     });
-  }, []);
+  }, [today]);
   return [dateTask];
 };
 
-export default useCalenderHook;
+export default useGetDateOfYear;

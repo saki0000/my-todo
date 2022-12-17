@@ -2,9 +2,9 @@ import { Grid, Stack } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../../atoms/stateAtom";
-import TaskBox from "../../../components/layout/TaskBox";
+import Calender from "../../../features/calendar/components/Calender";
+import TaskBox from "../../../features/show/components/TaskBox";
 import { boxType, orderType } from "../../../Types";
-import Calender from "../../calendar/Calender";
 
 type NewBoxType = Exclude<boxType, "inbox">;
 type NewOrderType = Exclude<orderType, "fourth">;
@@ -15,7 +15,7 @@ type stateType = {
   [k in NewOrderType]: NewBoxType;
 };
 
-const TasksPage = () => {
+const TasksPage: React.FC = () => {
   const [state, setState] = useSetState<stateType>({
     first: "nextAction",
     second: "calender",

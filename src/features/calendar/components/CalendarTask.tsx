@@ -1,19 +1,21 @@
 import { Loader } from "@mantine/core";
-import { useSelector } from "react-redux";
-import { dateTask } from "../../api";
-import { selectUser } from "../../redux/userSlice";
-import { task } from "../../Types";
-import AddTask from "../task/add/AddTask";
-import Task from "../task/Task";
+import { task } from "../../../Types";
+import AddTask from "../../add/components/AddTask";
+import Task from "../../show/components/Task";
+import useFetchDateTask from "../hooks/fetchDateTask";
 type taskType = task & { id: number };
 const CalendarTask = ({ date }: { date: string }) => {
-  const user = useSelector(selectUser);
-  const { data, isLoading, error, mutate } = dateTask(user, date);
+  const {
+    data: calendarTask,
+    isLoading,
+    error,
+    mutate,
+  } = useFetchDateTask(date);
   return (
     <>
       <div className="my-6">
-        {data &&
-          data.map((task: taskType) => (
+        {calendarTask &&
+          calendarTask.map((task: taskType) => (
             <div key={task.id}>
               <Task task={task} mutate={mutate} />
             </div>
