@@ -6,21 +6,19 @@ import { separateAtom } from "../../../atoms/openAtom";
 import { stateAtom } from "../../../atoms/stateAtom";
 import { task } from "../../../Types";
 import { deleteSubTask } from "../../delete/api/DeleteApi";
-import DeleteButton from "../../delete/components/DeleteButton";
 import EditButton from "../../update/components/EditButton";
 import UpdateTask from "../../update/components/UpdateTask";
+import useFetchSubTask from "../hooks/useFetchSubTask";
 
 type props = {
   task: task & { id: number };
-  mutate: any;
-  id: number;
+  index: number;
 };
-const SubTask = ({ task, mutate, id }: props) => {
+const SubTask = ({ task, index }: props) => {
   const modalValue = useRecoilValue(separateAtom);
   const [open, setOpen] = useState(false);
   const state = useRecoilValue(stateAtom);
-
-  console.log();
+  const { data, mutate } = useFetchSubTask(modalValue.id);
   return (
     <>
       {task && !task.statement && (
@@ -29,9 +27,9 @@ const SubTask = ({ task, mutate, id }: props) => {
             <UpdateTask
               task={task}
               setOpen={setOpen}
-              mutate={mutate}
               sub={true}
               id={modalValue.id}
+              mutate={mutate}
             />
           ) : (
             <>
@@ -46,33 +44,37 @@ const SubTask = ({ task, mutate, id }: props) => {
                         checked={false}
                         onChange={(e) => {
                           e.preventDefault();
-                          mutate(deleteSubTask(modalValue.id, task.id));
+                          const newData = [...data];
+                          newData.splice(index, 1);
+                          deleteSubTask(modalValue.id, task.id);
+                          mutate(newData, false);
                         }}
                       />
                       <Text>{task?.name}</Text>
                     </Group>
-                    {state.first === task.box && (
+                    {(state.first === task.box || task.box === "inbox") && (
                       <Group>
                         <EditButton
                           onClick={() => {
                             setOpen(true);
                           }}
                         />
-                        <DeleteButton
-                          onClick={() => {
-                            mutate(deleteSubTask(modalValue.id, task.id));
-                          }}
-                        />
                       </Group>
                     )}
                   </Group>
 
-                  <Group className="ml-16 mt-2">
-                    {task.weight && <Badge color="brown">{task?.weight}</Badge>}
-                    {task.due_date && task.due_date !== "期日" && (
-                      <Badge color="brown">{task?.due_date}</Badge>
-                    )}
-                  </Group>
+                  {!task.weight && !task.due_date ? (
+                    <></>
+                  ) : (
+                    <div className="ml-16 mt-2 flex space-x-2">
+                      {task.weight && (
+                        <Badge color="brown">{task?.weight}</Badge>
+                      )}
+                      {task.due_date && (
+                        <Badge color="brown">{task?.due_date}</Badge>
+                      )}
+                    </div>
+                  )}
 
                   {task.memo && (
                     <Text color="gray" className="ml-16 mt-1">

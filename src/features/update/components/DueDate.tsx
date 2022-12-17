@@ -37,7 +37,7 @@ const DueDate = React.forwardRef(({ control }: props) => {
                 />
               </div>
             </Modal>
-            <HoverCard width={160} position="top" shadow="md" zIndex={1}>
+            <HoverCard width={110} position="top" shadow="md" zIndex={1}>
               <HoverCard.Target>
                 <Badge color="brown" onClick={() => setOpen(true)}>
                   {field.value || "期日"}

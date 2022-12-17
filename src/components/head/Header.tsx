@@ -1,18 +1,17 @@
-import { Button, Group, Text } from "@mantine/core";
+import { Button, Group } from "@mantine/core";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { logout, selectUser } from "../../redux/userSlice";
-import { User } from "../../Types";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/userSlice";
 
 const Head = React.memo(() => {
   const dispatch = useDispatch();
-  const user: User = useSelector(selectUser);
+  // const user: User = useSelector(selectUser);
   return (
     <>
       <Group align="center" position="apart" className="bg-darkBlue mx-16">
         <Group>
-          <p className="font-bold text-2xl text-white">GHD APP</p>
-          <Text>{user.displayName}</Text>
+          <p className="font-bold text-2xl text-white">ASAP TASK</p>
+          {/* <Text>{user.displayName}</Text> */}
         </Group>
         <Button
           onClick={() => {

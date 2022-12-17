@@ -28,7 +28,7 @@ const AddForms = ({ box, date, setOpen }: Props) => {
     name: "",
     box: box,
     date: date || "",
-    due_date: "期日",
+    due_date: "",
     weight: "",
     subtasks: [],
     statement: false,
@@ -56,12 +56,12 @@ const AddForms = ({ box, date, setOpen }: Props) => {
             {...register("name")}
             style={{ width: "auto" }}
           />
-          <Group>
+          <div className="flex space-x-4">
             <Weight control={control} />
             <DueDate control={control} />
             <Box control={control} />
             {watch().box === "calender" && <DateSelect control={control} />}
-          </Group>
+          </div>
 
           <Textarea placeholder="Memo" {...register("memo")}></Textarea>
           <Group>
