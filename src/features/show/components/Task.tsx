@@ -38,8 +38,8 @@ const Task = ({ task, mutate, index }: props) => {
             <>
               <div className="pt-2" key={task.id}>
                 <div className="pt-2 px-2">
-                  <Group position="apart">
-                    <Group>
+                  <Group position="apart" className="my-0">
+                    <div className="flex space-x-4">
                       <Checkbox
                         checked={false}
                         onChange={(e) => {
@@ -51,8 +51,8 @@ const Task = ({ task, mutate, index }: props) => {
                         }}
                       />
 
-                      <Text>{task?.name}</Text>
-                    </Group>
+                      <p className="m-0 text-lg font-sans">{task?.name}</p>
+                    </div>
 
                     {/* buttons */}
                     {(task.box === "inbox" || state.first === task.box) && (

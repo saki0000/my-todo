@@ -47,7 +47,7 @@ const UpdateTask = ({ task, setOpen, mutate, sub, id }: props) => {
     setOpen(false);
   };
   return (
-    <div className="mx-4">
+    <div className="mt-4 mx-1">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Stack>
           <TextInput placeholder="Name" {...register("name")}></TextInput>
