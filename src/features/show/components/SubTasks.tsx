@@ -12,7 +12,7 @@ const SubTasks = ({ taskId }: { taskId: number }) => {
   if (error) return <div>error</div>;
   return (
     <>
-      <div className="my-2 mx-4">
+      <div className="my-2 ml-4 mr-2">
         {subtasks &&
           subtasks?.map((task: TaskType, index: number) => (
             <div className="my-3">

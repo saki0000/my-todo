@@ -13,7 +13,7 @@ const Box = React.forwardRef(({ taskBox, control }: box) => {
         name="box"
         control={control}
         render={({ field }) => (
-          <HoverCard width={160} position="bottom" shadow="md">
+          <HoverCard width={133} position="top" shadow="md">
             <HoverCard.Target>
               <Menu>
                 <Menu.Target>
@@ -30,6 +30,7 @@ const Box = React.forwardRef(({ taskBox, control }: box) => {
                     ref={field.ref}
                     onChange={field.onChange}
                     value={field.value}
+                    className="w-fit"
                   />
                 </Menu.Dropdown>
               </Menu>

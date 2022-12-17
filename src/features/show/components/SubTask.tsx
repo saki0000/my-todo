@@ -6,7 +6,6 @@ import { separateAtom } from "../../../atoms/openAtom";
 import { stateAtom } from "../../../atoms/stateAtom";
 import { task } from "../../../Types";
 import { deleteSubTask } from "../../delete/api/DeleteApi";
-import DeleteButton from "../../delete/components/DeleteButton";
 import EditButton from "../../update/components/EditButton";
 import UpdateTask from "../../update/components/UpdateTask";
 import useFetchSubTask from "../hooks/useFetchSubTask";
@@ -20,8 +19,6 @@ const SubTask = ({ task, index }: props) => {
   const [open, setOpen] = useState(false);
   const state = useRecoilValue(stateAtom);
   const { data, mutate } = useFetchSubTask(modalValue.id);
-
-  console.log();
   return (
     <>
       {task && !task.statement && (
@@ -32,6 +29,7 @@ const SubTask = ({ task, index }: props) => {
               setOpen={setOpen}
               sub={true}
               id={modalValue.id}
+              mutate={mutate}
             />
           ) : (
             <>
@@ -47,9 +45,9 @@ const SubTask = ({ task, index }: props) => {
                         onChange={(e) => {
                           e.preventDefault();
                           const newData = [...data];
+                          newData.splice(index, 1);
                           deleteSubTask(modalValue.id, task.id);
-                          mutate(newData.splice(index, 1), false);
-                          // mutate();
+                          mutate(newData, false);
                         }}
                       />
                       <Text>{task?.name}</Text>
@@ -61,23 +59,22 @@ const SubTask = ({ task, index }: props) => {
                             setOpen(true);
                           }}
                         />
-                        <DeleteButton
-                          onClick={() => {
-                            const newData = [...data];
-                            deleteSubTask(modalValue.id, task.id);
-                            mutate(newData.splice(index, 1), false);
-                          }}
-                        />
                       </Group>
                     )}
                   </Group>
 
-                  <Group className="ml-16 mt-2">
-                    {task.weight && <Badge color="brown">{task?.weight}</Badge>}
-                    {task.due_date && task.due_date !== "期日" && (
-                      <Badge color="brown">{task?.due_date}</Badge>
-                    )}
-                  </Group>
+                  {!task.weight && !task.due_date ? (
+                    <></>
+                  ) : (
+                    <div className="ml-16 mt-2 flex space-x-2">
+                      {task.weight && (
+                        <Badge color="brown">{task?.weight}</Badge>
+                      )}
+                      {task.due_date && (
+                        <Badge color="brown">{task?.due_date}</Badge>
+                      )}
+                    </div>
+                  )}
 
                   {task.memo && (
                     <Text color="gray" className="ml-16 mt-1">

@@ -10,7 +10,7 @@ export type task = {
   subtasks?: never[];
   updated_at?: Date;
   user_id?: string;
-  weight?: string | number;
+  weight?: string;
 };
 export type stateType = {
   [k in orderType]: boxType;

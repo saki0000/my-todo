@@ -3,6 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
+import useFetchSubTask from "../../show/hooks/useFetchSubTask";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";
 
@@ -10,6 +11,7 @@ import { addSubTask } from "../api/AddApi";
 
 const AddSubTaskForms = ({ taskValue, setOpen, mutate }: any) => {
   const modalValue = useRecoilValue(separateAtom);
+  const { data: subtasks, mutate: subMutate } = useFetchSubTask(taskValue.id);
   const {
     control,
     register,
@@ -21,25 +23,24 @@ const AddSubTaskForms = ({ taskValue, setOpen, mutate }: any) => {
       name: "",
       box: taskValue.box,
       date: taskValue.date,
-      due_date: "期日",
+      due_date: "",
       weight: "",
       statement: false,
       memo: "",
     },
   });
-  const onSubmit: SubmitHandler<task & { task_id: number }> = (data) => {
-    mutate(addSubTask(modalValue.id, data));
+  const onSubmit: SubmitHandler<task & { task_id: number }> = async (data) => {
+    await addSubTask(modalValue.id, data);
+    await subMutate([...subtasks, data], false);
     setOpen(true);
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack>
-        <Group position="apart">
-          <TextInput placeholder="Name" {...register("name")}></TextInput>
-          <Group>
-            <Weight control={control} />
-            <DueDate control={control} />
-          </Group>
+        <TextInput placeholder="Name" {...register("name")}></TextInput>
+        <Group>
+          <Weight control={control} />
+          <DueDate control={control} />
         </Group>
         <Textarea placeholder="Memo" {...register("memo")}></Textarea>
         <Group>

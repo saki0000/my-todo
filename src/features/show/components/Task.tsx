@@ -6,7 +6,6 @@ import { separateAtom } from "../../../atoms/openAtom";
 import { stateAtom } from "../../../atoms/stateAtom";
 import { task } from "../../../Types";
 import { deleteTask } from "../../delete/api/DeleteApi";
-import DeleteButton from "../../delete/components/DeleteButton";
 import SeparateButton from "../../separate/components/SeparateButton";
 import EditButton from "../../update/components/EditButton";
 import UpdateTask from "../../update/components/UpdateTask";
@@ -23,7 +22,6 @@ type props = {
 const Task = ({ task, mutate, index }: props) => {
   const { data, mutate: deleteMutate } = useFetchTasks(task.box);
   const [open, setOpen] = useState<boolean>(false);
-  const [checked, setChecked] = useState<boolean>(true);
   const setModal = useSetRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);
 
@@ -36,7 +34,7 @@ const Task = ({ task, mutate, index }: props) => {
         </div>
       ) : (
         <>
-          {task === undefined || !checked || (
+          {task === undefined || (
             <>
               <div className="pt-2" key={task.id}>
                 <div className="pt-2 px-2">
@@ -50,7 +48,6 @@ const Task = ({ task, mutate, index }: props) => {
                           newData.splice(index, 1);
                           deleteTask(task.id);
                           deleteMutate(newData, false);
-                          setChecked(false);
                         }}
                       />
 
@@ -60,20 +57,14 @@ const Task = ({ task, mutate, index }: props) => {
                     {/* buttons */}
                     {(task.box === "inbox" || state.first === task.box) && (
                       <Group>
-                        <SeparateButton
-                          onClick={() => {
-                            setModal({ id: task.id, open: true });
-                          }}
-                        />
-
                         <EditButton
                           onClick={() => {
                             setOpen(true);
                           }}
                         />
-                        <DeleteButton
+                        <SeparateButton
                           onClick={() => {
-                            mutate(deleteTask(task.id));
+                            setModal({ id: task.id, open: true });
                           }}
                         />
                       </Group>
@@ -82,14 +73,18 @@ const Task = ({ task, mutate, index }: props) => {
 
                   {/* badges */}
 
-                  <Group className="mx-8 mt-2">
-                    {task.weight && (
-                      <Badge color="brown">優先度:{task?.weight}</Badge>
-                    )}
-                    {task.due_date && task.due_date !== "期日" && (
-                      <Badge color="brown">期日:{task?.due_date}</Badge>
-                    )}
-                  </Group>
+                  {!task.weight && !task.due_date ? (
+                    <></>
+                  ) : (
+                    <Group className="mx-8 mt-2">
+                      {task.weight && (
+                        <Badge color="brown">優先度:{task?.weight}</Badge>
+                      )}
+                      {task.due_date && (
+                        <Badge color="brown">期日:{task?.due_date}</Badge>
+                      )}
+                    </Group>
+                  )}
 
                   {/* memo */}
                   {task.memo && (
