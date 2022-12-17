@@ -12,7 +12,7 @@ import EditButton from "../../update/components/EditButton";
 import UpdateTask from "../../update/components/UpdateTask";
 import { useFetchTasks } from "../hooks/useFetchTask";
 import PromptBadge from "./PromptBadge";
-import SubTask from "./SubTask";
+import SubTasks from "./SubTasks";
 
 type TaskType = task & { id: number };
 type props = {
@@ -100,15 +100,7 @@ const Task = ({ task, mutate, index }: props) => {
                 </div>
 
                 {/* subtask */}
-                {state.first && task?.subtasks?.length !== 0 && (
-                  <div className="my-2 mx-4">
-                    {task?.subtasks?.map((task: TaskType, index: number) => (
-                      <div className="my-3">
-                        <SubTask id={task.id} task={task} mutate={mutate} />
-                      </div>
-                    ))}
-                  </div>
-                )}
+                <SubTasks taskId={task.id} />
                 <PromptBadge task={task} />
               </div>
             </>

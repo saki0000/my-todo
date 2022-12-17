@@ -9,16 +9,17 @@ import { deleteSubTask } from "../../delete/api/DeleteApi";
 import DeleteButton from "../../delete/components/DeleteButton";
 import EditButton from "../../update/components/EditButton";
 import UpdateTask from "../../update/components/UpdateTask";
+import useFetchSubTask from "../hooks/useFetchSubTask";
 
 type props = {
   task: task & { id: number };
-  mutate: any;
-  id: number;
+  index: number;
 };
-const SubTask = ({ task, mutate, id }: props) => {
+const SubTask = ({ task, index }: props) => {
   const modalValue = useRecoilValue(separateAtom);
   const [open, setOpen] = useState(false);
   const state = useRecoilValue(stateAtom);
+  const { data, mutate } = useFetchSubTask(modalValue.id);
 
   console.log();
   return (
@@ -29,7 +30,6 @@ const SubTask = ({ task, mutate, id }: props) => {
             <UpdateTask
               task={task}
               setOpen={setOpen}
-              mutate={mutate}
               sub={true}
               id={modalValue.id}
             />
@@ -46,12 +46,15 @@ const SubTask = ({ task, mutate, id }: props) => {
                         checked={false}
                         onChange={(e) => {
                           e.preventDefault();
-                          mutate(deleteSubTask(modalValue.id, task.id));
+                          const newData = [...data];
+                          deleteSubTask(modalValue.id, task.id);
+                          mutate(newData.splice(index, 1), false);
+                          // mutate();
                         }}
                       />
                       <Text>{task?.name}</Text>
                     </Group>
-                    {state.first === task.box && (
+                    {(state.first === task.box || task.box === "inbox") && (
                       <Group>
                         <EditButton
                           onClick={() => {
@@ -60,7 +63,9 @@ const SubTask = ({ task, mutate, id }: props) => {
                         />
                         <DeleteButton
                           onClick={() => {
-                            mutate(deleteSubTask(modalValue.id, task.id));
+                            const newData = [...data];
+                            deleteSubTask(modalValue.id, task.id);
+                            mutate(newData.splice(index, 1), false);
                           }}
                         />
                       </Group>

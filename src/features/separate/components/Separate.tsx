@@ -1,15 +1,13 @@
 import { Divider, Modal, Stack } from "@mantine/core";
 import { useRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
-import { task } from "../../../Types";
 import AddSubTask from "../../add/components/AddSubTask";
-import SubTask from "../../show/components/SubTask";
+import SubTasks from "../../show/components/SubTasks";
 import useFetchTask from "../hooks/fetchTask";
 
-const Separate = ({ dataMutate }: { dataMutate?: any }) => {
+const Separate = () => {
   const [modal, setOpen] = useRecoilState(separateAtom);
   const { data, isLoading, error, mutate } = useFetchTask();
-
   if (isLoading) return <div></div>;
   if (error) return <div>error</div>;
   return (
@@ -28,10 +26,7 @@ const Separate = ({ dataMutate }: { dataMutate?: any }) => {
           <p className="text-xl ml-4">{data.name}</p>
 
           <Divider />
-          {data.subtasks.length === 0 ||
-            data.subtasks.map((task: task & { id: number }) => (
-              <SubTask id={modal.id} task={task} mutate={dataMutate} />
-            ))}
+          <SubTasks taskId={modal.id} />
           <AddSubTask task={data} mutate={mutate} />
         </Stack>
       </Modal>
