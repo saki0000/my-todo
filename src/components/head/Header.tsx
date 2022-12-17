@@ -11,7 +11,7 @@ const Head = React.memo(() => {
     <>
       <Group align="center" position="apart" className="bg-darkBlue mx-16">
         <Group>
-          <p className="font-bold text-2xl text-white">GHD APP</p>
+          <p className="font-bold text-2xl text-white">ASAP TASK</p>
           <Text>{user.displayName}</Text>
         </Group>
         <Button
