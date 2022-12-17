@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 import { selectUser } from "../../../redux/userSlice";
 import { boxType, DateFormat, task, User } from "../../../Types";
+import { useFetchTasks } from "../../show/hooks/useFetchTask";
 
 import Box from "../../update/components/Box";
 import DateSelect from "../../update/components/Date";
@@ -19,7 +20,8 @@ type Props = {
   mutate: any;
 };
 type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
-const AddForms = ({ box, date, setOpen, mutate }: Props) => {
+const AddForms = ({ box, date, setOpen }: Props) => {
+  const { data, mutate: addMutate } = useFetchTasks(box);
   const user: User = useSelector(selectUser);
   const initialValue = {
     user_id: user.uid,
@@ -39,9 +41,10 @@ const AddForms = ({ box, date, setOpen, mutate }: Props) => {
     watch,
     // formState: { errors },
   } = useForm<StateTask>({ defaultValues: initialValue });
-  const onSubmit: SubmitHandler<StateTask> = (addData) => {
-    // mutate();
-    mutate(addTask(addData));
+  const onSubmit: SubmitHandler<StateTask> = async (addData) => {
+    const newData = [...data, addData];
+    await addTask(addData);
+    await addMutate(newData, false);
     setOpen(true);
   };
   return (

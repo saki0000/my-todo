@@ -15,9 +15,9 @@ const CalendarTask = ({ date }: { date: string }) => {
     <>
       <div className="my-6">
         {calendarTask &&
-          calendarTask.map((task: taskType) => (
+          calendarTask.map((task: taskType, index: number) => (
             <div key={task.id}>
-              <Task task={task} mutate={mutate} />
+              <Task task={task} mutate={mutate} index={index} />
             </div>
           ))}
         {isLoading && (

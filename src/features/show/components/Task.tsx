@@ -10,6 +10,7 @@ import DeleteButton from "../../delete/components/DeleteButton";
 import SeparateButton from "../../separate/components/SeparateButton";
 import EditButton from "../../update/components/EditButton";
 import UpdateTask from "../../update/components/UpdateTask";
+import { useFetchTasks } from "../hooks/useFetchTask";
 import PromptBadge from "./PromptBadge";
 import SubTask from "./SubTask";
 
@@ -17,8 +18,10 @@ type TaskType = task & { id: number };
 type props = {
   task: TaskType;
   mutate?: any;
+  index: number;
 };
-const Task = ({ task, mutate }: props) => {
+const Task = ({ task, mutate, index }: props) => {
+  const { data, mutate: deleteMutate } = useFetchTasks(task.box);
   const [open, setOpen] = useState<boolean>(false);
   const [checked, setChecked] = useState<boolean>(true);
   const setModal = useSetRecoilState(separateAtom);
@@ -28,14 +31,14 @@ const Task = ({ task, mutate }: props) => {
   return (
     <>
       {open ? (
-        <div className="h-full">
+        <div className="h-full" key={task.id}>
           <UpdateTask task={task} setOpen={setOpen} mutate={mutate} />
         </div>
       ) : (
         <>
           {task === undefined || !checked || (
             <>
-              <div className="pt-2">
+              <div className="pt-2" key={task.id}>
                 <div className="pt-2 px-2">
                   <Group position="apart">
                     <Group>
@@ -43,8 +46,10 @@ const Task = ({ task, mutate }: props) => {
                         checked={false}
                         onChange={(e) => {
                           // e.preventDefault();
-
-                          mutate(deleteTask(task.id));
+                          const newData = [...data];
+                          newData.splice(index, 1);
+                          deleteTask(task.id);
+                          deleteMutate(newData, false);
                           setChecked(false);
                         }}
                       />
@@ -97,7 +102,7 @@ const Task = ({ task, mutate }: props) => {
                 {/* subtask */}
                 {state.first && task?.subtasks?.length !== 0 && (
                   <div className="my-2 mx-4">
-                    {task?.subtasks?.map((task: TaskType) => (
+                    {task?.subtasks?.map((task: TaskType, index: number) => (
                       <div className="my-3">
                         <SubTask id={task.id} task={task} mutate={mutate} />
                       </div>
