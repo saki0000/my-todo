@@ -1,13 +1,16 @@
 import { Grid } from "@mantine/core";
 import React, { useState } from "react";
+import { useRecoilValue } from "recoil";
+import { inboxNumber } from "../atoms/inboxNumberAtom";
 import Separate from "../features/separate/components/Separate";
 import TaskBox from "../features/show/components/TaskBox";
 import TasksPage from "./layout/tasks/TasksPage";
 
 const Main: React.FC = () => {
   const [page, setPage] = useState<boolean>(true);
+  const inbox = useRecoilValue(inboxNumber);
 
-  console.log("main");
+  console.log(inbox);
 
   return (
     <div className=" h-full mx-16 pt-4">
@@ -15,22 +18,32 @@ const Main: React.FC = () => {
       <Grid className="h-full">
         <Grid.Col span={2} className="grid content-center">
           <div>
-            <p
-              className={`font-bold  text-2xl text-white  ${
-                page && "underline"
-              } hover:underline decoration-white cursor-pointer`}
-              onClick={() => setPage(true)}
-            >
-              Inbox
-            </p>
-            <p
-              className={`font-bold  text-2xl text-white  ${
-                page || "underline"
-              } hover:underline decoration-white cursor-pointer`}
-              onClick={() => setPage(false)}
-            >
-              Tasks
-            </p>
+            <div className="relative">
+              <p
+                className={`font-bold  text-2xl text-white  ${
+                  page && "underline"
+                } hover:underline decoration-white cursor-pointer
+              `}
+                onClick={() => setPage(true)}
+              >
+                Inbox
+              </p>
+              {inbox !== 0 && inbox && (
+                <div className="bg-brown h-6 w-6  rounded-full text-center absolute top-0 left-16">
+                  <p className="text-white m-0 font-semibold">{inbox}</p>
+                </div>
+              )}
+            </div>
+            <div>
+              <p
+                className={`font-bold  text-2xl text-white  ${
+                  page || "underline"
+                } hover:underline decoration-white cursor-pointer`}
+                onClick={() => setPage(false)}
+              >
+                Tasks
+              </p>
+            </div>
           </div>
         </Grid.Col>
 

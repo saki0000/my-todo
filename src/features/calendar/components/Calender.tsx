@@ -23,7 +23,7 @@ const Calender = ({ onClick }: { onClick?: () => void }) => {
         onClick={onClick}
         className="h-full"
       >
-        <Stack className="h-full" key="calendar">
+        <Stack className="h-full mx-2" key="calendar">
           <p className="text-xl  my-2">
             {calendar.first}
             <span

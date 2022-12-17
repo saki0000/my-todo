@@ -20,6 +20,7 @@ type props = {
 };
 const Task = ({ task, mutate }: props) => {
   const [open, setOpen] = useState<boolean>(false);
+  const [checked, setChecked] = useState<boolean>(true);
   const setModal = useSetRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);
 
@@ -32,17 +33,19 @@ const Task = ({ task, mutate }: props) => {
         </div>
       ) : (
         <>
-          {task === undefined || (
+          {task === undefined || !checked || (
             <>
               <div className="pt-2">
-                <div className="pt-2 px-4">
+                <div className="pt-2 px-2">
                   <Group position="apart">
                     <Group>
                       <Checkbox
                         checked={false}
                         onChange={(e) => {
-                          e.preventDefault();
-                          deleteTask(task.id);
+                          // e.preventDefault();
+
+                          mutate(deleteTask(task.id));
+                          setChecked(false);
                         }}
                       />
 
