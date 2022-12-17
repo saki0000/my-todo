@@ -1,5 +1,4 @@
 import { Divider, Loader, Paper, Stack, Text } from "@mantine/core";
-import React from "react";
 import { useRecoilValue } from "recoil";
 import { stateAtom } from "../../../atoms/stateAtom";
 import { boxType, task } from "../../../Types";
@@ -20,7 +19,7 @@ const boxes: boxName = {
   nextAction: "Next Action List",
 };
 
-const TaskBox = React.memo(({ box, onClick }: props) => {
+const TaskBox = ({ box, onClick }: props) => {
   const first = useRecoilValue(stateAtom);
   const { data, isLoading, error, mutate } = useFetchTasks(box);
 
@@ -69,6 +68,6 @@ const TaskBox = React.memo(({ box, onClick }: props) => {
       </Paper>
     </>
   );
-});
+};
 
 export default TaskBox;

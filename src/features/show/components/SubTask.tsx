@@ -1,5 +1,5 @@
 import { Badge, Checkbox, Group, Text } from "@mantine/core";
-import React, { useState } from "react";
+import { useState } from "react";
 import { AiOutlineEnter } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
@@ -15,7 +15,7 @@ type props = {
   mutate: any;
   id: number;
 };
-const SubTask = React.memo(({ task, mutate, id }: props) => {
+const SubTask = ({ task, mutate, id }: props) => {
   const modalValue = useRecoilValue(separateAtom);
   const [open, setOpen] = useState(false);
   const state = useRecoilValue(stateAtom);
@@ -87,6 +87,6 @@ const SubTask = React.memo(({ task, mutate, id }: props) => {
       )}
     </>
   );
-});
+};
 
 export default SubTask;

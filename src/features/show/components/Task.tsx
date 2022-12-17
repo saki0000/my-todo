@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Badge, Checkbox, Group, Text } from "@mantine/core";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
 import { stateAtom } from "../../../atoms/stateAtom";
@@ -18,7 +18,7 @@ type props = {
   task: TaskType;
   mutate?: any;
 };
-const Task = React.memo(({ task, mutate }: props) => {
+const Task = ({ task, mutate }: props) => {
   const [open, setOpen] = useState<boolean>(false);
   const setModal = useSetRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);
@@ -109,6 +109,6 @@ const Task = React.memo(({ task, mutate }: props) => {
       )}
     </>
   );
-});
+};
 
 export default Task;
