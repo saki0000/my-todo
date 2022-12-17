@@ -1,5 +1,7 @@
 import { Divider, Loader, Paper, Stack, Text } from "@mantine/core";
-import { useRecoilValue } from "recoil";
+import { useEffect } from "react";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { inboxNumber } from "../../../atoms/inboxNumberAtom";
 import { stateAtom } from "../../../atoms/stateAtom";
 import { boxType, task } from "../../../Types";
 import AddTask from "../../add/components/AddTask";
@@ -21,7 +23,13 @@ const boxes: boxName = {
 
 const TaskBox = ({ box, onClick }: props) => {
   const first = useRecoilValue(stateAtom);
+  const setInboxNumber = useSetRecoilState(inboxNumber);
   const { data, isLoading, error, mutate } = useFetchTasks(box);
+  useEffect(() => {
+    if (box === "inbox" && data) {
+      setInboxNumber(data.length);
+    }
+  }, [data]);
 
   console.log(box, "box", "rendering");
   return (
@@ -33,8 +41,8 @@ const TaskBox = ({ box, onClick }: props) => {
         radius="md"
         onClick={onClick}
       >
-        <Stack className="h-full" key={box}>
-          <p className="text-xl  my-2">{boxes[box]}</p>
+        <Stack className="h-full px-2" key={box}>
+          <p className="text-xl  my-2 mx-1">{boxes[box]}</p>
           <Divider className="border-brown" />
           <div className="h-full overflow-auto">
             <div>

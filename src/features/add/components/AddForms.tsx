@@ -39,10 +39,9 @@ const AddForms = ({ box, date, setOpen, mutate }: Props) => {
     watch,
     // formState: { errors },
   } = useForm<StateTask>({ defaultValues: initialValue });
-  const onSubmit: SubmitHandler<StateTask> = (data) => {
+  const onSubmit: SubmitHandler<StateTask> = (addData) => {
     // mutate();
-    addTask(data);
-    mutate();
+    mutate(addTask(addData));
     setOpen(true);
   };
   return (
