@@ -5,6 +5,7 @@ import { useSelector } from "react-redux";
 
 import { selectUser } from "../../../redux/userSlice";
 import { boxType, DateFormat, task, User } from "../../../Types";
+import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
 import { useFetchTasks } from "../../show/hooks/useFetchTask";
 
 import Box from "../../update/components/Box";
@@ -17,11 +18,13 @@ type Props = {
   box: boxType;
   date?: DateFormat | string;
   setOpen: Dispatch<SetStateAction<boolean>>;
-  mutate: any;
 };
 type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
 const AddForms = ({ box, date, setOpen }: Props) => {
   const { data, mutate: addMutate } = useFetchTasks(box);
+  const { data: calendarData, mutate: calendarMutate } = useFetchDateTask(
+    date || ""
+  );
   const user: User = useSelector(selectUser);
   const initialValue = {
     user_id: user.uid,
@@ -42,9 +45,16 @@ const AddForms = ({ box, date, setOpen }: Props) => {
     // formState: { errors },
   } = useForm<StateTask>({ defaultValues: initialValue });
   const onSubmit: SubmitHandler<StateTask> = async (addData) => {
-    const newData = [...data, addData];
-    await addTask(addData);
-    await addMutate(newData, false);
+    if (date) {
+      const newData = [...calendarData, addData];
+      await addTask(addData);
+      await calendarMutate(newData, false);
+    } else {
+      const newData = [...data, addData];
+      await addTask(addData);
+      await addMutate(newData, false);
+    }
+
     setOpen(true);
   };
   return (

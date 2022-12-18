@@ -24,7 +24,7 @@ const boxes: boxName = {
 const TaskBox = ({ box, onClick }: props) => {
   const first = useRecoilValue(stateAtom);
   const setInboxNumber = useSetRecoilState(inboxNumber);
-  const { data, isLoading, error, mutate } = useFetchTasks(box);
+  const { data, isLoading, error } = useFetchTasks(box);
   useEffect(() => {
     if (box === "inbox" && data) {
       setInboxNumber(data.length);
@@ -50,7 +50,7 @@ const TaskBox = ({ box, onClick }: props) => {
               {data && data.length !== 0 ? (
                 data.map((task: task & { id: number }, index: number) => (
                   <div key={task.id}>
-                    <Task task={task} mutate={mutate} index={index} />
+                    <Task task={task} index={index} />
                   </div>
                 ))
               ) : (
@@ -68,7 +68,7 @@ const TaskBox = ({ box, onClick }: props) => {
               {error && <div>error</div>}
               {(box === "inbox" || first.first === box) && (
                 <div className="mt-4">
-                  <AddTask box={box} mutate={mutate} />
+                  <AddTask box={box} />
                 </div>
               )}
             </div>

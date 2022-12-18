@@ -5,8 +5,8 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { boxType, DateFormat } from "../../../Types";
 import AddForms from "./AddForms";
 
-type Props = { box: boxType; date?: DateFormat | string; mutate?: any };
-const AddTask = ({ box, date, mutate }: Props) => {
+type Props = { box: boxType; date?: DateFormat | string };
+const AddTask = ({ box, date }: Props) => {
   const [open, setOpen] = useState<boolean>(true);
 
   return (
@@ -23,7 +23,7 @@ const AddTask = ({ box, date, mutate }: Props) => {
           <Text>タスクを追加</Text>
         </Group>
       ) : (
-        <AddForms box={box} date={date} setOpen={setOpen} mutate={mutate} />
+        <AddForms box={box} date={date} setOpen={setOpen} />
       )}
     </div>
   );

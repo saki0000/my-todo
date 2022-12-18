@@ -16,10 +16,9 @@ import SubTasks from "./SubTasks";
 type TaskType = task & { id: number };
 type props = {
   task: TaskType;
-  mutate?: any;
   index: number;
 };
-const Task = ({ task, mutate, index }: props) => {
+const Task = ({ task, index }: props) => {
   const { data, mutate: deleteMutate } = useFetchTasks(task.box);
   const [open, setOpen] = useState<boolean>(false);
   const setModal = useSetRecoilState(separateAtom);
