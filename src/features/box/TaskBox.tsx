@@ -1,14 +1,14 @@
 import { Divider, Loader, Paper, Stack, Text } from "@mantine/core";
 import { useEffect } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { inboxNumber } from "../../../atoms/inboxNumberAtom";
-import { stateAtom } from "../../../atoms/stateAtom";
-import { boxType, task } from "../../../Types";
-import AddTask from "../../add/components/AddTask";
-import { useFetchTasks } from "../hooks/useFetchTask";
-import Task from "./Task";
+import { inboxNumber } from "../../atoms/inboxNumberAtom";
+import { stateAtom } from "../../atoms/stateAtom";
+import { boxType, task } from "../../Types";
+import AddTask from "../add/components/AddTask";
+import Task from "../task/components/Task";
+import { useFetchTasks } from "../task/hooks/useFetchTask";
 
-type props = { box: "inbox" | "someday" | "nextAction"; onClick?: () => void };
+type props = { box: "inbox" | "someday" | "nextAction" };
 type boxName = Omit<
   {
     [attr in boxType]: string;
@@ -21,7 +21,7 @@ const boxes: boxName = {
   nextAction: "Next Action List",
 };
 
-const TaskBox = ({ box, onClick }: props) => {
+const TaskBox = ({ box }: props) => {
   const first = useRecoilValue(stateAtom);
   const setInboxNumber = useSetRecoilState(inboxNumber);
   const { data, isLoading, error } = useFetchTasks(box);
@@ -32,16 +32,9 @@ const TaskBox = ({ box, onClick }: props) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
-  console.log(data);
   return (
     <>
-      <Paper
-        p="xl"
-        shadow="lg"
-        className="h-full"
-        radius="md"
-        onClick={onClick}
-      >
+      <Paper p="xl" shadow="lg" className="h-full" radius="md">
         <Stack className="h-full px-2" key={box}>
           <p className="text-xl  my-2 mx-1">{boxes[box]}</p>
           <Divider className="border-brown" />

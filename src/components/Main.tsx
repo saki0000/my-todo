@@ -2,8 +2,8 @@ import { Grid } from "@mantine/core";
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { inboxNumber } from "../atoms/inboxNumberAtom";
+import TaskBox from "../features/box/TaskBox";
 import Separate from "../features/separate/components/Separate";
-import TaskBox from "../features/show/components/TaskBox";
 import TasksPage from "./layout/tasks/TasksPage";
 
 const Main: React.FC = () => {

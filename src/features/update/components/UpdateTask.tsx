@@ -11,8 +11,8 @@ import { useSetRecoilState } from "recoil";
 
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
-import useFetchSubTask from "../../show/hooks/useFetchSubTask";
-import { useFetchTasks } from "../../show/hooks/useFetchTask";
+import useFetchSubTask from "../../task/hooks/useFetchSubTask";
+import { useFetchTasks } from "../../task/hooks/useFetchTask";
 import { updateSubTask, updateTaskAPI } from "../api/UpdateApi";
 
 import Box from "./Box";

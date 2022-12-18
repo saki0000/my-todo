@@ -66,6 +66,7 @@ const Task = ({ task, index }: props) => {
                             setModal({ id: task.id, open: true });
                           }}
                         />
+                        {/* <Box /> */}
                       </Group>
                     )}
                   </Group>

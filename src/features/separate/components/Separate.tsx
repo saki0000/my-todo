@@ -2,7 +2,7 @@ import { Divider, Modal, Stack } from "@mantine/core";
 import { useRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
 import AddSubTask from "../../add/components/AddSubTask";
-import SubTasks from "../../show/components/SubTasks";
+import SubTasks from "../../task/components/SubTasks";
 import useFetchTask from "../hooks/fetchTask";
 
 const Separate = () => {

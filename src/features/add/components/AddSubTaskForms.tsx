@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
-import useFetchSubTask from "../../show/hooks/useFetchSubTask";
+import useFetchSubTask from "../../task/hooks/useFetchSubTask";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";
 

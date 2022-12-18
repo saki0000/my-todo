@@ -1,12 +1,11 @@
 import { Badge, HoverCard, Menu, Select, Text } from "@mantine/core";
 import React from "react";
 import { Controller } from "react-hook-form";
-import { boxType } from "../../../Types";
 
 // eslint-disable-next-line no-empty-pattern
-type box = { taskBox?: boxType; control?: any };
+type box = { control?: any };
 
-const Box = React.forwardRef(({ taskBox, control }: box) => {
+const Box = React.forwardRef(({ control }: box) => {
   return (
     <div>
       <Controller

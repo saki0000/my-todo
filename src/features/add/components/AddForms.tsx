@@ -6,7 +6,7 @@ import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/userSlice";
 import { boxType, DateFormat, task, User } from "../../../Types";
 import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
-import { useFetchTasks } from "../../show/hooks/useFetchTask";
+import { useFetchTasks } from "../../task/hooks/useFetchTask";
 
 import Box from "../../update/components/Box";
 import DateSelect from "../../update/components/Date";
