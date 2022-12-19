@@ -1,7 +1,8 @@
 /* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Divider, Paper, Stack, Text } from "@mantine/core";
+import { Divider, Group, Paper, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
+import BoxInfoIcon from "../../box/BoxInfoIcon";
 import useGetDateOfYear from "../hooks/CalenderHook";
 import CalendarTask from "./CalendarTask";
 
@@ -24,20 +25,24 @@ const Calender = ({ onClick }: { onClick?: () => void }) => {
         className="h-full"
       >
         <Stack className="h-full mx-2" key="calendar">
-          <p className="text-xl  my-2">
-            {calendar.first}
-            <span
-              onClick={() => {
-                setCalendar({
-                  first: calendar.second,
-                  second: calendar.first,
-                });
-              }}
-              className="text-gray-400 cursor text-lg cursor-pointer"
-            >
-              /{calendar.second}
-            </span>
-          </p>
+          <Group>
+            <p className="text-xl  my-2">
+              {calendar.first}
+              <span
+                onClick={() => {
+                  setCalendar({
+                    first: calendar.second,
+                    second: calendar.first,
+                  });
+                }}
+                className="text-gray-400 cursor text-lg cursor-pointer"
+              >
+                /{calendar.second}
+              </span>
+              <BoxInfoIcon box="calendar" />
+            </p>
+          </Group>
+
           <Divider className="border-brown" />
           <div className="h-full overflow-auto">
             {calendar.first === "カレンダー" ? (

@@ -1,12 +1,12 @@
-import { Divider, Loader, Paper, Stack, Text } from "@mantine/core";
+import { Divider, Group, Paper, Stack } from "@mantine/core";
+import { useSetState } from "@mantine/hooks";
 import { useEffect } from "react";
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { inboxNumber } from "../../atoms/inboxNumberAtom";
-import { stateAtom } from "../../atoms/stateAtom";
-import { boxType, task } from "../../Types";
-import AddTask from "../add/components/AddTask";
-import Task from "../task/components/Task";
+import { boxType } from "../../Types";
 import { useFetchTasks } from "../task/hooks/useFetchTask";
+import BoxInfoIcon from "./BoxInfoIcon";
+import TaskList from "./TaskList";
 
 type props = { box: "inbox" | "someday" | "nextAction" };
 type boxName = Omit<
@@ -22,50 +22,70 @@ const boxes: boxName = {
 };
 
 const TaskBox = ({ box }: props) => {
-  const first = useRecoilValue(stateAtom);
   const setInboxNumber = useSetRecoilState(inboxNumber);
   const { data, isLoading, error } = useFetchTasks(box);
+  // const {
+  //   data: goalData,
+  //   isLoading: goalIsLoading,
+  //   error: goalError,
+  // } = useFetchGoal();
+
+  const [page, setPage] = useSetState({
+    first: "Next Action List",
+    second: "GOAL",
+  });
   useEffect(() => {
     if (box === "inbox" && data) {
       setInboxNumber(data.length);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
-
+  console.log(data);
   return (
     <>
       <Paper p="xl" shadow="lg" className="h-full" radius="md">
         <Stack className="h-full px-2" key={box}>
-          <p className="text-xl  my-2 mx-1">{boxes[box]}</p>
+          {/* {box === "nextAction" ? (
+            <p className="text-xl  my-2">
+              {page.first}
+              <span
+                onClick={() => {
+                  setPage({
+                    first: page.second,
+                    second: page.first,
+                  });
+                }}
+                className="text-gray-400 cursor text-lg cursor-pointer"
+              >
+                /{page.second}
+              </span>
+            </p>
+          ) : (
+            <p className="text-xl  my-2 mx-1">{boxes[box]}</p>
+          )} */}
+          <Group>
+            <p className="text-xl   mx-1">{boxes[box]}</p>
+            <BoxInfoIcon box={box} />
+          </Group>
+
           <Divider className="border-brown" />
-          <div className="h-full overflow-auto">
-            <div>
-              {data && data.length !== 0 ? (
-                data.map((task: task & { id: number }, index: number) => (
-                  <div key={task.id}>
-                    <Task task={task} index={index} />
-                  </div>
-                ))
-              ) : (
-                <div className="my-4 ml-10">
-                  {isLoading || first.first === box || box === "inbox" || (
-                    <Text>No Task</Text>
-                  )}
-                </div>
-              )}
-              {isLoading && (
-                <div style={{ marginLeft: 40, marginTop: 10 }}>
-                  <Loader />
-                </div>
-              )}
-              {error && <div>error</div>}
-              {(box === "inbox" || first.first === box) && (
-                <div className="mt-4">
-                  <AddTask box={box} />
-                </div>
-              )}
-            </div>
-          </div>
+
+          {page.first === "GOAL" ? (
+            <>
+              {/* <TaskList
+                data={goalData}
+                isLoading={goalIsLoading}
+                error={goalError}
+              /> */}
+            </>
+          ) : (
+            <TaskList
+              data={data}
+              isLoading={isLoading}
+              error={error}
+              box={box}
+            />
+          )}
         </Stack>
       </Paper>
     </>

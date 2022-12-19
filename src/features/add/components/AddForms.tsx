@@ -36,6 +36,7 @@ const AddForms = ({ box, date, setOpen }: Props) => {
     subtasks: [],
     statement: false,
     memo: "",
+    goal: false,
   };
   const {
     control,
@@ -54,7 +55,7 @@ const AddForms = ({ box, date, setOpen }: Props) => {
       await addTask(addData);
       await addMutate(newData, false);
     }
-
+    console.log(addData);
     setOpen(true);
   };
   return (

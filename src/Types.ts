@@ -11,6 +11,7 @@ export type task = {
   updated_at?: Date;
   user_id?: string;
   weight?: string;
+  goal?: boolean;
 };
 export type stateType = {
   [k in orderType]: boxType;
