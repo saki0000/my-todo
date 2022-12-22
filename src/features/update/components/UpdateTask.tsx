@@ -21,19 +21,20 @@ import DateSelect from "./Date";
 import DueDate from "./DueDate";
 import Weight from "./Weight";
 
-type taskType = task & { id: number };
+type taskType = task & { id: number; task_id?: number };
 type props = {
   task: taskType;
   setOpen: (arg: boolean) => void;
   setTasks?: (arg: taskType) => void;
   type?: string;
-  id?: number;
   index: number;
 };
 type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
-const UpdateTask = ({ task, setOpen, type, id, index }: props) => {
+const UpdateTask = ({ task, setOpen, type, index }: props) => {
   const { data: taskData, mutate: taskMutate } = useFetchTasks(task.box);
-  const { data: subData, mutate: subMutate } = useFetchSubTask(task.id);
+  const { data: subData, mutate: subMutate } = useFetchSubTask(
+    task.task_id || 0
+  );
   const { data: calendarData, mutate: calendarMutate } = useFetchDateTask(
     task.date || ""
   );
@@ -45,11 +46,11 @@ const UpdateTask = ({ task, setOpen, type, id, index }: props) => {
     watch,
     // formState: { errors },
   } = useForm<StateTask>({ defaultValues: task });
-  const onSubmit: SubmitHandler<StateTask> = async (data) => {
-    if (type === "sub" && id) {
+  const onSubmit: SubmitHandler<StateTask> = (data) => {
+    if (type === "sub" && task.task_id) {
       const newData = [...subData];
       newData.splice(index, 1, data);
-      updateSubTask(id, task.id, data);
+      updateSubTask(task.task_id, task.id, data);
       subMutate(newData, false);
     } else if (type === "calendar") {
       const newData = [...calendarData];
