@@ -39,8 +39,8 @@ const Calender = ({ onClick }: { onClick?: () => void }) => {
               >
                 /{calendar.second}
               </span>
-              <BoxInfoIcon box="calendar" />
             </p>
+            <BoxInfoIcon box="calendar" />
           </Group>
 
           <Divider className="border-brown" />

@@ -11,6 +11,7 @@ import { useSetRecoilState } from "recoil";
 
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
+import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
 import useFetchSubTask from "../../task/hooks/useFetchSubTask";
 import { useFetchTasks } from "../../task/hooks/useFetchTask";
 import { updateSubTask, updateTaskAPI } from "../api/UpdateApi";
@@ -25,14 +26,17 @@ type props = {
   task: taskType;
   setOpen: (arg: boolean) => void;
   setTasks?: (arg: taskType) => void;
-  sub?: boolean;
+  type?: string;
   id?: number;
   index: number;
 };
 type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
-const UpdateTask = ({ task, setOpen, sub, id, index }: props) => {
+const UpdateTask = ({ task, setOpen, type, id, index }: props) => {
   const { data: taskData, mutate: taskMutate } = useFetchTasks(task.box);
   const { data: subData, mutate: subMutate } = useFetchSubTask(task.id);
+  const { data: calendarData, mutate: calendarMutate } = useFetchDateTask(
+    task.date || ""
+  );
   const setModal = useSetRecoilState(separateAtom);
   const {
     control,
@@ -42,16 +46,21 @@ const UpdateTask = ({ task, setOpen, sub, id, index }: props) => {
     // formState: { errors },
   } = useForm<StateTask>({ defaultValues: task });
   const onSubmit: SubmitHandler<StateTask> = async (data) => {
-    if (sub && id) {
+    if (type === "sub" && id) {
       const newData = [...subData];
       newData.splice(index, 1, data);
-      await updateSubTask(id, task.id, data);
-      await subMutate(newData, false);
+      updateSubTask(id, task.id, data);
+      subMutate(newData, false);
+    } else if (type === "calendar") {
+      const newData = [...calendarData];
+      newData.splice(index, 1, data);
+      updateTaskAPI(task.id, data);
+      calendarMutate(newData, false);
     } else {
       const newData = [...taskData];
       newData.splice(index, 1, data);
-      await updateTaskAPI(task.id, data);
-      await taskMutate(newData, false);
+      updateTaskAPI(task.id, data);
+      taskMutate(newData, false);
     }
 
     task.box === "inbox" &&
@@ -67,8 +76,8 @@ const UpdateTask = ({ task, setOpen, sub, id, index }: props) => {
           <Group>
             <Weight control={control} />
             <DueDate control={control} />
-            {!sub && <Box control={control} />}
-            {watch().box === "calender" && !sub && (
+            {type !== "sub" && <Box control={control} />}
+            {watch().box === "calender" && type !== "sub" && (
               <DateSelect control={control} />
             )}
           </Group>

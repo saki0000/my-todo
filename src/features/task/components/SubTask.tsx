@@ -27,7 +27,7 @@ const SubTask = ({ task, index }: props) => {
             <UpdateTask
               task={task}
               setOpen={setOpen}
-              sub={true}
+              type={"sub"}
               id={modalValue.id}
               index={index}
             />

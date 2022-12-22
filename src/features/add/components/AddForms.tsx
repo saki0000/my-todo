@@ -45,15 +45,15 @@ const AddForms = ({ box, date, setOpen }: Props) => {
     watch,
     // formState: { errors },
   } = useForm<StateTask>({ defaultValues: initialValue });
-  const onSubmit: SubmitHandler<StateTask> = async (addData) => {
+  const onSubmit: SubmitHandler<StateTask> = (addData) => {
     if (date) {
       const newData = [...calendarData, addData];
-      await addTask(addData);
-      await calendarMutate(newData, false);
+      addTask(addData);
+      calendarMutate(newData, false);
     } else {
       const newData = [...data, addData];
-      await addTask(addData);
-      await addMutate(newData, false);
+      addTask(addData);
+      addMutate(newData, false);
     }
     console.log(addData);
     setOpen(true);
