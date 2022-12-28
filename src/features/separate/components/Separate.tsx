@@ -7,7 +7,7 @@ import useFetchTask from "../hooks/fetchTask";
 
 const Separate = () => {
   const [modal, setOpen] = useRecoilState(separateAtom);
-  const { data, isLoading, error, mutate } = useFetchTask();
+  const { data, isLoading, error } = useFetchTask();
   if (isLoading) return <div></div>;
   if (error) return <div>error</div>;
   return (
@@ -15,7 +15,6 @@ const Separate = () => {
       <Modal
         onClose={() => {
           setOpen({ ...modal, open: false });
-          mutate();
         }}
         opened={modal.open}
         size="lg"
@@ -27,7 +26,7 @@ const Separate = () => {
 
           <Divider />
           <SubTasks taskId={modal.id} />
-          <AddSubTask task={data} mutate={mutate} />
+          <AddSubTask task={data} />
         </Stack>
       </Modal>
     </>

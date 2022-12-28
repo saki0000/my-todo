@@ -9,7 +9,7 @@ import Weight from "../../update/components/Weight";
 
 import { addSubTask } from "../api/AddApi";
 
-const AddSubTaskForms = ({ taskValue, setOpen, mutate }: any) => {
+const AddSubTaskForms = ({ taskValue, setOpen }: any) => {
   const modalValue = useRecoilValue(separateAtom);
   const { data: subtasks, mutate: subMutate } = useFetchSubTask(taskValue.id);
   const {
@@ -29,9 +29,10 @@ const AddSubTaskForms = ({ taskValue, setOpen, mutate }: any) => {
       memo: "",
     },
   });
-  const onSubmit: SubmitHandler<task & { task_id: number }> = async (data) => {
-    await addSubTask(modalValue.id, data);
-    await subMutate([...subtasks, data], false);
+  const onSubmit: SubmitHandler<task & { task_id: number }> = (data) => {
+    addSubTask(modalValue.id, data);
+    subMutate([...subtasks, data], false);
+    console.log([...subtasks, data]);
     setOpen(true);
   };
   return (

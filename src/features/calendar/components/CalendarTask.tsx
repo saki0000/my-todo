@@ -12,7 +12,7 @@ const CalendarTask = ({ date }: { date: string }) => {
         {calendarTask &&
           calendarTask.map((task: taskType, index: number) => (
             <div key={task.id}>
-              <Task task={task} index={index} />
+              <Task task={task} index={index} date={date} />
             </div>
           ))}
         {isLoading && (

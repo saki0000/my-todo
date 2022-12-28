@@ -4,8 +4,8 @@ import { AiOutlinePlus } from "react-icons/ai";
 import { task } from "../../../Types";
 import AddSubTaskForms from "./AddSubTaskForms";
 
-type props = { task: task; mutate: any };
-const AddSubTask = ({ task, mutate }: props) => {
+type props = { task: task };
+const AddSubTask = ({ task }: props) => {
   const [open, setOpen] = useState<boolean>(true);
   return (
     <div className=" my-4">
@@ -21,7 +21,7 @@ const AddSubTask = ({ task, mutate }: props) => {
           <Text>タスクを追加</Text>
         </Group>
       ) : (
-        <AddSubTaskForms taskValue={task} setOpen={setOpen} mutate={mutate} />
+        <AddSubTaskForms taskValue={task} setOpen={setOpen} />
       )}
     </div>
   );

@@ -5,11 +5,14 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
 import { stateAtom } from "../../../atoms/stateAtom";
 import { task } from "../../../Types";
-import { deleteTask } from "../../delete/api/DeleteApi";
+import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
+import useDeleteCache from "../../delete/hooks/useDeleteCache";
 import SeparateButton from "../../separate/components/SeparateButton";
+import DistributeButton from "../../update/components/DistributeButton";
 import EditButton from "../../update/components/EditButton";
 import UpdateTask from "../../update/components/UpdateTask";
 import { useFetchTasks } from "../hooks/useFetchTask";
+import MenuButton from "./MenuButton";
 import PromptBadge from "./PromptBadge";
 import SubTasks from "./SubTasks";
 
@@ -17,19 +20,26 @@ type TaskType = task & { id: number };
 type props = {
   task: TaskType;
   index: number;
+  date?: string;
 };
-const Task = ({ task, index }: props) => {
+const Task = ({ task, index, date }: props) => {
+  const deleteData = useDeleteCache();
   const { data, mutate: deleteMutate } = useFetchTasks(task.box);
+  const { data: calendarTask, mutate } = useFetchDateTask(date || "");
   const [open, setOpen] = useState<boolean>(false);
   const setModal = useSetRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);
 
-  console.log(task.name);
   return (
     <>
       {open ? (
         <div className="h-full" key={task.id}>
-          <UpdateTask task={task} setOpen={setOpen} index={index} />
+          <UpdateTask
+            task={task}
+            setOpen={setOpen}
+            index={index}
+            type={date && "calendar"}
+          />
         </div>
       ) : (
         <>
@@ -41,12 +51,12 @@ const Task = ({ task, index }: props) => {
                     <div className="flex space-x-4">
                       <Checkbox
                         checked={false}
-                        onChange={(e) => {
-                          // e.preventDefault();
-                          const newData = [...data];
-                          newData.splice(index, 1);
-                          deleteTask(task.id);
-                          deleteMutate(newData, false);
+                        onChange={() => {
+                          if (date) {
+                            deleteData(calendarTask, mutate, index, task.id);
+                          } else {
+                            deleteData(data, deleteMutate, index, task.id);
+                          }
                         }}
                       />
 
@@ -55,7 +65,7 @@ const Task = ({ task, index }: props) => {
 
                     {/* buttons */}
                     {(task.box === "inbox" || state.first === task.box) && (
-                      <Group>
+                      <div className="flex space-x-2">
                         <EditButton
                           onClick={() => {
                             setOpen(true);
@@ -66,8 +76,13 @@ const Task = ({ task, index }: props) => {
                             setModal({ id: task.id, open: true });
                           }}
                         />
+                        {task.box === "inbox" ? (
+                          <DistributeButton task={task} index={index} />
+                        ) : (
+                          <MenuButton />
+                        )}
                         {/* <Box /> */}
-                      </Group>
+                      </div>
                     )}
                   </Group>
 
