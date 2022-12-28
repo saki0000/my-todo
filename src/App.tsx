@@ -23,6 +23,18 @@ function App() {
             "#4D4D4D",
             "#404040",
           ],
+          dullblue: [
+            "#5F5C68",
+            "#747481",
+            "#8B8E9B",
+            "#A2AAB5",
+            "#bac6ce",
+            "#C3D1D5",
+            "#CCDBDC",
+            "#D5E2E0",
+            "#DEE9E5",
+            "#E7EFEB",
+          ],
         },
       }}
       withGlobalStyles
