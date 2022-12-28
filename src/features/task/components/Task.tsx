@@ -6,7 +6,7 @@ import { separateAtom } from "../../../atoms/openAtom";
 import { stateAtom } from "../../../atoms/stateAtom";
 import { task } from "../../../Types";
 import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
-import { deleteTask } from "../../delete/api/DeleteApi";
+import useDeleteCache from "../../delete/hooks/useDeleteCache";
 import SeparateButton from "../../separate/components/SeparateButton";
 import DistributeButton from "../../update/components/DistributeButton";
 import EditButton from "../../update/components/EditButton";
@@ -23,6 +23,7 @@ type props = {
   date?: string;
 };
 const Task = ({ task, index, date }: props) => {
+  const deleteData = useDeleteCache();
   const { data, mutate: deleteMutate } = useFetchTasks(task.box);
   const { data: calendarTask, mutate } = useFetchDateTask(date || "");
   const [open, setOpen] = useState<boolean>(false);
@@ -52,15 +53,9 @@ const Task = ({ task, index, date }: props) => {
                         checked={false}
                         onChange={() => {
                           if (date) {
-                            const newData = [...calendarTask];
-                            newData.splice(index, 1);
-                            deleteTask(task.id);
-                            mutate(newData, false);
+                            deleteData(calendarTask, mutate, index, task.id);
                           } else {
-                            const newData = [...data];
-                            newData.splice(index, 1);
-                            deleteTask(task.id);
-                            deleteMutate(newData, false);
+                            deleteData(data, deleteMutate, index, task.id);
                           }
                         }}
                       />

@@ -1,5 +1,4 @@
 import { Divider, Group, Paper, Stack } from "@mantine/core";
-import { useSetState } from "@mantine/hooks";
 import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { inboxNumber } from "../../atoms/inboxNumberAtom";
@@ -31,10 +30,6 @@ const TaskBox = ({ box }: props) => {
     error: goalError,
   } = useFetchGoal();
 
-  const [page, setPage] = useSetState({
-    first: "Next Action List",
-    second: "GOAL",
-  });
   useEffect(() => {
     if (box === "inbox" && data) {
       setInboxNumber(data.length);
@@ -47,46 +42,13 @@ const TaskBox = ({ box }: props) => {
       <Paper p="xl" shadow="lg" className="h-full" radius="md">
         <Stack className="h-full px-2" key={box}>
           <Group>
-            {box === "nextAction" ? (
-              <p className="text-xl  my-2">
-                {page.first}
-                <span
-                  onClick={() => {
-                    setPage({
-                      first: page.second,
-                      second: page.first,
-                    });
-                  }}
-                  className="text-gray-400 cursor text-lg cursor-pointer"
-                >
-                  /{page.second}
-                </span>
-              </p>
-            ) : (
-              <p className="text-xl  my-2 mx-1">{boxes[box]}</p>
-            )}
+            <p className="text-xl my-2">{boxes[box]}</p>
             <BoxInfoIcon box={box} />
           </Group>
 
           <Divider className="border-brown" />
 
-          {page.first === "GOAL" ? (
-            <>
-              <TaskList
-                data={goalData}
-                isLoading={goalIsLoading}
-                error={goalError}
-                box={box}
-              />
-            </>
-          ) : (
-            <TaskList
-              data={data}
-              isLoading={isLoading}
-              error={error}
-              box={box}
-            />
-          )}
+          <TaskList data={data} isLoading={isLoading} error={error} box={box} />
         </Stack>
       </Paper>
     </>
