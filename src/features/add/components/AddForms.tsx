@@ -54,8 +54,8 @@ const AddForms = ({ box, date, setOpen }: Props) => {
       const newData = [...data, addData];
       addTask(addData);
       addMutate(newData, false);
+      console.log("add", newData);
     }
-    console.log(addData);
     setOpen(true);
   };
   return (

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Badge, Button, Checkbox, Group, Text } from "@mantine/core";
+import { Badge, Checkbox, Group, Text } from "@mantine/core";
 import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
@@ -8,6 +8,7 @@ import { task } from "../../../Types";
 import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
 import { deleteTask } from "../../delete/api/DeleteApi";
 import SeparateButton from "../../separate/components/SeparateButton";
+import DistributeButton from "../../update/components/DistributeButton";
 import EditButton from "../../update/components/EditButton";
 import UpdateTask from "../../update/components/UpdateTask";
 import { useFetchTasks } from "../hooks/useFetchTask";
@@ -28,7 +29,6 @@ const Task = ({ task, index, date }: props) => {
   const setModal = useSetRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);
 
-  console.log(task.name);
   return (
     <>
       {open ? (
@@ -82,14 +82,7 @@ const Task = ({ task, index, date }: props) => {
                           }}
                         />
                         {task.box === "inbox" ? (
-                          <Button
-                            color="brown"
-                            size="xs"
-                            variant="light"
-                            radius="lg"
-                          >
-                            振り分け
-                          </Button>
+                          <DistributeButton task={task} index={index} />
                         ) : (
                           <MenuButton />
                         )}
