@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { inboxNumber } from "../../atoms/inboxNumberAtom";
 import { boxType } from "../../Types";
-import { useFetchGoal } from "../task/hooks/useFetchGoal";
 import { useFetchTasks } from "../task/hooks/useFetchTask";
 import BoxInfoIcon from "./BoxInfoIcon";
 import TaskList from "./TaskList";
@@ -24,11 +23,11 @@ const boxes: boxName = {
 const TaskBox = ({ box }: props) => {
   const setInboxNumber = useSetRecoilState(inboxNumber);
   const { data, isLoading, error } = useFetchTasks(box);
-  const {
-    data: goalData,
-    isLoading: goalIsLoading,
-    error: goalError,
-  } = useFetchGoal();
+  // const {
+  //   data: goalData,
+  //   isLoading: goalIsLoading,
+  //   error: goalError,
+  // } = useFetchGoal();
 
   useEffect(() => {
     if (box === "inbox" && data) {
