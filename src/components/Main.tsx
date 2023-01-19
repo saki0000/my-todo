@@ -10,8 +10,6 @@ const Main: React.FC = () => {
   const [page, setPage] = useState<boolean>(true);
   const inbox = useRecoilValue(inboxNumber);
 
-  console.log(inbox);
-
   return (
     <div className=" h-full mx-16 pt-4">
       <Separate />
