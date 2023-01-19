@@ -21,7 +21,6 @@ const DistributeButton = ({ task, index }: { task: any; index: number }) => {
   const { data: calendarData, mutate: calendarMutate } = useFetchDateTask(
     day || ""
   );
-  console.log(calendarData);
 
   return (
     <>
