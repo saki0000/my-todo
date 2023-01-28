@@ -3,14 +3,10 @@ import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
 import DefaultCalendar from "../../calendar/components/Calendar";
-import useDeleteCache from "../../delete/hooks/useDeleteCache";
-import { useFetchTasks } from "../../fetch/hooks/useFetchTask";
 import useDistribute from "../hooks/useUpdate";
 
 const DistributeButton = ({ task, index }: { task: any; index: number }) => {
   const setModal = useSetRecoilState(separateAtom);
-  const deleteData = useDeleteCache();
-  const { data, mutate } = useFetchTasks("inbox");
   const [open, setOpen] = useState<boolean>(false);
   const [day, setDate] = useState<any>(null);
   const value = new Date(day);
@@ -54,7 +50,6 @@ const DistributeButton = ({ task, index }: { task: any; index: number }) => {
             onClick={() => {
               mutation.mutate({ ...task, box: "nextAction" });
               setModal({ open: true, id: task.id });
-              deleteData(data, mutate, index);
             }}
           >
             Next Action Listへ
@@ -70,7 +65,6 @@ const DistributeButton = ({ task, index }: { task: any; index: number }) => {
             onClick={() => {
               mutation.mutate({ ...task, box: "someday" });
               setModal({ open: true, id: task.id });
-              deleteData(data, mutate, index);
             }}
           >
             Somedayへ
