@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
 import DefaultCalendar from "../../calendar/components/Calendar";
-import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
 import useDeleteCache from "../../delete/hooks/useDeleteCache";
 import { useFetchTasks } from "../../fetch/hooks/useFetchTask";
 import useDistribute from "../hooks/useUpdate";
@@ -11,16 +10,11 @@ import useDistribute from "../hooks/useUpdate";
 const DistributeButton = ({ task, index }: { task: any; index: number }) => {
   const setModal = useSetRecoilState(separateAtom);
   const deleteData = useDeleteCache();
-  const distribute = useDistribute();
   const { data, mutate } = useFetchTasks("inbox");
-  const { data: nextData, mutate: nextMutate } = useFetchTasks("nextAction");
-  const { data: someData, mutate: someMutate } = useFetchTasks("someday");
   const [open, setOpen] = useState<boolean>(false);
   const [day, setDate] = useState<any>(null);
   const value = new Date(day);
-  const { data: calendarData, mutate: calendarMutate } = useFetchDateTask(
-    day || ""
-  );
+  const mutation = useDistribute(task, index);
 
   return (
     <>
@@ -39,10 +33,9 @@ const DistributeButton = ({ task, index }: { task: any; index: number }) => {
             <Button
               color="brown"
               onClick={() => {
-                distribute(task, "calendar", calendarData, calendarMutate, day);
+                mutation.mutate({ ...task, date: day, box: "calender" });
                 setOpen(false);
                 setModal({ open: true, id: task.id });
-                deleteData(data, mutate, index);
               }}
             >
               決定
@@ -59,7 +52,7 @@ const DistributeButton = ({ task, index }: { task: any; index: number }) => {
         <Menu.Dropdown>
           <Menu.Item
             onClick={() => {
-              distribute(task, "nextAction", nextData, nextMutate);
+              mutation.mutate({ ...task, box: "nextAction" });
               setModal({ open: true, id: task.id });
               deleteData(data, mutate, index);
             }}
@@ -75,7 +68,7 @@ const DistributeButton = ({ task, index }: { task: any; index: number }) => {
           </Menu.Item>
           <Menu.Item
             onClick={() => {
-              distribute(task, "someday", someData, someMutate);
+              mutation.mutate({ ...task, box: "someday" });
               setModal({ open: true, id: task.id });
               deleteData(data, mutate, index);
             }}

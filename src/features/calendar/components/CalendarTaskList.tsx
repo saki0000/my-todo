@@ -1,11 +1,21 @@
 import { Loader } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
 import Task from "../../../components/task/Task";
-import { task } from "../../../Types";
+import { selectUser } from "../../../redux/userSlice";
+import { task, User } from "../../../Types";
 import AddTask from "../../add/components/AddTask";
-import useFetchDateTask from "../hooks/fetchDateTask";
+import { fetchCalendarTask } from "../api/CalendarApi";
 type taskType = task & { id: number };
 const CalendarTask = ({ date }: { date: string }) => {
-  const { data: calendarTask, isLoading, error } = useFetchDateTask(date);
+  const user: User = useSelector(selectUser);
+
+  const {
+    data: calendarTask,
+    isLoading,
+    isError,
+    error,
+  } = useQuery(["calender", date], () => fetchCalendarTask(user.uid, date));
   return (
     <>
       <div className="my-6">
@@ -20,7 +30,7 @@ const CalendarTask = ({ date }: { date: string }) => {
             <Loader />
           </div>
         )}
-        {error && <div>error</div>}
+        {isError && <div>error</div>}
         <AddTask box={"calender"} date={date} />
       </div>
     </>

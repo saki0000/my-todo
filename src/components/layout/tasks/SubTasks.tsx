@@ -23,6 +23,7 @@ const SubTasks = ({ taskId }: { taskId: number }) => {
   });
   if (isLoading) return <></>;
   if (isError) return <div></div>;
+  console.log(data);
   return (
     <>
       <div className="my-2 ml-4 mr-2" key={taskId}>

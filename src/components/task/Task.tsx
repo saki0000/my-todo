@@ -1,11 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Badge, Checkbox, Group, Text } from "@mantine/core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { separateAtom } from "../../atoms/openAtom";
 import { stateAtom } from "../../atoms/stateAtom";
-import { deleteTask } from "../../features/delete/api/DeleteApi";
+import useDeleteTask from "../../features/delete/hooks/useDeleteTask";
 import SeparateButton from "../../features/separate/components/SeparateButton";
 import DistributeButton from "../../features/update/components/DistributeButton";
 import EditButton from "../../features/update/components/EditButton";
@@ -22,13 +21,7 @@ type props = {
   date?: string;
 };
 const Task = ({ task, index, date }: props) => {
-  const queryClient = useQueryClient();
-
-  const mutation = useMutation(deleteTask, {
-    onSuccess: () => {
-      queryClient.invalidateQueries([task.box]);
-    },
-  });
+  const mutation = useDeleteTask(task, index);
   const [open, setOpen] = useState<boolean>(false);
   const setModal = useSetRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);

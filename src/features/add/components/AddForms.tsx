@@ -1,5 +1,4 @@
 import { Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
@@ -9,7 +8,8 @@ import Box from "../../update/components/Box";
 import DateSelect from "../../update/components/Date";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";
-import { addTask } from "../api/AddApi";
+import useAddCalendarTask from "../hooks/useAddCalendarTask";
+import useAddMutate from "../hooks/useAddMutate";
 
 type Props = {
   box: boxType;
@@ -18,22 +18,8 @@ type Props = {
 };
 type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
 const AddForms = ({ box, date, setOpen }: Props) => {
-  const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: addTask,
-    onMutate: async (newData) => {
-      queryClient.cancelQueries([box]);
-      const previousData = queryClient.getQueryData([box]);
-      queryClient.setQueryData([box], (old: any) => [...old, newData]);
-      return { previousData };
-    },
-    onError: (err, newData, context) => {
-      queryClient.setQueryData([box], context?.previousData);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries([box]);
-    },
-  });
+  const mutation = useAddMutate(box);
+  const calendarMutation = useAddCalendarTask(date || "");
   const user: User = useSelector(selectUser);
   const initialValue = {
     user_id: user.uid,
@@ -55,8 +41,11 @@ const AddForms = ({ box, date, setOpen }: Props) => {
     // formState: { errors },
   } = useForm<StateTask>({ defaultValues: initialValue });
   const onSubmit: SubmitHandler<StateTask> = (addData) => {
-    mutation.mutate(addData);
-
+    if (date) {
+      calendarMutation.mutate(addData);
+    } else {
+      mutation.mutate(addData);
+    }
     setOpen(true);
   };
   return (
