@@ -2,17 +2,14 @@ import { Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
 import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
-
 import { selectUser } from "../../../redux/userSlice";
 import { boxType, DateFormat, task, User } from "../../../Types";
-import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
-import { useFetchTasks } from "../../task/hooks/useFetchTask";
-
 import Box from "../../update/components/Box";
 import DateSelect from "../../update/components/Date";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";
-import { addTask } from "../api/AddApi";
+import useAddCalendarTask from "../hooks/useAddCalendarTask";
+import useAddMutate from "../hooks/useAddMutate";
 
 type Props = {
   box: boxType;
@@ -21,10 +18,8 @@ type Props = {
 };
 type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
 const AddForms = ({ box, date, setOpen }: Props) => {
-  const { data, mutate: addMutate } = useFetchTasks(box);
-  const { data: calendarData, mutate: calendarMutate } = useFetchDateTask(
-    date || ""
-  );
+  const mutation = useAddMutate(box);
+  const calendarMutation = useAddCalendarTask(date || "");
   const user: User = useSelector(selectUser);
   const initialValue = {
     user_id: user.uid,
@@ -47,14 +42,9 @@ const AddForms = ({ box, date, setOpen }: Props) => {
   } = useForm<StateTask>({ defaultValues: initialValue });
   const onSubmit: SubmitHandler<StateTask> = (addData) => {
     if (date) {
-      const newData = [...calendarData, addData];
-      addTask(addData);
-      calendarMutate(newData, false);
+      calendarMutation.mutate(addData);
     } else {
-      const newData = [...data, addData];
-      addTask(addData);
-      addMutate(newData, false);
-      console.log("add", newData);
+      mutation.mutate(addData);
     }
     setOpen(true);
   };

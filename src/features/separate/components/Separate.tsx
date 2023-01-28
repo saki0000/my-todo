@@ -1,15 +1,23 @@
 import { Divider, Modal, Stack } from "@mantine/core";
+import { useQuery } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
+import SubTasks from "../../../components/layout/tasks/SubTasks";
 import AddSubTask from "../../add/components/AddSubTask";
-import SubTasks from "../../task/components/SubTasks";
-import useFetchTask from "../hooks/fetchTask";
+import { fetchTask } from "../../fetch/api/fetchApi";
 
 const Separate = () => {
   const [modal, setOpen] = useRecoilState(separateAtom);
-  const { data, isLoading, error } = useFetchTask();
+  const { data, isLoading } = useQuery(
+    ["separate", modal.id],
+    () => fetchTask(modal.id),
+    {
+      enabled: modal.id !== 0,
+    }
+  );
   if (isLoading) return <div></div>;
-  if (error) return <div>error</div>;
+  // if (error) return <div>error</div>;
+  console.log(data);
   return (
     <>
       <Modal

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { URL } from "../../../api";
 
-export const deleteTask = (id: number) => {
-  axios
+export const deleteTask = async (id: number): Promise<void> => {
+  await axios
     .delete(`${URL}/tasks/${id}`)
     .then((res: any) => {
       console.log(res);
@@ -11,10 +11,10 @@ export const deleteTask = (id: number) => {
       console.log(err);
     });
 };
-export const deleteSubTask = (taskId: any, id: number) => {
-  axios
+export const deleteSubTask = async (taskId: any, id: number): Promise<void> => {
+  await axios
     .delete(`${URL}/tasks/${taskId.id}/subtasks/${id}`)
-    .then((res: any) => {
+    .then((res) => {
       console.log(res);
     })
     .catch((err) => {

@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Divider, Group, Paper, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
-import BoxInfoIcon from "../../box/BoxInfoIcon";
+import BoxInfoIcon from "../../../components/button/BoxInfoIcon";
 import useGetDateOfYear from "../hooks/CalenderHook";
 import CalendarTask from "./CalendarTaskList";
 

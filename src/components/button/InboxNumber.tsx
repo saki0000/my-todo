@@ -1,5 +1,5 @@
 import { useRecoilValue } from "recoil";
-import { inboxNumber } from "../../../atoms/inboxNumberAtom";
+import { inboxNumber } from "../../atoms/inboxNumberAtom";
 
 const InboxNumber = () => {
   const inbox = useRecoilValue(inboxNumber);
