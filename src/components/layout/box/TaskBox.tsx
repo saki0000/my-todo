@@ -1,6 +1,4 @@
 import { Divider, Group, Paper, Stack } from "@mantine/core";
-import { useSetRecoilState } from "recoil";
-import { inboxNumber } from "../../../atoms/inboxNumberAtom";
 import { boxType } from "../../../Types";
 import BoxInfoIcon from "../../button/BoxInfoIcon";
 import TaskList from "../tasks/TaskList";
@@ -25,7 +23,7 @@ const boxes: boxName = {
 };
 
 const TaskBox = ({ box, isLoading, isError, data, error }: props) => {
-  const setInboxNumber = useSetRecoilState(inboxNumber);
+  // const setInboxNumber = useSetRecoilState(inboxNumber);
 
   return (
     <>

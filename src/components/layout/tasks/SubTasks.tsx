@@ -17,7 +17,7 @@ const SubTasks = ({ taskId }: { taskId: number }) => {
     );
     return res.data;
   };
-  const { data, error, isLoading, isError } = useQuery({
+  const { data, isLoading, isError } = useQuery({
     queryKey: [taskId],
     queryFn: fetchData,
   });

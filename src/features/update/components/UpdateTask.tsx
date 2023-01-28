@@ -11,10 +11,8 @@ import { useSetRecoilState } from "recoil";
 
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
-import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
-import useFetchSubTask from "../../fetch/hooks/useFetchSubTask";
-import { useFetchTasks } from "../../fetch/hooks/useFetchTask";
-import { updateSubTask, updateTaskAPI } from "../api/UpdateApi";
+import useUpdateSubTask from "../hooks/useUpdateSubTask";
+import useUpdateTask from "../hooks/useUpdateTask";
 
 import Box from "./Box";
 import DateSelect from "./Date";
@@ -31,13 +29,9 @@ type props = {
 };
 type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
 const UpdateTask = ({ task, setOpen, type, index }: props) => {
-  const { data: taskData, mutate: taskMutate } = useFetchTasks(task.box);
-  const { data: subData, mutate: subMutate } = useFetchSubTask(
-    task.task_id || 0
-  );
-  const { data: calendarData, mutate: calendarMutate } = useFetchDateTask(
-    task.date || ""
-  );
+  const mutation = useUpdateTask(task, index);
+  const subMutation = useUpdateSubTask(task, index);
+
   const setModal = useSetRecoilState(separateAtom);
   const {
     control,
@@ -48,20 +42,9 @@ const UpdateTask = ({ task, setOpen, type, index }: props) => {
   } = useForm<StateTask>({ defaultValues: task });
   const onSubmit: SubmitHandler<StateTask> = (data) => {
     if (type === "sub" && task.task_id) {
-      const newData = [...subData];
-      newData.splice(index, 1, data);
-      updateSubTask(task.task_id, task.id, data);
-      subMutate(newData, false);
-    } else if (type === "calendar") {
-      const newData = [...calendarData];
-      newData.splice(index, 1, data);
-      updateTaskAPI(task.id, data);
-      calendarMutate(newData, false);
+      subMutation.mutate(data);
     } else {
-      const newData = [...taskData];
-      newData.splice(index, 1, data);
-      updateTaskAPI(task.id, data);
-      taskMutate(newData, false);
+      mutation.mutate(data);
     }
 
     task.box === "inbox" &&
