@@ -1,12 +1,17 @@
 import { Divider, Group, Paper, Stack } from "@mantine/core";
 import { useSetRecoilState } from "recoil";
-import { inboxNumber } from "../../atoms/inboxNumberAtom";
-import { boxType } from "../../Types";
-import { useFetchTasks } from "../task/hooks/useFetchTask";
-import BoxInfoIcon from "./BoxInfoIcon";
-import TaskList from "./TaskList";
+import { inboxNumber } from "../../../atoms/inboxNumberAtom";
+import { boxType } from "../../../Types";
+import BoxInfoIcon from "../../button/BoxInfoIcon";
+import TaskList from "../tasks/TaskList";
 
-type props = { box: "inbox" | "someday" | "nextAction" };
+type props = {
+  box: "inbox" | "someday" | "nextAction";
+  isLoading: any;
+  isError: any;
+  data: any;
+  error: any;
+};
 type boxName = Omit<
   {
     [attr in boxType]: string;
@@ -19,20 +24,9 @@ const boxes: boxName = {
   nextAction: "Next Action List",
 };
 
-const TaskBox = ({ box }: props) => {
+const TaskBox = ({ box, isLoading, isError, data, error }: props) => {
   const setInboxNumber = useSetRecoilState(inboxNumber);
-  const { data, isLoading, error } = useFetchTasks(box);
-  // const {
-  //   data: goalData,
-  //   isLoading: goalIsLoading,
-  //   error: goalError,
-  // } = useFetchGoal();
 
-  if (box === "inbox" && data) {
-    setInboxNumber(data.length);
-  }
-
-  console.log(data);
   return (
     <>
       <Paper p="xl" shadow="lg" className="h-full" radius="md">
@@ -44,7 +38,13 @@ const TaskBox = ({ box }: props) => {
 
           <Divider className="border-brown" />
 
-          <TaskList data={data} isLoading={isLoading} error={error} box={box} />
+          <TaskList
+            data={data}
+            isLoading={isLoading}
+            isError={isError}
+            error={error}
+            box={box}
+          />
         </Stack>
       </Paper>
     </>

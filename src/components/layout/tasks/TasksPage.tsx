@@ -2,8 +2,9 @@ import { Grid, Stack } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import { useSetRecoilState } from "recoil";
 import { stateAtom } from "../../../atoms/stateAtom";
-import TaskBox from "../../../features/box/TaskBox";
 import Calender from "../../../features/calendar/components/CalenderTasks";
+import NextActionBox from "../../../features/fetch/components/NextActionBox";
+import SomedayBox from "../../../features/fetch/components/SomedayBox";
 import { boxType, orderType } from "../../../Types";
 
 type NewBoxType = Exclude<boxType, "inbox">;
@@ -25,8 +26,8 @@ const TasksPage: React.FC = () => {
 
   const components: componentsType = {
     calender: <Calender></Calender>,
-    nextAction: <TaskBox box={"nextAction"} />,
-    someday: <TaskBox box={"someday"} />,
+    nextAction: <NextActionBox />,
+    someday: <SomedayBox />,
   };
   return (
     <>

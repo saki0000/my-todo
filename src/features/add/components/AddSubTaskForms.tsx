@@ -1,9 +1,9 @@
 import { Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
 import { task } from "../../../Types";
-import useFetchSubTask from "../../task/hooks/useFetchSubTask";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";
 
@@ -11,7 +11,25 @@ import { addSubTask } from "../api/AddApi";
 
 const AddSubTaskForms = ({ taskValue, setOpen }: any) => {
   const modalValue = useRecoilValue(separateAtom);
-  const { data: subtasks, mutate: subMutate } = useFetchSubTask(taskValue.id);
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (newData: task) => addSubTask(modalValue.id, newData),
+    onMutate: async (newData) => {
+      queryClient.cancelQueries([modalValue.id]);
+      const previousData = queryClient.getQueryData([modalValue.id]);
+      queryClient.setQueryData([modalValue.id], (old: any) => [
+        ...old,
+        newData,
+      ]);
+      return { previousData };
+    },
+    onError: (err, newData, context) => {
+      queryClient.setQueryData([modalValue.id], context?.previousData);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries([modalValue.id]);
+    },
+  });
   const {
     control,
     register,
@@ -30,9 +48,7 @@ const AddSubTaskForms = ({ taskValue, setOpen }: any) => {
     },
   });
   const onSubmit: SubmitHandler<task & { task_id: number }> = (data) => {
-    addSubTask(modalValue.id, data);
-    subMutate([...subtasks, data], false);
-    console.log([...subtasks, data]);
+    mutation.mutate(data);
     setOpen(true);
   };
   return (

@@ -2,13 +2,13 @@ import { Badge, Checkbox, Group, Text } from "@mantine/core";
 import { useState } from "react";
 import { AiOutlineEnter } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
-import { separateAtom } from "../../../atoms/openAtom";
-import { stateAtom } from "../../../atoms/stateAtom";
-import { task } from "../../../Types";
-import { deleteSubTask } from "../../delete/api/DeleteApi";
-import EditButton from "../../update/components/EditButton";
-import UpdateTask from "../../update/components/UpdateTask";
-import useFetchSubTask from "../hooks/useFetchSubTask";
+import { separateAtom } from "../../atoms/openAtom";
+import { stateAtom } from "../../atoms/stateAtom";
+import { deleteSubTask } from "../../features/delete/api/DeleteApi";
+import useFetchSubTask from "../../features/fetch/hooks/useFetchSubTask";
+import EditButton from "../../features/update/components/EditButton";
+import UpdateTask from "../../features/update/components/UpdateTask";
+import { task } from "../../Types";
 
 type props = {
   task: task & { id: number };

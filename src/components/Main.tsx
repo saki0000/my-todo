@@ -1,8 +1,8 @@
 import { Grid } from "@mantine/core";
 import React, { useState } from "react";
-import TaskBox from "../features/box/TaskBox";
+import Inbox from "../features/fetch/components/Inbox";
 import Separate from "../features/separate/components/Separate";
-import InboxNumber from "../features/task/components/InboxNumber";
+import InboxNumber from "./button/InboxNumber";
 import TasksPage from "./layout/tasks/TasksPage";
 
 const Main: React.FC = () => {
@@ -40,7 +40,7 @@ const Main: React.FC = () => {
 
         {page ? (
           <Grid.Col span={10} className="h-full">
-            <TaskBox box={"inbox"} />
+            <Inbox />
           </Grid.Col>
         ) : (
           <>

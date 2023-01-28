@@ -10,6 +10,6 @@ export const useFetchTasks = (box: string) => {
     `${URL}/do_tasks?id=${user.uid}&box=${box}`,
     fetcher
   );
-  console.log("fetch");
+  // console.log("fetch");
   return { data, isLoading: !error && !data, error, mutate };
 };

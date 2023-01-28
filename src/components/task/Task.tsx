@@ -2,19 +2,19 @@
 import { Badge, Checkbox, Group, Text } from "@mantine/core";
 import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { separateAtom } from "../../../atoms/openAtom";
-import { stateAtom } from "../../../atoms/stateAtom";
-import { task } from "../../../Types";
-import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
-import useDeleteCache from "../../delete/hooks/useDeleteCache";
-import SeparateButton from "../../separate/components/SeparateButton";
-import DistributeButton from "../../update/components/DistributeButton";
-import EditButton from "../../update/components/EditButton";
-import UpdateTask from "../../update/components/UpdateTask";
-import { useFetchTasks } from "../hooks/useFetchTask";
-import MenuButton from "./MenuButton";
-import PromptBadge from "./PromptBadge";
-import SubTasks from "./SubTasks";
+import { separateAtom } from "../../atoms/openAtom";
+import { stateAtom } from "../../atoms/stateAtom";
+import useFetchDateTask from "../../features/calendar/hooks/fetchDateTask";
+import useDeleteCache from "../../features/delete/hooks/useDeleteCache";
+import { useFetchTasks } from "../../features/fetch/hooks/useFetchTask";
+import SeparateButton from "../../features/separate/components/SeparateButton";
+import DistributeButton from "../../features/update/components/DistributeButton";
+import EditButton from "../../features/update/components/EditButton";
+import UpdateTask from "../../features/update/components/UpdateTask";
+import { task } from "../../Types";
+import MenuButton from "../button/MenuButton";
+import PromptBadge from "../button/PromptBadge";
+import SubTasks from "../layout/tasks/SubTasks";
 
 type TaskType = task & { id: number };
 type props = {

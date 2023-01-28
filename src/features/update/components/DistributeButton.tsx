@@ -5,7 +5,7 @@ import { separateAtom } from "../../../atoms/openAtom";
 import DefaultCalendar from "../../calendar/components/Calendar";
 import useFetchDateTask from "../../calendar/hooks/fetchDateTask";
 import useDeleteCache from "../../delete/hooks/useDeleteCache";
-import { useFetchTasks } from "../../task/hooks/useFetchTask";
+import { useFetchTasks } from "../../fetch/hooks/useFetchTask";
 import useDistribute from "../hooks/useUpdate";
 
 const DistributeButton = ({ task, index }: { task: any; index: number }) => {

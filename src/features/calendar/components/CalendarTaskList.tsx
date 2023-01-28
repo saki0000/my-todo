@@ -1,7 +1,7 @@
 import { Loader } from "@mantine/core";
+import Task from "../../../components/task/Task";
 import { task } from "../../../Types";
 import AddTask from "../../add/components/AddTask";
-import Task from "../../task/components/Task";
 import useFetchDateTask from "../hooks/fetchDateTask";
 type taskType = task & { id: number };
 const CalendarTask = ({ date }: { date: string }) => {

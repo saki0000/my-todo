@@ -1,6 +1,6 @@
 import { Badge } from "@mantine/core";
-import { task } from "../../../Types";
-import useGetDiffDate from "../hooks/useGetDiffDate";
+import useGetDiffDate from "../../features/fetch/hooks/useGetDiffDate";
+import { task } from "../../Types";
 
 type TaskType = task & { id: number };
 const PromptBadge = ({ task }: { task: TaskType }) => {
