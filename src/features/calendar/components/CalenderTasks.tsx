@@ -4,7 +4,7 @@ import { Divider, Group, Paper, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import BoxInfoIcon from "../../box/BoxInfoIcon";
 import useGetDateOfYear from "../hooks/CalenderHook";
-import CalendarTask from "./CalendarTask";
+import CalendarTask from "./CalendarTaskList";
 
 const Calender = ({ onClick }: { onClick?: () => void }) => {
   const today = new Date();

@@ -1,15 +1,12 @@
 import { Grid } from "@mantine/core";
 import React, { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { inboxNumber } from "../atoms/inboxNumberAtom";
 import TaskBox from "../features/box/TaskBox";
 import Separate from "../features/separate/components/Separate";
+import InboxNumber from "../features/task/components/InboxNumber";
 import TasksPage from "./layout/tasks/TasksPage";
 
 const Main: React.FC = () => {
   const [page, setPage] = useState<boolean>(true);
-  const inbox = useRecoilValue(inboxNumber);
-
   return (
     <div className=" h-full mx-16 pt-4">
       <Separate />
@@ -26,11 +23,7 @@ const Main: React.FC = () => {
               >
                 Inbox
               </p>
-              {inbox !== 0 && inbox && (
-                <div className="bg-brown h-6 w-6  rounded-full text-center absolute top-0 left-16">
-                  <p className="text-white m-0 font-semibold">{inbox}</p>
-                </div>
-              )}
+              <InboxNumber />
             </div>
             <div>
               <p
