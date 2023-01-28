@@ -29,7 +29,7 @@ const SubTasks = ({ taskId }: { taskId: number }) => {
         {data &&
           data?.map((task: TaskType, index: number) => (
             <div className="my-3">
-              <SubTask task={task} index={index} />
+              <SubTask task={task} index={index} taskId={taskId} />
             </div>
           ))}
       </div>

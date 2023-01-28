@@ -1,12 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Badge, Checkbox, Group, Text } from "@mantine/core";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { separateAtom } from "../../atoms/openAtom";
 import { stateAtom } from "../../atoms/stateAtom";
-import useFetchDateTask from "../../features/calendar/hooks/fetchDateTask";
-import useDeleteCache from "../../features/delete/hooks/useDeleteCache";
-import { useFetchTasks } from "../../features/fetch/hooks/useFetchTask";
+import { deleteTask } from "../../features/delete/api/DeleteApi";
 import SeparateButton from "../../features/separate/components/SeparateButton";
 import DistributeButton from "../../features/update/components/DistributeButton";
 import EditButton from "../../features/update/components/EditButton";
@@ -23,9 +22,13 @@ type props = {
   date?: string;
 };
 const Task = ({ task, index, date }: props) => {
-  const deleteData = useDeleteCache();
-  const { data, mutate: deleteMutate } = useFetchTasks(task.box);
-  const { data: calendarTask, mutate } = useFetchDateTask(date || "");
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(deleteTask, {
+    onSuccess: () => {
+      queryClient.invalidateQueries([task.box]);
+    },
+  });
   const [open, setOpen] = useState<boolean>(false);
   const setModal = useSetRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);
@@ -51,13 +54,7 @@ const Task = ({ task, index, date }: props) => {
                     <div className="flex space-x-4">
                       <Checkbox
                         checked={false}
-                        onChange={() => {
-                          if (date) {
-                            deleteData(calendarTask, mutate, index, task.id);
-                          } else {
-                            deleteData(data, deleteMutate, index, task.id);
-                          }
-                        }}
+                        onChange={() => mutation.mutate(task.id)}
                       />
 
                       <p className="m-0 text-lg font-sans">{task?.name}</p>
