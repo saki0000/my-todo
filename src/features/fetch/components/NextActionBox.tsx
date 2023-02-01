@@ -15,7 +15,7 @@ const NextActionBox = () => {
     return res.data;
   };
   const { data, error, isLoading, isError } = useQuery({
-    queryKey: ["nextAcrion"],
+    queryKey: ["nextAction"],
     queryFn: fetchData,
   });
   return (

@@ -28,6 +28,7 @@ const useDistribute = (task: any, index: number) => {
     },
     onSettled: (newData, error, variables, context) => {
       queryClient.invalidateQueries([context?.newData.box]);
+      queryClient.invalidateQueries([context?.previousData]);
     },
   });
   return mutation;
