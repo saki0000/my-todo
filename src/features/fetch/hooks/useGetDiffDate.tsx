@@ -1,6 +1,5 @@
 import { useMemo } from "react";
-import { task } from "../../../Types";
-type TaskType = task & { id: number };
+import { TaskType } from "../../../Types";
 const useGetDiffDate = (task: TaskType) => {
   const diffDate = useMemo(() => {
     if (task.created_at) {

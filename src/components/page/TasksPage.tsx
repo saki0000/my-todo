@@ -1,30 +1,30 @@
 import { Grid, Stack } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import { useSetRecoilState } from "recoil";
-import { stateAtom } from "../../../atoms/stateAtom";
-import Calender from "../../../features/calendar/components/CalenderTasks";
-import NextActionBox from "../../../features/fetch/components/NextActionBox";
-import SomedayBox from "../../../features/fetch/components/SomedayBox";
-import { boxType, orderType } from "../../../Types";
+import { stateAtom } from "../../atoms/stateAtom";
+import Calender from "../../features/calendar/components/CalenderTasks";
+import NextActionBox from "../../features/fetch/components/NextActionBox";
+import SomedayBox from "../../features/fetch/components/SomedayBox";
+import { BoxType, OrderType } from "../../Types";
 
-type NewBoxType = Exclude<boxType, "inbox">;
-type NewOrderType = Exclude<orderType, "fourth">;
-type componentsType = {
+type NewBoxType = Exclude<BoxType, "inbox">;
+type NewOrderType = Exclude<OrderType, "fourth">;
+type ComponentsType = {
   [k in NewBoxType]: JSX.Element;
 };
-type stateType = {
+type StateType = {
   [k in NewOrderType]: NewBoxType;
 };
 
 const TasksPage: React.FC = () => {
-  const [state, setState] = useSetState<stateType>({
+  const [state, setState] = useSetState<StateType>({
     first: "nextAction",
     second: "calender",
     third: "someday",
   });
   const setStates = useSetRecoilState(stateAtom);
 
-  const components: componentsType = {
+  const components: ComponentsType = {
     calender: <Calender></Calender>,
     nextAction: <NextActionBox />,
     someday: <SomedayBox />,

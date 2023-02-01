@@ -2,18 +2,17 @@ import { Loader, Text } from "@mantine/core";
 import { useRecoilValue } from "recoil";
 import { stateAtom } from "../../../atoms/stateAtom";
 import AddTask from "../../../features/add/components/AddTask";
-import { task } from "../../../Types";
+import { TaskType } from "../../../Types";
 import Task from "../../task/Task";
 
 const TaskList = ({ data, isLoading, isError, error, box }: any) => {
   const first = useRecoilValue(stateAtom);
-  console.log(data);
   return (
     <>
       <div className="h-full overflow-auto">
         <div>
           {data && data.length !== 0 ? (
-            data.map((task: task & { id: number }, index: number) => (
+            data.map((task: TaskType, index: number) => (
               <div key={task?.id || 0}>
                 <Task task={task} index={index} />
               </div>

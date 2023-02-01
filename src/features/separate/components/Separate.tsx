@@ -2,7 +2,7 @@ import { Divider, Modal, Stack } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
-import SubTasks from "../../../components/layout/tasks/SubTasks";
+import SubTasks from "../../../components/layout/list/SubTaskList";
 import AddSubTask from "../../add/components/AddSubTask";
 import { fetchTask } from "../../fetch/api/fetchApi";
 

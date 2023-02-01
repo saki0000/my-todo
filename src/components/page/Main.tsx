@@ -1,9 +1,9 @@
 import { Grid } from "@mantine/core";
 import React, { useState } from "react";
-import Inbox from "../features/fetch/components/Inbox";
-import Separate from "../features/separate/components/Separate";
-import InboxNumber from "./button/InboxNumber";
-import TasksPage from "./layout/tasks/TasksPage";
+import Inbox from "../../features/fetch/components/Inbox";
+import Separate from "../../features/separate/components/Separate";
+import InboxNumber from "../button/InboxNumber";
+import TasksPage from "./TasksPage";
 
 const Main: React.FC = () => {
   const [page, setPage] = useState<boolean>(true);

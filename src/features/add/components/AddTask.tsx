@@ -2,10 +2,10 @@ import { ActionIcon, Group, Text } from "@mantine/core";
 
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { boxType, DateFormat } from "../../../Types";
+import { BoxType, DateFormat } from "../../../Types";
 import AddForms from "./AddForms";
 
-type Props = { box: boxType; date?: DateFormat | string };
+type Props = { box: BoxType; date?: DateFormat | string };
 const AddTask = ({ box, date }: Props) => {
   const [open, setOpen] = useState<boolean>(true);
 

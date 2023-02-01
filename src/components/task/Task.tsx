@@ -9,12 +9,11 @@ import SeparateButton from "../../features/separate/components/SeparateButton";
 import DistributeButton from "../../features/update/components/DistributeButton";
 import EditButton from "../../features/update/components/EditButton";
 import UpdateTask from "../../features/update/components/UpdateTask";
-import { task } from "../../Types";
+import { TaskType } from "../../Types";
 import MenuButton from "../button/MenuButton";
 import PromptBadge from "../button/PromptBadge";
-import SubTasks from "../layout/tasks/SubTasks";
+import SubTasks from "../layout/list/SubTaskList";
 
-type TaskType = task & { id: number };
 type props = {
   task: TaskType;
   index: number;

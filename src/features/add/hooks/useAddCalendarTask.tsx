@@ -1,10 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { task } from "../../../Types";
 import { addTask } from "../api/AddApi";
+import { AddTaskType } from "../type/FeatureAddType";
 
 const useAddCalendarTask = (date: string) => {
   const queryClient = useQueryClient();
-
   const mutation = useMutation({
     mutationFn: addTask,
     onMutate: async (newData) => {
@@ -12,7 +11,7 @@ const useAddCalendarTask = (date: string) => {
       const previousData = queryClient.getQueryData(["calender", date]);
       queryClient.setQueryData(
         ["calender", date],
-        (old: task[] | undefined) => old && [...old, newData]
+        (old: AddTaskType[] | undefined) => old && [...old, newData]
       );
       return { previousData };
     },

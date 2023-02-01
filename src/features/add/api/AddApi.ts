@@ -1,7 +1,11 @@
 import axios from "axios";
 import { URL } from "../../../api";
+import { AddSubTaskType, AddTaskType } from "../type/FeatureAddType";
 
-export const addSubTask = async (id: number, body: any) => {
+export const addSubTask = async (
+  id: number,
+  body: AddSubTaskType
+): Promise<void> => {
   await axios
     .post(`${URL}/tasks/${id}/subtasks`, body)
     .then((res) => {
@@ -12,7 +16,7 @@ export const addSubTask = async (id: number, body: any) => {
     });
 };
 
-export const addTask = async (body: any) => {
+export const addTask = async (body: AddTaskType): Promise<void> => {
   await axios
     .post(`${URL}/tasks`, body)
     .then((res) => {
