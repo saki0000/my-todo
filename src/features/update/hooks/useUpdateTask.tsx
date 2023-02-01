@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { task } from "../../../Types";
+import { TaskType } from "../../../Types";
 import { updateTaskAPI } from "../api/UpdateApi";
-type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
+type StateTask = Omit<TaskType, "updated_at" | "created_at" | "id">;
 
 const useUpdateTask = (task: any, index: number) => {
   const queryClient = useQueryClient();
@@ -13,10 +13,12 @@ const useUpdateTask = (task: any, index: number) => {
         queryClient.cancelQueries([task.box]);
         const previousData = queryClient.getQueryData([task.box]);
 
-        queryClient.setQueryData([task.box], (old: any) => {
-          const newAry = [...old];
-          newAry.splice(index, 1, newData);
-          return newAry;
+        queryClient.setQueryData([task.box], (old: StateTask[] | undefined) => {
+          if (old) {
+            const newAry = [...old];
+            newAry.splice(index, 1, newData);
+            return newAry;
+          }
         });
         return { previousData };
       },

@@ -3,10 +3,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { URL } from "../../../api";
 import { selectUser } from "../../../redux/userSlice";
-import { task, User } from "../../../Types";
+import { SubTaskType, User } from "../../../Types";
 import SubTask from "../../task/SubTask";
-
-type TaskType = task & { id: number };
 
 const SubTasks = ({ taskId }: { taskId: number }) => {
   const user: User = useSelector(selectUser);
@@ -28,7 +26,7 @@ const SubTasks = ({ taskId }: { taskId: number }) => {
     <>
       <div className="my-2 ml-4 mr-2" key={taskId}>
         {data &&
-          data?.map((task: TaskType, index: number) => (
+          data?.map((task: SubTaskType, index: number) => (
             <div className="my-3">
               <SubTask task={task} index={index} taskId={taskId} />
             </div>

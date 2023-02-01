@@ -1,7 +1,7 @@
 import { Divider, Group, Paper, Stack } from "@mantine/core";
-import { boxType } from "../../../Types";
+import { BoxType } from "../../../Types";
 import BoxInfoIcon from "../../button/BoxInfoIcon";
-import TaskList from "../tasks/TaskList";
+import TaskList from "../list/TaskList";
 
 type props = {
   box: "inbox" | "someday" | "nextAction";
@@ -10,27 +10,25 @@ type props = {
   data: any;
   error: any;
 };
-type boxName = Omit<
+type BoxName = Omit<
   {
-    [attr in boxType]: string;
+    [attr in BoxType]: string;
   },
   "calender"
 >;
-const boxes: boxName = {
+const boxes: BoxName = {
   inbox: "Inbox",
   someday: "Someday",
   nextAction: "Next Action List",
 };
 
 const TaskBox = ({ box, isLoading, isError, data, error }: props) => {
-  // const setInboxNumber = useSetRecoilState(inboxNumber);
-
   return (
     <>
       <Paper p="xl" shadow="lg" className="h-full" radius="md">
         <Stack className="h-full px-2" key={box}>
           <Group>
-            <p className="text-xl my-2">{boxes[box]}</p>
+            <p className="text-xl my-2 font-medium">{boxes[box]}</p>
             <BoxInfoIcon box={box} />
           </Group>
 

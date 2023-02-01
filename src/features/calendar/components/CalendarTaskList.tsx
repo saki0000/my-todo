@@ -3,10 +3,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import Task from "../../../components/task/Task";
 import { selectUser } from "../../../redux/userSlice";
-import { task, User } from "../../../Types";
+import { TaskType, User } from "../../../Types";
 import AddTask from "../../add/components/AddTask";
 import { fetchCalendarTask } from "../api/CalendarApi";
-type taskType = task & { id: number };
 const CalendarTask = ({ date }: { date: string }) => {
   const user: User = useSelector(selectUser);
 
@@ -20,7 +19,7 @@ const CalendarTask = ({ date }: { date: string }) => {
     <>
       <div className="my-6">
         {calendarTask &&
-          calendarTask.map((task: taskType, index: number) => (
+          calendarTask.map((task: TaskType, index: number) => (
             <div key={task.id}>
               <Task task={task} index={index} date={date} />
             </div>

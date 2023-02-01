@@ -7,10 +7,10 @@ import { stateAtom } from "../../atoms/stateAtom";
 import useDeleteSubTask from "../../features/delete/hooks/useDeleteSubTask";
 import EditButton from "../../features/update/components/EditButton";
 import UpdateTask from "../../features/update/components/UpdateTask";
-import { task } from "../../Types";
+import { TaskType } from "../../Types";
 
 type props = {
-  task: task & { id: number };
+  task: TaskType;
   index: number;
   taskId: number;
 };

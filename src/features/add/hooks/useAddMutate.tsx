@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { boxType, task } from "../../../Types";
+import { BoxType } from "../../../Types";
 import { addTask } from "../api/AddApi";
-
-const useAddMutate = (box: boxType) => {
+import { AddTaskType } from "../type/FeatureAddType";
+const useAddMutate = (box: BoxType) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: addTask,
-    onMutate: async (newData) => {
+    onMutate: async (newData: AddTaskType) => {
       queryClient.cancelQueries([box]);
       const previousData = queryClient.getQueryData([box]);
       queryClient.setQueryData(
         [box],
-        (old: task[] | undefined) => old && [...old, newData]
+        (old: AddTaskType[] | undefined) => old && [...old, newData]
       );
       return { previousData };
     },

@@ -1,41 +1,23 @@
 import { Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
-import { task } from "../../../Types";
+import { SubTaskType } from "../../../Types";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";
+import useAddSubTask from "../hooks/useAddSubTask";
 
-import { addSubTask } from "../api/AddApi";
+type Props = { taskValue: any; setOpen: (arg: boolean) => void };
 
-const AddSubTaskForms = ({ taskValue, setOpen }: any) => {
+const AddSubTaskForms = ({ taskValue, setOpen }: Props) => {
   const modalValue = useRecoilValue(separateAtom);
-  const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: (newData: task) => addSubTask(modalValue.id, newData),
-    onMutate: async (newData) => {
-      queryClient.cancelQueries([modalValue.id]);
-      const previousData = queryClient.getQueryData([modalValue.id]);
-      queryClient.setQueryData([modalValue.id], (old: any) => [
-        ...old,
-        newData,
-      ]);
-      return { previousData };
-    },
-    onError: (err, newData, context) => {
-      queryClient.setQueryData([modalValue.id], context?.previousData);
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries([modalValue.id]);
-    },
-  });
+  const mutation = useAddSubTask();
   const {
     control,
     register,
     handleSubmit,
     // formState: { errors },
-  } = useForm<task & { task_id: number }>({
+  } = useForm<SubTaskType>({
     defaultValues: {
       task_id: modalValue.id,
       name: "",
@@ -47,7 +29,7 @@ const AddSubTaskForms = ({ taskValue, setOpen }: any) => {
       memo: "",
     },
   });
-  const onSubmit: SubmitHandler<task & { task_id: number }> = (data) => {
+  const onSubmit: SubmitHandler<SubTaskType> = (data: SubTaskType) => {
     mutation.mutate(data);
     setOpen(true);
   };

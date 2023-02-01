@@ -10,7 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 
 import { separateAtom } from "../../../atoms/openAtom";
-import { task } from "../../../Types";
+import { TaskType } from "../../../Types";
 import useUpdateSubTask from "../hooks/useUpdateSubTask";
 import useUpdateTask from "../hooks/useUpdateTask";
 
@@ -19,15 +19,15 @@ import DateSelect from "./Date";
 import DueDate from "./DueDate";
 import Weight from "./Weight";
 
-type taskType = task & { id: number; task_id?: number };
+type TaskOrSubTaskType = TaskType & { task_id?: number };
 type props = {
-  task: taskType;
+  task: TaskOrSubTaskType;
   setOpen: (arg: boolean) => void;
-  setTasks?: (arg: taskType) => void;
+  setTasks?: (arg: TaskOrSubTaskType) => void;
   type?: string;
   index: number;
 };
-type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
+type StateTask = Omit<TaskType, "updated_at" | "created_at" | "id">;
 const UpdateTask = ({ task, setOpen, type, index }: props) => {
   const mutation = useUpdateTask(task, index);
   const subMutation = useUpdateSubTask(task, index);

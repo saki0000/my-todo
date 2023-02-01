@@ -1,4 +1,4 @@
-import { Badge, HoverCard, Menu, Select, Text } from "@mantine/core";
+import { HoverCard, Select, Text } from "@mantine/core";
 import React from "react";
 import { Controller } from "react-hook-form";
 
@@ -14,25 +14,22 @@ const Box = React.forwardRef(({ control }: box) => {
         render={({ field }) => (
           <HoverCard width={133} position="top" shadow="md">
             <HoverCard.Target>
-              <Menu>
-                <Menu.Target>
-                  <Badge color="brown">{field.value || "priority"}</Badge>
-                </Menu.Target>
-                <Menu.Dropdown>
-                  <Select
-                    data={[
-                      { value: "inbox", label: "Inbox" },
-                      { value: "nextAction", label: "Next Action List" },
-                      { value: "calender", label: "Calendar" },
-                      { value: "someday", label: "Someday" },
-                    ]}
-                    ref={field.ref}
-                    onChange={field.onChange}
-                    value={field.value}
-                    className="w-fit"
-                  />
-                </Menu.Dropdown>
-              </Menu>
+              {/* <Badge color="brown">{field.value || "priority"}</Badge> */}
+              <Select
+                data={[
+                  { value: "inbox", label: "Inbox" },
+                  { value: "nextAction", label: "Next Action List" },
+                  { value: "calender", label: "Calendar" },
+                  { value: "someday", label: "Someday" },
+                ]}
+                ref={field.ref}
+                onChange={field.onChange}
+                value={field.value}
+                className="w-fit"
+              />
+              {/* <Menu.Dropdown>
+                  
+                </Menu.Dropdown> */}
             </HoverCard.Target>
 
             <HoverCard.Dropdown sx={{ pointerEvents: "none" }}>

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { task } from "../../../Types";
+import { TaskType } from "../../../Types";
 import { updateTaskAPI } from "../api/UpdateApi";
-type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
+type StateTask = Omit<TaskType, "updated_at" | "created_at" | "id">;
 
 const useDistribute = (task: any, index: number) => {
   const queryClient = useQueryClient();
@@ -12,9 +12,9 @@ const useDistribute = (task: any, index: number) => {
 
       queryClient.setQueryData(
         [newData.box],
-        (old: task[] | undefined) => old && [...old, newData]
+        (old: StateTask[] | undefined) => old && [...old, newData]
       );
-      queryClient.setQueryData([task.box], (old: task[] | undefined) => {
+      queryClient.setQueryData([task.box], (old: TaskType[] | undefined) => {
         if (old) {
           const newAry = [...old];
           newAry.splice(index, 1);
@@ -28,6 +28,7 @@ const useDistribute = (task: any, index: number) => {
     },
     onSettled: (newData, error, variables, context) => {
       queryClient.invalidateQueries([context?.newData.box]);
+      queryClient.invalidateQueries([context?.previousData]);
     },
   });
   return mutation;

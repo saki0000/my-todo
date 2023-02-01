@@ -3,25 +3,25 @@ import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/userSlice";
-import { boxType, DateFormat, task, User } from "../../../Types";
+import { BoxType, DateFormat, User } from "../../../Types";
 import Box from "../../update/components/Box";
 import DateSelect from "../../update/components/Date";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";
 import useAddCalendarTask from "../hooks/useAddCalendarTask";
 import useAddMutate from "../hooks/useAddMutate";
+import { AddTaskType } from "../type/FeatureAddType";
 
 type Props = {
-  box: boxType;
+  box: BoxType;
   date?: DateFormat | string;
   setOpen: Dispatch<SetStateAction<boolean>>;
 };
-type StateTask = Required<Omit<task, "updated_at" | "created_at" | "id">>;
 const AddForms = ({ box, date, setOpen }: Props) => {
   const mutation = useAddMutate(box);
   const calendarMutation = useAddCalendarTask(date || "");
   const user: User = useSelector(selectUser);
-  const initialValue = {
+  const initialValue: AddTaskType = {
     user_id: user.uid,
     name: "",
     box: box,
@@ -39,8 +39,8 @@ const AddForms = ({ box, date, setOpen }: Props) => {
     handleSubmit,
     watch,
     // formState: { errors },
-  } = useForm<StateTask>({ defaultValues: initialValue });
-  const onSubmit: SubmitHandler<StateTask> = (addData) => {
+  } = useForm<AddTaskType>({ defaultValues: initialValue });
+  const onSubmit: SubmitHandler<AddTaskType> = (addData) => {
     if (date) {
       calendarMutation.mutate(addData);
     } else {

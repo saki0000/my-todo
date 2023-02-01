@@ -1,6 +1,7 @@
-import { Badge, HoverCard, Modal, Text } from "@mantine/core";
+import { Button, HoverCard, Modal, Text } from "@mantine/core";
 import React, { useState } from "react";
 import { Controller } from "react-hook-form";
+import { AiOutlineCalendar } from "react-icons/ai";
 import DefaultCalendar from "../../calendar/components/Calendar";
 
 type props = { control: any };
@@ -35,9 +36,13 @@ const DateSelect = React.forwardRef(({ control }: props) => {
                 zIndex={1}
               >
                 <HoverCard.Target>
-                  <Badge color="brown" onClick={() => setOpen(true)}>
+                  <Button
+                    leftIcon={<AiOutlineCalendar />}
+                    color="brown"
+                    onClick={() => setOpen(true)}
+                  >
                     {field.value || "日付"}
-                  </Badge>
+                  </Button>
                 </HoverCard.Target>
 
                 <HoverCard.Dropdown sx={{ pointerEvents: "none" }}>
