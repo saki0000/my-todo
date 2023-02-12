@@ -50,7 +50,7 @@ const Calender = ({ onClick }: { onClick?: () => void }) => {
                 {dateTask.map((date: string) => (
                   <div key={date}>
                     <Text className="mb-2">{date}</Text>
-                    <Divider className="border-brown" />
+                    <Divider />
                     <CalendarTask date={date} />
                   </div>
                 ))}

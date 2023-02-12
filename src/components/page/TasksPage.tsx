@@ -46,7 +46,7 @@ const TasksPage: React.FC = () => {
                     setState({ first: key[1], [key[0]]: state.first });
                     setStates({ first: key[1] });
                   }}
-                  className="cursor-pointer"
+                  className="cursor-pointer hover:shadow-2xl"
                 >
                   {components[key[1]]}
                 </div>
