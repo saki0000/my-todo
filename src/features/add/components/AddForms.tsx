@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/userSlice";
 import { BoxType, DateFormat, User } from "../../../Types";
-import Box from "../../update/components/Box";
 import DateSelect from "../../update/components/Date";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";
@@ -37,7 +36,6 @@ const AddForms = ({ box, date, setOpen }: Props) => {
     control,
     register,
     handleSubmit,
-    watch,
     // formState: { errors },
   } = useForm<AddTaskType>({ defaultValues: initialValue });
   const onSubmit: SubmitHandler<AddTaskType> = (addData) => {
@@ -60,8 +58,8 @@ const AddForms = ({ box, date, setOpen }: Props) => {
           <div className="flex space-x-4">
             <Weight control={control} />
             <DueDate control={control} />
-            <Box control={control} />
-            {watch().box === "calender" && <DateSelect control={control} />}
+            {/* <Box control={control} /> */}
+            {box === "calender" && <DateSelect control={control} />}
           </div>
 
           <Textarea placeholder="Memo" {...register("memo")}></Textarea>

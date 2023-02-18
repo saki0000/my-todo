@@ -2,8 +2,8 @@ import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import "./App.css";
-import Authed from "./features/auth/Authed";
-import Login from "./features/auth/Login";
+import Authed from "./features/auth/components/Authed";
+import Login from "./features/auth/components/Login";
 import { selectUser } from "./redux/userSlice";
 
 const queryClient = new QueryClient({
