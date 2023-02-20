@@ -15,7 +15,6 @@ import useUpdateSubTask from "../hooks/useUpdateSubTask";
 import useUpdateTask from "../hooks/useUpdateTask";
 
 import Box from "./Box";
-import DateSelect from "./Date";
 import DueDate from "./DueDate";
 import Weight from "./Weight";
 
@@ -37,7 +36,6 @@ const UpdateTask = ({ task, setOpen, type, index }: props) => {
     control,
     register,
     handleSubmit,
-    watch,
     // formState: { errors },
   } = useForm<StateTask>({ defaultValues: task });
   const onSubmit: SubmitHandler<StateTask> = (data) => {
@@ -61,9 +59,6 @@ const UpdateTask = ({ task, setOpen, type, index }: props) => {
             <Weight control={control} />
             <DueDate control={control} />
             {type !== "sub" && <Box control={control} />}
-            {watch().box === "calender" && type !== "sub" && (
-              <DateSelect control={control} />
-            )}
           </Group>
 
           <Textarea placeholder="Memo" {...register("memo")}></Textarea>
