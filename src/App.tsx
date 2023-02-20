@@ -1,9 +1,10 @@
 import { MantineProvider } from "@mantine/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import "./App.css";
 import Authed from "./features/auth/components/Authed";
-import Login from "./features/auth/components/Login";
 import { selectUser } from "./redux/userSlice";
 
 const queryClient = new QueryClient({
@@ -11,6 +12,11 @@ const queryClient = new QueryClient({
 });
 function App() {
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    !user.uid && navigate("/signIn");
+  });
   return (
     <QueryClientProvider client={queryClient}>
       <MantineProvider
@@ -45,7 +51,7 @@ function App() {
         withGlobalStyles
         withNormalizeCSS
       >
-        {user.uid ? <Authed /> : <Login />}
+        <Authed />
       </MantineProvider>
     </QueryClientProvider>
   );
