@@ -13,7 +13,6 @@ const CalendarTask = ({ date }: { date: string }) => {
     data: calendarTask,
     isLoading,
     isError,
-    error,
   } = useQuery(["calender", date], () => fetchCalendarTask(user.uid, date));
   return (
     <>
