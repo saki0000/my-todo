@@ -3,9 +3,9 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { RecoilRoot } from "recoil";
-import Head from "../../../components/head/Header";
-import Main from "../../../components/page/Main";
-import { selectUser } from "../../../redux/userSlice";
+import { selectUser } from "../../redux/userSlice";
+import Head from "../head/Header";
+import Main from "./Main";
 
 const Authed = () => {
   const user = useSelector(selectUser);

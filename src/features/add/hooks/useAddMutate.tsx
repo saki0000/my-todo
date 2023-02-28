@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { BoxType } from "../../../Types";
+import { BoxType } from "../../../types/Types";
 import { addTask } from "../api/AddApi";
 import { AddTaskType } from "../type/FeatureAddType";
 const useAddMutate = (box: BoxType) => {

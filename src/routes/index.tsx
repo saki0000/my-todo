@@ -1,5 +1,5 @@
 import { useRoutes } from "react-router-dom";
-import Authed from "../features/auth/components/Authed";
+import Authed from "../components/page/Authed";
 import Login from "../features/auth/components/Login";
 import SignUp from "../features/auth/components/SignUp";
 

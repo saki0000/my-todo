@@ -10,7 +10,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useSetRecoilState } from "recoil";
 
 import { separateAtom } from "../../../atoms/openAtom";
-import { TaskType } from "../../../Types";
+import { TaskType } from "../../../types/Types";
 import useUpdateSubTask from "../hooks/useUpdateSubTask";
 import useUpdateTask from "../hooks/useUpdateTask";
 

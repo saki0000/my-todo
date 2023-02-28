@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
 import Task from "../../../components/task/Task";
 import { selectUser } from "../../../redux/userSlice";
-import { TaskType, User } from "../../../Types";
+import { TaskType, User } from "../../../types/Types";
 import AddTask from "../../add/components/AddTask";
 import { fetchCalendarTask } from "../api/CalendarApi";
 const CalendarTask = ({ date }: { date: string }) => {

@@ -2,7 +2,7 @@ import { Divider, Loader, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { stateAtom } from "../../../atoms/stateAtom";
-import { TaskType } from "../../../Types";
+import { TaskType } from "../../../types/Types";
 import Task from "../../task/Task";
 
 type DistributeTasksByDueDate = { [index: string]: TaskType[] };

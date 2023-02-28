@@ -2,7 +2,7 @@ import { Loader, Text } from "@mantine/core";
 import { useRecoilValue } from "recoil";
 import { stateAtom } from "../../../atoms/stateAtom";
 import AddTask from "../../../features/add/components/AddTask";
-import { TaskType } from "../../../Types";
+import { TaskType } from "../../../types/Types";
 import Task from "../../task/Task";
 
 const TaskList = ({ data, isLoading, isError, error, box }: any) => {

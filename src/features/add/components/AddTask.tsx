@@ -2,7 +2,7 @@ import { ActionIcon, Group, Text } from "@mantine/core";
 
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { BoxType, DateFormat } from "../../../Types";
+import { BoxType, DateFormat } from "../../../types/Types";
 import AddForms from "./AddForms";
 
 type Props = { box: BoxType; date?: DateFormat | string };
