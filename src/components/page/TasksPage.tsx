@@ -5,7 +5,7 @@ import { stateAtom } from "../../atoms/stateAtom";
 import Calender from "../../features/calendar/components/CalenderTasks";
 import NextActionBox from "../../features/fetch/components/NextActionBox";
 import SomedayBox from "../../features/fetch/components/SomedayBox";
-import { BoxType, OrderType } from "../../Types";
+import { BoxType, OrderType } from "../../types/Types";
 
 type NewBoxType = Exclude<BoxType, "inbox">;
 type NewOrderType = Exclude<OrderType, "fourth">;

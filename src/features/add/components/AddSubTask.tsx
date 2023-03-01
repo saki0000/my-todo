@@ -1,7 +1,7 @@
 import { ActionIcon, Group, Text } from "@mantine/core";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { TaskType } from "../../../Types";
+import { TaskType } from "../../../types/Types";
 import AddSubTaskForms from "./AddSubTaskForms";
 
 type props = { task: TaskType };

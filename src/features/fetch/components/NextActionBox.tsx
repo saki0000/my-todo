@@ -11,7 +11,7 @@ import DueDateTaskList from "../../../components/layout/list/DueDateTaskList";
 import PrimaryTaskList from "../../../components/layout/list/PrimaryTaskList";
 import TaskList from "../../../components/layout/list/TaskList";
 import { selectUser } from "../../../redux/userSlice";
-import { BoxType, User } from "../../../Types";
+import { BoxType, User } from "../../../types/Types";
 type BoxName = Omit<
   {
     [attr in BoxType]: string;

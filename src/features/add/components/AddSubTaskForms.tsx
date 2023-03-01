@@ -2,7 +2,7 @@ import { Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRecoilValue } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
-import { SubTaskType } from "../../../Types";
+import { SubTaskType } from "../../../types/Types";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";
 import useAddSubTask from "../hooks/useAddSubTask";

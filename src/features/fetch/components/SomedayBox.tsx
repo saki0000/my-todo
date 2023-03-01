@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { URL } from "../../../api";
 import TaskBox from "../../../components/layout/box/TaskBox";
 import { selectUser } from "../../../redux/userSlice";
-import { User } from "../../../Types";
+import { User } from "../../../types/Types";
 
 const SomedayBox = () => {
   const user: User = useSelector(selectUser);

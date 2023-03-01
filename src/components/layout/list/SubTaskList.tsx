@@ -3,7 +3,7 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { URL } from "../../../api";
 import { selectUser } from "../../../redux/userSlice";
-import { SubTaskType, User } from "../../../Types";
+import { SubTaskType, User } from "../../../types/Types";
 import SubTask from "../../task/SubTask";
 
 const SubTasks = ({ taskId }: { taskId: number }) => {

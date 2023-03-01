@@ -3,7 +3,7 @@ import { Dispatch, SetStateAction } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { selectUser } from "../../../redux/userSlice";
-import { BoxType, DateFormat, User } from "../../../Types";
+import { BoxType, DateFormat, User } from "../../../types/Types";
 import DateSelect from "../../update/components/Date";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";

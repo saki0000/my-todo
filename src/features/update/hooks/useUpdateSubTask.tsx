@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { TaskType } from "../../../Types";
+import { TaskType } from "../../../types/Types";
 import { updateSubTask } from "../api/UpdateApi";
 type StateTask = Required<Omit<TaskType, "updated_at" | "created_at" | "id">>;
 

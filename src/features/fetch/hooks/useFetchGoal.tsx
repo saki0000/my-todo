@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import useSWR from "swr";
 import { fetcher, URL } from "../../../api";
 import { selectUser } from "../../../redux/userSlice";
-import { User } from "../../../Types";
+import { User } from "../../../types/Types";
 
 export const useFetchGoal = () => {
   const user: User = useSelector(selectUser);

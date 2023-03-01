@@ -7,7 +7,7 @@ import { stateAtom } from "../../atoms/stateAtom";
 import useDeleteSubTask from "../../features/delete/hooks/useDeleteSubTask";
 import EditButton from "../../features/update/components/EditButton";
 import UpdateTask from "../../features/update/components/UpdateTask";
-import { TaskType } from "../../Types";
+import { TaskType } from "../../types/Types";
 
 type props = {
   task: TaskType;

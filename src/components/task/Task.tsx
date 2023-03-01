@@ -9,7 +9,7 @@ import SeparateButton from "../../features/separate/components/SeparateButton";
 import DistributeButton from "../../features/update/components/DistributeButton";
 import EditButton from "../../features/update/components/EditButton";
 import UpdateTask from "../../features/update/components/UpdateTask";
-import { TaskType } from "../../Types";
+import { TaskType } from "../../types/Types";
 import MenuButton from "../button/MenuButton";
 import PromptBadge from "../button/PromptBadge";
 import SubTasks from "../layout/list/SubTaskList";

@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { TaskType } from "../../../Types";
+import { TaskType } from "../../../types/Types";
 import { deleteTask } from "../api/DeleteApi";
 const useDeleteTask = (task: TaskType, index: number) => {
   const queryClient = useQueryClient();

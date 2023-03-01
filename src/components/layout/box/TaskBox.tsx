@@ -1,5 +1,5 @@
 import { Divider, Group, Paper, Stack } from "@mantine/core";
-import { BoxType } from "../../../Types";
+import { BoxType } from "../../../types/Types";
 import BoxInfoIcon from "../../button/BoxInfoIcon";
 import TaskList from "../list/TaskList";
 
