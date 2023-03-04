@@ -13,6 +13,7 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import ErrorMessage from "../../../components/error/ErrorMessage";
 import { auth } from "../../../firebase";
 import { login } from "../../../redux/userSlice";
 import { signInSchema, SignInSchema } from "../type/type";
@@ -40,6 +41,7 @@ const Login = () => {
       })
       .catch((error) => {
         const errorCode = error.code;
+        console.log(errorCode);
         switch (errorCode) {
           case "auth/network-request-failed":
             setError(
@@ -54,9 +56,15 @@ const Login = () => {
               "メールアドレスがすでに使用されています。ログインするか別のメールアドレスで作成してください"
             );
             break;
+          case "auth/wrong-password":
+            setError("パスワードが正しくありません");
+            break;
+          case "auth/user-not-found":
+            setError("メールアドレスが正しくありません。");
+            break;
           default: //想定外
             setError(
-              "アカウントの作成に失敗しました。通信環境がいい所で再度やり直してください。"
+              "認証に失敗しました。通信環境がいい所で再度やり直してください。"
             );
         }
       });
@@ -78,34 +86,44 @@ const Login = () => {
               <Text>
                 <Title className="text-8xl text-white pb-10">Login</Title>
               </Text>
-              <TextInput
-                placeholder="Email"
-                {...register("email")}
-                className="w-60"
-              />
-              {errors.email?.message && <p>{errors.email?.message}</p>}
+              <div className="w-60 space-y-2">
+                <TextInput
+                  placeholder="Email"
+                  {...register("email")}
+                  className="w-full"
+                />
+                {errors.email?.message && (
+                  <ErrorMessage>{errors.email?.message}</ErrorMessage>
+                )}
+              </div>
 
-              <PasswordInput
-                placeholder="Password"
-                {...register("password")}
-                required
-                className="w-60"
-              />
-              {errors.password?.message && <p>{errors.password?.message}</p>}
+              <div className="w-60 space-y-2">
+                <PasswordInput
+                  placeholder="Password"
+                  {...register("password")}
+                  required
+                  className="w-full"
+                />
+                {errors.password?.message && (
+                  <ErrorMessage>{errors.password?.message}</ErrorMessage>
+                )}
+              </div>
 
-              <Button
-                style={{ width: 240 }}
-                color="dark"
-                radius="md"
-                type="submit"
-              >
-                Login
-              </Button>
-              {error !== "" && (
-                <>
-                  <Text color="red">{error}</Text>
-                </>
-              )}
+              <div className="w-60 space-y-2">
+                <Button
+                  className="w-full"
+                  color="dark"
+                  radius="md"
+                  type="submit"
+                  disabled={
+                    !!errors.email?.message || !!errors.password?.message
+                  }
+                >
+                  Login
+                </Button>
+                {error !== "" && <ErrorMessage>{error}</ErrorMessage>}
+              </div>
+
               <Link
                 to="/signUp"
                 className="font-semibold text-white no-underline hover:underline decoration-white cursor-pointer"

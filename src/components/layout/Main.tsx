@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Inbox from "../../features/fetch/components/Inbox";
 import Separate from "../../features/separate/components/Separate";
 import InboxNumber from "../button/InboxNumber";
-import TasksPage from "./TasksPage";
+import TasksPage from "../page/TasksPage";
 
 const Main: React.FC = () => {
   const [page, setPage] = useState<boolean>(true);
