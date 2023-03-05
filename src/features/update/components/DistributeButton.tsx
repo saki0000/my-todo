@@ -1,5 +1,6 @@
 import { Button, Menu, Modal } from "@mantine/core";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
 import DefaultCalendar from "../../calendar/components/Calendar";
@@ -11,6 +12,7 @@ const DistributeButton = ({ task, index }: { task: any; index: number }) => {
   const [day, setDate] = useState<any>(null);
   const value = new Date(day);
   const mutation = useDistribute(task, index);
+  const navigate = useNavigate();
 
   return (
     <>
@@ -32,6 +34,7 @@ const DistributeButton = ({ task, index }: { task: any; index: number }) => {
                 mutation.mutate({ ...task, date: day, box: "calender" });
                 setOpen(false);
                 setModal({ open: true, id: task.id });
+                navigate("/tasks");
               }}
             >
               決定
@@ -50,6 +53,7 @@ const DistributeButton = ({ task, index }: { task: any; index: number }) => {
             onClick={() => {
               mutation.mutate({ ...task, box: "nextAction" });
               setModal({ open: true, id: task.id });
+              navigate("/tasks");
             }}
           >
             Next Action Listへ
@@ -65,6 +69,7 @@ const DistributeButton = ({ task, index }: { task: any; index: number }) => {
             onClick={() => {
               mutation.mutate({ ...task, box: "someday" });
               setModal({ open: true, id: task.id });
+              navigate("/tasks");
             }}
           >
             Somedayへ

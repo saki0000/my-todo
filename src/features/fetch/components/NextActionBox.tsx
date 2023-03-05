@@ -8,6 +8,7 @@ import { URL } from "../../../api";
 import { stateAtom } from "../../../atoms/stateAtom";
 import BoxInfoIcon from "../../../components/button/BoxInfoIcon";
 import DueDateTaskList from "../../../components/layout/list/DueDateTaskList";
+import GoalTaskList from "../../../components/layout/list/GoalTaskList";
 import PrimaryTaskList from "../../../components/layout/list/PrimaryTaskList";
 import TaskList from "../../../components/layout/list/TaskList";
 import { selectUser } from "../../../redux/userSlice";
@@ -51,14 +52,17 @@ const NextActionBox = () => {
           <Divider className="border-brown" />
           {state.first === "nextAction" && (
             <Chip.Group position="left" value={label} onChange={setLabel}>
-              <Chip variant="filled" value="all">
+              <Chip variant="outline" value="all">
                 All
               </Chip>
-              <Chip variant="filled" value="primary">
+              <Chip variant="outline" value="primary">
                 Primary
               </Chip>
-              <Chip variant="filled" value="dueDate">
+              <Chip variant="outline" value="dueDate">
                 Due Date
+              </Chip>
+              <Chip variant="filled" color="indigo" value="goal">
+                Goal
               </Chip>
             </Chip.Group>
           )}
@@ -89,6 +93,7 @@ const NextActionBox = () => {
               box={"nextAction"}
             />
           )}
+          {label === "goal" && <GoalTaskList />}
         </Stack>
       </Paper>
     </>

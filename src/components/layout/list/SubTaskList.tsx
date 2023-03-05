@@ -21,17 +21,17 @@ const SubTasks = ({ taskId }: { taskId: number }) => {
   });
   if (isLoading) return <></>;
   if (isError) return <div></div>;
-  console.log(data);
   return (
     <>
-      <div className="my-2 ml-4 mr-2" key={taskId}>
-        {data &&
-          data?.map((task: SubTaskType, index: number) => (
-            <div className="my-3">
+      {data && (
+        <div className="my-2 ml-4 mr-2" key={taskId}>
+          {data?.map((task: SubTaskType, index: number) => (
+            <div className="my-3" key={index}>
               <SubTask task={task} index={index} taskId={taskId} />
             </div>
           ))}
-      </div>
+        </div>
+      )}
     </>
   );
 };

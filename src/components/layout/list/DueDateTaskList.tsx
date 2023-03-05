@@ -44,7 +44,7 @@ const DueDateTaskList = ({ data, isLoading, isError, error, box }: any) => {
           <>
             {tasks &&
               Object.entries(tasks).map((value: [string, TaskType[]]) => (
-                <div>
+                <div key={value[0]}>
                   <p className="my-2">{value[0]}</p>
                   <Divider />
                   {value[1]?.map((task: TaskType, index: number) => (

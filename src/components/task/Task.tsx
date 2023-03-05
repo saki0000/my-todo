@@ -10,6 +10,7 @@ import DistributeButton from "../../features/update/components/DistributeButton"
 import EditButton from "../../features/update/components/EditButton";
 import UpdateTask from "../../features/update/components/UpdateTask";
 import { TaskType } from "../../types/Types";
+import GoalCheckBox from "../button/GoalCheckBox";
 import MenuButton from "../button/MenuButton";
 import PromptBadge from "../button/PromptBadge";
 import SubTasks from "../layout/list/SubTaskList";
@@ -18,13 +19,14 @@ type props = {
   task: TaskType;
   index: number;
   date?: string;
+  goal?: boolean;
 };
-const Task = ({ task, index, date }: props) => {
+const Task = ({ task, index, date, goal }: props) => {
   const mutation = useDeleteTask(task, index);
   const [open, setOpen] = useState<boolean>(false);
+  const [truncate, setTruncate] = useState<boolean>(true);
   const setModal = useSetRecoilState(separateAtom);
   const state = useRecoilValue(stateAtom);
-
   return (
     <>
       {open ? (
@@ -44,10 +46,18 @@ const Task = ({ task, index, date }: props) => {
                 <div className="">
                   <Group position="apart" className="my-0">
                     <div className="flex space-x-4">
-                      <Checkbox
-                        checked={false}
-                        onChange={() => mutation.mutate(task.id)}
-                      />
+                      {goal ? (
+                        <>
+                          <GoalCheckBox task={task} index={index} />
+                        </>
+                      ) : (
+                        <Checkbox
+                          checked={false}
+                          onChange={() =>
+                            mutation.mutate({ ...task, statement: true })
+                          }
+                        />
+                      )}
 
                       <p className="m-0 text-lg font-sans">{task?.name}</p>
                     </div>
@@ -68,7 +78,7 @@ const Task = ({ task, index, date }: props) => {
                         {task.box === "inbox" ? (
                           <DistributeButton task={task} index={index} />
                         ) : (
-                          <MenuButton />
+                          <MenuButton task={task} />
                         )}
                         {/* <Box /> */}
                       </div>
@@ -92,7 +102,15 @@ const Task = ({ task, index, date }: props) => {
 
                   {/* memo */}
                   {task.memo && (
-                    <Text color="brown" className="ml-9 mt-2">
+                    <Text
+                      onClick={() => {
+                        setTruncate((v) => !v);
+                      }}
+                      color="brown"
+                      className={`ml-9 mr-1 mt-2 ${
+                        truncate && "truncate cursor-pointer"
+                      }`}
+                    >
                       {task?.memo}
                     </Text>
                   )}
