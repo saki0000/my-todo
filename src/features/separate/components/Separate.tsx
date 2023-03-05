@@ -1,4 +1,4 @@
-import { Divider, Modal, Stack } from "@mantine/core";
+import { Divider, Modal } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
 import { separateAtom } from "../../../atoms/openAtom";
@@ -29,13 +29,13 @@ const Separate = () => {
         overlayOpacity={0.2}
         overlayBlur={1}
       >
-        <Stack className="mx-8">
+        <div className="mx-8 flex flex-col">
           <p className="text-xl ml-4">{data.name}</p>
 
           <Divider />
           <SubTasks taskId={modal.id} />
           <AddSubTask task={data} />
-        </Stack>
+        </div>
       </Modal>
     </>
   );

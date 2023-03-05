@@ -11,7 +11,7 @@ export type TaskType = {
   updated_at: Date;
   user_id: string;
   weight: string;
-  goal: boolean;
+  goal: string;
 };
 export type SubTaskType = TaskType & { task_id: number };
 export type StateType = {

@@ -92,11 +92,6 @@ const PrimaryTaskList = ({ data, isLoading, isError, error, box }: any) => {
           </div>
         )}
         {isError && <div>{error.message}</div>}
-        {/* {(box === "inbox" || first.first === box) && (
-          <div className="mt-4">
-            <AddTask box={box} />
-          </div>
-        )} */}
       </div>
     </div>
   );

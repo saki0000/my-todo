@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { selectUser } from "../../redux/userSlice";
 import Head from "../head/Header";
-import Main from "./Main";
+import Main from "../layout/Main";
 
 const Authed = () => {
   const user = useSelector(selectUser);
