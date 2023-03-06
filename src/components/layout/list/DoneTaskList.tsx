@@ -10,20 +10,32 @@ type PropsType = {
   isError: any;
   error: any;
   box: BoxType;
+  children: React.ReactNode;
 };
 
-const DoneTaskList = ({ data, isLoading, isError, error, box }: PropsType) => {
+const DoneTaskList = ({
+  data,
+  isLoading,
+  isError,
+  error,
+  box,
+  children,
+}: PropsType) => {
   const first = useRecoilValue(stateAtom);
   return (
     <>
       {/* <div className="h-full overflow-auto"> */}
+
       <div>
         {data && data.length !== 0 ? (
-          data.map((task: TaskType, index: number) => (
-            <div key={task?.id || 0}>
-              <Task task={task} index={index} goal={true} />
-            </div>
-          ))
+          <>
+            {children}
+            {data.map((task: TaskType, index: number) => (
+              <div key={task?.id || 0}>
+                <Task task={task} index={index} goal={true} />
+              </div>
+            ))}
+          </>
         ) : (
           <div className="my-4 ml-10">
             {isLoading || first.first === box || box === "inbox" || (
