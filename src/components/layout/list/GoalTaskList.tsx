@@ -19,34 +19,38 @@ const GoalTaskList = () => {
   } = useFetchDoneGoal();
   const [progress, setProgress] = useState<number>(0);
   useEffect(() => {
-    const maxDataNumber = data.length + doneData.length;
-    setProgress((doneData.length / maxDataNumber) * 100);
+    if (data) {
+      const maxDataNumber = data.length + doneData.length;
+      setProgress(Math.floor((doneData.length / maxDataNumber) * 100));
+    }
   }, [data]);
   return (
     <div className="h-full overflow-auto space-y-4">
       <Progress value={progress} label={`${progress}%完了`} size="xl" />
       <div>
-        <p className="my-2">未完了</p>
-        <Divider />
         <DoneTaskList
           data={data}
           isError={isError}
           isLoading={isLoading}
           box="nextAction"
           error={error}
-        />
+        >
+          <p className="my-2">未完了</p>
+          <Divider />
+        </DoneTaskList>
       </div>
 
       <div>
-        <p className="my-2">完了</p>
-        <Divider />
         <DoneTaskList
           data={doneData}
           isError={doneIsError}
           isLoading={doneIsLoading}
           box="nextAction"
           error={doneError}
-        />
+        >
+          <p className="my-2">完了</p>
+          <Divider />
+        </DoneTaskList>
       </div>
     </div>
   );
