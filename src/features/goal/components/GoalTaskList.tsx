@@ -1,11 +1,12 @@
 import { Divider, Progress } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { useFetchDoneGoal } from "../../../features/fetch/hooks/useFetchDoneGoal";
-import { useFetchGoal } from "../../../features/fetch/hooks/useFetchGoal";
 import { selectUser } from "../../../redux/userSlice";
 import { User } from "../../../types/Types";
+import { useFetchDoneGoal } from "../hooks/useFetchDoneGoal";
+import { useFetchGoal } from "../hooks/useFetchGoal";
 import DoneTaskList from "./DoneTaskList";
+import GoalSetting from "./GoalSetting";
 
 const GoalTaskList = () => {
   const user: User = useSelector(selectUser);
@@ -26,7 +27,18 @@ const GoalTaskList = () => {
   }, [data]);
   return (
     <div className="h-full overflow-auto space-y-4">
-      <Progress value={progress} label={`${progress}%完了`} size="xl" />
+      <div className="grid grid-cols-4  items-center">
+        <Progress
+          value={progress}
+          label={`${progress}%完了`}
+          size="xl"
+          className="col-span-3"
+        />
+        <div className="justify-self-end">
+          <GoalSetting goalTasks={data} />
+        </div>
+      </div>
+
       <div>
         <DoneTaskList
           data={data}

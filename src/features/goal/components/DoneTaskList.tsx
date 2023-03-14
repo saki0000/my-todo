@@ -1,8 +1,8 @@
 import { Loader } from "@mantine/core";
 import { useRecoilValue } from "recoil";
 import { stateAtom } from "../../../atoms/stateAtom";
+import Task from "../../../components/task/Task";
 import { BoxType, TaskType } from "../../../types/Types";
-import Task from "../../task/Task";
 
 type PropsType = {
   data: TaskType[];
