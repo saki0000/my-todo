@@ -2,6 +2,7 @@ import axios from "axios";
 import { URL } from "../../../api";
 
 export const updateTaskAPI = async (id: number, body: any) => {
+  console.log(body);
   await axios
     .put(`${URL}/tasks/${id}`, body)
     .then((res) => {

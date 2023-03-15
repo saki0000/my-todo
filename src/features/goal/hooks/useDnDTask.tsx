@@ -1,33 +1,7 @@
 import React, { useRef, useState } from "react";
 import { TaskType } from "../../../types/Types";
-type DnDResult<T> = {
-  key: string;
-  value: T;
-  events: {
-    ref: (element: HTMLElement | null) => void;
-    onMouseDown: (event: React.MouseEvent<HTMLElement>) => void;
-  };
-};
-type Position = {
-  x: number;
-  y: number;
-};
-
-// ドラッグ＆ドロップ要素の情報をまとめた型
-type DnDItem<T> = {
-  value: TaskType; // useDnDSort()の引数に渡された配列の要素の値
-  key: string; // 要素と紐づいた一意な文字列
-  position: Position; // 要素の座標
-  element: HTMLElement; // DOM情報
-  parent: string | undefined;
-};
-type DnDRef<T> = {
-  keys: Map<T, string>; // 要素に紐づいたkey文字列を管理するMap
-  dndItems: { task: DnDItem<T>[]; goal: DnDItem<T>[] }; // 並び替える全ての要素を保持するための配列
-  canCheckHovered: boolean; // 重なり判定ができるかのフラグ
-  pointerPosition: Position; // マウスポインターの座標
-  dragElement: DnDItem<T> | null; // ドラッグしてる要素
-};
+import { DnDRef, DnDResult, Position } from "../type/type";
+import useUpdateGoal from "./useUpdateGoal";
 
 const useDnDTask = <T,>(
   defaultTasks: TaskType[],
@@ -41,6 +15,7 @@ const useDnDTask = <T,>(
     }
   | undefined => {
   if (!defaultTasks) return;
+
   const [items, setItems] = useState<{ tasks: TaskType[]; goal: TaskType[] }>({
     tasks: defaultTasks,
     goal: goalTasks,
@@ -53,6 +28,12 @@ const useDnDTask = <T,>(
     canCheckHovered: true,
     pointerPosition: { x: 0, y: 0 },
   }).current;
+  const { dragElement, dndItems } = state;
+  const dragIndex = dndItems.goal.findIndex(
+    ({ key }) => key === dragElement?.key
+  );
+  const mutation = useUpdateGoal();
+  const deleteMutation = useUpdateGoal(dragIndex, "delete");
 
   const isHover = (event: MouseEvent, element: HTMLElement): boolean => {
     // マウスポインターの座標を取得
@@ -104,11 +85,12 @@ const useDnDTask = <T,>(
         const tasks = items.tasks;
         goal.push(dragElement.value);
         tasks.splice(dragIndex, 1);
-        console.log(dragElement, dragIndex);
+        dndItems.task.splice(dragIndex, 1);
         const { left: x, top: y } = dragElement.element.getBoundingClientRect();
         dragElement.parent = "goal";
         dragElement.position = { x, y };
         setItems({ tasks: tasks, goal: goal });
+        mutation.mutate({ ...dragElement.value, goal: goalAreaRef.today });
       }
     } else if (dragElement.parent == "goal") {
       const dragIndex = dndItems.goal.findIndex(
@@ -119,10 +101,12 @@ const useDnDTask = <T,>(
         const tasks = items.tasks;
         tasks.push(dragElement.value);
         goal.splice(dragIndex, 1);
+        dndItems.goal.splice(dragIndex, 1);
         const { left: x, top: y } = dragElement.element.getBoundingClientRect();
         dragElement.position = { x, y };
         dragElement.parent = "task";
         setItems({ tasks: tasks, goal: goal });
+        deleteMutation.mutate({ ...dragElement.value, goal: "" });
       }
     }
 

@@ -27,7 +27,7 @@ const GoalSetting = ({ goalTasks }: Props) => {
   const { data, error, isLoading, isError } = useFetchBoxTasks();
 
   const result = useDnDTask<TaskType>(
-    data && data.filter((v: TaskType) => v.goal !== dt),
+    data ? data.filter((v: TaskType) => v.goal !== dt) : [],
     goalTasks,
     taskAreaRef,
     goalAreaRef
