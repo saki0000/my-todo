@@ -20,7 +20,7 @@ const GoalTaskList = () => {
   } = useFetchDoneGoal();
   const [progress, setProgress] = useState<number>(0);
   useEffect(() => {
-    if (data) {
+    if (data && data.length) {
       const maxDataNumber = data.length + doneData.length;
       setProgress(Math.floor((doneData.length / maxDataNumber) * 100));
     }
