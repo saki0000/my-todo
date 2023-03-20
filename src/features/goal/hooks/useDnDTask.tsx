@@ -1,4 +1,6 @@
 import React, { useRef, useState } from "react";
+import { useRecoilState } from "recoil";
+import { hoverAtom } from "../../../atoms/hoverAtom";
 import { TaskType } from "../../../types/Types";
 import { DnDRef, DnDResult, Position } from "../type/type";
 import useUpdateGoal from "./useUpdateGoal";
@@ -10,17 +12,19 @@ const useDnDTask = <T,>(
   goalAreaRef?: any
 ):
   | {
+      hover?: { tasks: boolean; goal: boolean };
       tasks: DnDResult<TaskType>[] | undefined;
       goal: DnDResult<TaskType>[] | undefined;
     }
   | undefined => {
   if (!defaultTasks) return;
 
+  const [hover, setHover] = useRecoilState(hoverAtom);
+
   const [items, setItems] = useState<{ tasks: TaskType[]; goal: TaskType[] }>({
     tasks: defaultTasks,
     goal: goalTasks,
   });
-
   const state = useRef<DnDRef<TaskType>>({
     dndItems: { task: [], goal: [] },
     keys: new Map(),
@@ -68,6 +72,25 @@ const useDnDTask = <T,>(
     dragStyle.zIndex = "100";
     dragStyle.cursor = "grabbing";
     dragStyle.transform = `translate(${x}px,${y}px)`;
+    state.canCheckHovered = false;
+    setTimeout(() => (state.canCheckHovered = true), 300);
+
+    if (isHover(event, goalAreaRef.element)) {
+      state.pointerPosition.x = clientX;
+      state.pointerPosition.y = clientY;
+
+      const { left: x, top: y } = dragElement.element.getBoundingClientRect();
+      console.log(x, y);
+      dragElement.position = { x, y };
+      //   setHover({ ...hover, task: true });
+    } else if (isHover(event, taskAreaRef.element)) {
+      state.pointerPosition.x = clientX;
+      state.pointerPosition.y = clientY;
+      const { left: x, top: y } = dragElement.element.getBoundingClientRect();
+
+      dragElement.position = { x, y };
+      //   setHover({ ...hover, goal: true });
+    }
   };
 
   const onMouseUp = (event: MouseEvent) => {
@@ -120,163 +143,101 @@ const useDnDTask = <T,>(
     // ドラッグしている要素をstateから削除
     state.dragElement = null;
 
+    setHover({ goal: false, task: false });
     // windowに登録していたイベントを削除
     window.removeEventListener("mouseup", onMouseUp);
     window.removeEventListener("mousemove", onMouseMove);
   };
 
-  console.log(items);
+  const mapFunc = (value: TaskType): DnDResult<TaskType> => {
+    const key = state.keys.get(value) || Math.random().toString(16);
 
-  return {
-    tasks: items.tasks.map((value: TaskType): DnDResult<TaskType> => {
-      const key = state.keys.get(value) || Math.random().toString(16);
+    // 生成したkey文字列を保存
+    state.keys.set(value, key);
+    return {
+      value,
 
-      // 生成したkey文字列を保存
-      state.keys.set(value, key);
-      return {
-        value,
+      key: Math.random().toString(16),
 
-        key: Math.random().toString(16),
+      events: {
+        ref: (element: HTMLElement | null) => {
+          if (!element) return;
 
-        events: {
-          ref: (element: HTMLElement | null) => {
-            if (!element) return;
+          const { dndItems, pointerPosition } = state;
+          // 位置をリセットする
+          element.style.transform = "";
 
-            const { dndItems } = state;
-            // 位置をリセットする
-            element.style.transform = "";
+          // 要素の位置を取得
+          const { left: x, top: y } = element.getBoundingClientRect();
+          const position: Position = { x, y };
 
-            // 要素の位置を取得
-            const { left: x, top: y } = element.getBoundingClientRect();
-            const position: Position = { x, y };
-
-            const itemIndex = dndItems.task.findIndex(
-              (item) => item.key === key
-            );
-            if (itemIndex === -1) {
-              return dndItems.task.push({
-                key,
-                value,
-                element,
-                position,
-                parent: "task",
-              });
-            }
-            // 要素を更新する
-            state.dndItems.task[itemIndex] = {
+          const itemIndex = dndItems.task.findIndex((item) => item.key === key);
+          if (itemIndex === -1) {
+            return dndItems.task.push({
               key,
               value,
               element,
               position,
               parent: "task",
-            };
+            });
+          }
+          if (dragElement?.key === key) {
+            // ドラッグ要素のズレを計算する
+            const dragX = dragElement.position.x - position.x;
+            const dragY = dragElement.position.y - position.y;
 
-            // 要素が無ければ新しく追加して処理を終わる
-          },
+            // 入れ替え時のズレを無くす
+            element.style.transform = `translate(${dragX}px,${dragY}px)`;
 
-          onMouseDown: (event: React.MouseEvent<HTMLElement>) => {
-            // ドラッグする要素(DOM)
-            const element = event.currentTarget;
-            const parent = element.parentElement?.id;
+            // マウスポインターの位置も再計算してズレを無くす
+            pointerPosition.x -= dragX;
+            pointerPosition.y -= dragY;
+          }
+          // 要素を更新する
+          state.dndItems.task[itemIndex] = {
+            key,
+            value,
+            element,
+            position,
+            parent: "task",
+          };
 
-            // マウスポインターの座標を保持しておく
-            state.pointerPosition.x = event.clientX;
-            state.pointerPosition.y = event.clientY;
-
-            // ドラッグしている要素のスタイルを上書き
-            element.style.transition = ""; // アニメーションを無効にする
-            element.style.cursor = "grabbing"; // カーソルのデザインを変更
-
-            // 要素の座標を取得
-            const { left: x, top: y } = element.getBoundingClientRect();
-            const position: Position = { x, y };
-
-            // ドラッグする要素を保持しておく
-            state.dragElement = { key, value, element, position, parent };
-
-            // mousemove, mouseupイベントをwindowに登録する
-            window.addEventListener("mouseup", onMouseUp);
-            window.addEventListener("mousemove", onMouseMove);
-          },
+          // 要素が無ければ新しく追加して処理を終わる
         },
-      };
-    }),
+
+        onMouseDown: (event: React.MouseEvent<HTMLElement>) => {
+          // ドラッグする要素(DOM)
+          const element = event.currentTarget;
+          const parent = element.parentElement?.id;
+
+          // マウスポインターの座標を保持しておく
+          state.pointerPosition.x = event.clientX;
+          state.pointerPosition.y = event.clientY;
+
+          // ドラッグしている要素のスタイルを上書き
+          element.style.transition = ""; // アニメーションを無効にする
+          element.style.cursor = "grabbing"; // カーソルのデザインを変更
+
+          // 要素の座標を取得
+          const { left: x, top: y } = element.getBoundingClientRect();
+          const position: Position = { x, y };
+
+          // ドラッグする要素を保持しておく
+          state.dragElement = { key, value, element, position, parent };
+
+          // mousemove, mouseupイベントをwindowに登録する
+          window.addEventListener("mouseup", onMouseUp);
+          window.addEventListener("mousemove", onMouseMove);
+        },
+      },
+    };
+  };
+
+  return {
+    tasks: items.tasks.map(mapFunc),
     goal:
       items.goal && items.goal.length != 0
-        ? items.goal.map((value: TaskType): DnDResult<TaskType> => {
-            const key = state.keys.get(value) || Math.random().toString(16);
-
-            // 生成したkey文字列を保存
-            state.keys.set(value, key);
-            return {
-              value,
-
-              key: Math.random().toString(16),
-
-              events: {
-                ref: (element: HTMLElement | null) => {
-                  if (!element) return;
-
-                  const { dndItems } = state;
-                  const parent = element.parentElement?.id;
-                  // 位置をリセットする
-                  element.style.transform = "";
-
-                  // 要素の位置を取得
-                  const { left: x, top: y } = element.getBoundingClientRect();
-                  const position: Position = { x, y };
-
-                  const itemIndex = dndItems.goal.findIndex(
-                    (item) => item.key === key
-                  );
-                  if (itemIndex === -1) {
-                    return dndItems.goal.push({
-                      key,
-                      value,
-                      element,
-                      position,
-                      parent: "goal",
-                    });
-                  }
-                  // 要素を更新する
-                  state.dndItems.goal[itemIndex] = {
-                    key,
-                    value,
-                    element,
-                    position,
-                    parent: "goal",
-                  };
-
-                  // 要素が無ければ新しく追加して処理を終わる
-                },
-
-                onMouseDown: (event: React.MouseEvent<HTMLElement>) => {
-                  // ドラッグする要素(DOM)
-                  const element = event.currentTarget;
-                  const parent = element.parentElement?.id;
-
-                  // マウスポインターの座標を保持しておく
-                  state.pointerPosition.x = event.clientX;
-                  state.pointerPosition.y = event.clientY;
-
-                  // ドラッグしている要素のスタイルを上書き
-                  element.style.transition = ""; // アニメーションを無効にする
-                  element.style.cursor = "grabbing"; // カーソルのデザインを変更
-
-                  // 要素の座標を取得
-                  const { left: x, top: y } = element.getBoundingClientRect();
-                  const position: Position = { x, y };
-
-                  // ドラッグする要素を保持しておく
-                  state.dragElement = { key, value, element, position, parent };
-
-                  // mousemove, mouseupイベントをwindowに登録する
-                  window.addEventListener("mouseup", onMouseUp);
-                  window.addEventListener("mousemove", onMouseMove);
-                },
-              },
-            };
-          })
+        ? items.goal.map(mapFunc)
         : undefined,
   };
 };

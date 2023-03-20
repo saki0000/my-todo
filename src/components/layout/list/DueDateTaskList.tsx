@@ -11,14 +11,15 @@ const DueDateTaskList = ({ data, isLoading, isError, error, box }: any) => {
   const [tasks, setTasks] = useState<DistributeTasksByDueDate>();
   const distributeTaskByDueDate = (tasks: TaskType[]) => {
     let distributedTask: DistributeTasksByDueDate = {};
-    tasks.map((task) => {
-      if (!task.due_date) {
-      } else if (distributedTask[task.due_date]) {
-        distributedTask[task.due_date].push(task);
-      } else {
-        distributedTask[task.due_date] = [task];
-      }
-    });
+    tasks &&
+      tasks.map((task) => {
+        if (!task.due_date) {
+        } else if (distributedTask[task.due_date]) {
+          distributedTask[task.due_date].push(task);
+        } else {
+          distributedTask[task.due_date] = [task];
+        }
+      });
     const sortDistributedTask = Object.entries(distributedTask).sort(
       (a: [string, TaskType[]], b: [string, TaskType[]]) => {
         const date1 = new Date(a[0]);

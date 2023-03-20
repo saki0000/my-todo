@@ -2,27 +2,34 @@ import { ActionIcon, HoverCard, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { useRef } from "react";
 import { AiOutlineSetting } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useRecoilState } from "recoil";
+import { hoverAtom } from "../../../atoms/hoverAtom";
 import Task from "../../../components/task/Task";
-import { selectUser } from "../../../redux/userSlice";
-import { TaskType, User } from "../../../types/Types";
+import { TaskType } from "../../../types/Types";
 import useFetchBoxTasks from "../../fetch/hooks/useFetchBoxTasks";
 import useDnDTask from "../hooks/useDnDTask";
 
 type Props = { goalTasks: TaskType[] };
-type GoalRefType = { element: HTMLElement | null; today: string | null };
-type TaskRefType = { element: HTMLElement | null };
+type GoalRefType = {
+  element: HTMLElement | null;
+  today: string | null;
+  isHover: boolean;
+};
+type TaskRefType = { element: HTMLElement | null; isHover: boolean };
 const date = new Date();
 const dt = date.toJSON().split("T")[0];
+
 const GoalSetting = ({ goalTasks }: Props) => {
-  const user: User = useSelector(selectUser);
   const [opened, { open, close }] = useDisclosure(false);
+  const [hover] = useRecoilState(hoverAtom);
   const goalAreaRef = useRef<GoalRefType>({
     element: null,
     today: null,
+    isHover: false,
   }).current;
   const taskAreaRef = useRef<TaskRefType>({
     element: null,
+    isHover: false,
   }).current;
   const { data, error, isLoading, isError } = useFetchBoxTasks();
 
@@ -32,7 +39,6 @@ const GoalSetting = ({ goalTasks }: Props) => {
     taskAreaRef,
     goalAreaRef
   );
-
   return (
     <div>
       <Modal
@@ -43,7 +49,7 @@ const GoalSetting = ({ goalTasks }: Props) => {
       >
         <div className="h-full grid grid-cols-9" id="parent">
           <div
-            className="col-span-4"
+            className={`col-span-4 ${hover?.goal && "bg-slate-500"}`}
             ref={(e) => {
               if (!e) return;
               taskAreaRef.element = e;
@@ -65,7 +71,7 @@ const GoalSetting = ({ goalTasks }: Props) => {
               goalAreaRef.element = e;
               goalAreaRef.today = dt;
             }}
-            className="col-span-4"
+            className={`col-span-4 ${hover?.task && "bg-slate-500"}`}
             id="goal"
           >
             {result &&

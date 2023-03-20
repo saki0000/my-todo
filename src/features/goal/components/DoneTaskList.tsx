@@ -27,9 +27,9 @@ const DoneTaskList = ({
       {/* <div className="h-full overflow-auto"> */}
 
       <div>
+        {children}
         {data && data.length !== 0 ? (
           <>
-            {children}
             {data.map((task: TaskType, index: number) => (
               <div key={task?.id || 0}>
                 <Task task={task} index={index} goal={true} />
