@@ -19,21 +19,22 @@ const PrimaryTaskList = ({ data, isLoading, isError, error, box }: any) => {
       middle: [],
       low: [],
     };
-    tasks.map((task: TaskType) => {
-      switch (task.weight) {
-        case "高":
-          distributedTask.high.push(task);
-          break;
-        case "中":
-          distributedTask.middle.push(task);
-          break;
-        case "低":
-          distributedTask.low.push(task);
-          break;
-        default:
-          break;
-      }
-    });
+    tasks &&
+      tasks.map((task: TaskType) => {
+        switch (task.weight) {
+          case "高":
+            distributedTask.high.push(task);
+            break;
+          case "中":
+            distributedTask.middle.push(task);
+            break;
+          case "低":
+            distributedTask.low.push(task);
+            break;
+          default:
+            break;
+        }
+      });
     return distributedTask;
   };
   useEffect(() => {
