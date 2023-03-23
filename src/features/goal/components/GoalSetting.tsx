@@ -78,7 +78,7 @@ const GoalSetting = ({ goalTasks }: Props) => {
                 <div className="flex gap-2">
                   <AiOutlinePlusCircle size={20} color="#3b82f6" />
                   <p className="text-blue-500 m-0 leading-5">
-                    Drop and Add Task
+                    Drop and Delete Goal
                   </p>
                 </div>
               </div>
@@ -116,7 +116,7 @@ const GoalSetting = ({ goalTasks }: Props) => {
                 <div className="flex gap-2">
                   <AiOutlinePlusCircle size={20} color="#3b82f6" />
                   <p className="text-blue-500 m-0 leading-5">
-                    Drop and Add Task
+                    Drop and Set Goal
                   </p>
                 </div>
               </div>

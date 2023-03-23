@@ -29,13 +29,13 @@ const DoneTaskList = ({
       <div>
         {children}
         {data && data.length !== 0 ? (
-          <>
+          <div className="mt-2">
             {data.map((task: TaskType, index: number) => (
               <div key={task?.id || 0}>
                 <Task task={task} index={index} goal={true} />
               </div>
             ))}
-          </>
+          </div>
         ) : (
           <div className="my-4 ml-10">
             {isLoading || first.first === box || box === "inbox" || (
