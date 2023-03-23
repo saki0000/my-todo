@@ -1,6 +1,4 @@
 import React, { useRef, useState } from "react";
-import { useRecoilState } from "recoil";
-import { hoverAtom } from "../../../atoms/hoverAtom";
 import { TaskType } from "../../../types/Types";
 import { DnDRef, DnDResult, Position } from "../type/type";
 import useUpdateGoal from "./useUpdateGoal";
@@ -18,8 +16,6 @@ const useDnDTask = <T,>(
     }
   | undefined => {
   if (!defaultTasks) return;
-
-  const [hover, setHover] = useRecoilState(hoverAtom);
 
   const [items, setItems] = useState<{ tasks: TaskType[]; goal: TaskType[] }>({
     tasks: defaultTasks,
@@ -72,24 +68,22 @@ const useDnDTask = <T,>(
     dragStyle.zIndex = "100";
     dragStyle.cursor = "grabbing";
     dragStyle.transform = `translate(${x}px,${y}px)`;
+    dragStyle.border = "1px solid #cbd5e1";
     state.canCheckHovered = false;
     setTimeout(() => (state.canCheckHovered = true), 300);
 
-    if (isHover(event, goalAreaRef.element)) {
-      state.pointerPosition.x = clientX;
-      state.pointerPosition.y = clientY;
+    const goalAddAreaStyle = goalAreaRef.element.lastElementChild.style;
+    const taskAddAreaStyle = taskAreaRef.element.lastElementChild.style;
 
-      const { left: x, top: y } = dragElement.element.getBoundingClientRect();
-      console.log(x, y);
-      dragElement.position = { x, y };
-      //   setHover({ ...hover, task: true });
-    } else if (isHover(event, taskAreaRef.element)) {
-      state.pointerPosition.x = clientX;
-      state.pointerPosition.y = clientY;
-      const { left: x, top: y } = dragElement.element.getBoundingClientRect();
-
-      dragElement.position = { x, y };
-      //   setHover({ ...hover, goal: true });
+    if (isHover(event, goalAreaRef.element) && dragElement.parent == "task") {
+      goalAddAreaStyle.visibility = "visible";
+    } else {
+      goalAddAreaStyle.visibility = "hidden";
+    }
+    if (isHover(event, taskAreaRef.element) && dragElement.parent == "goal") {
+      taskAddAreaStyle.visibility = "visible";
+    } else {
+      taskAddAreaStyle.visibility = "hidden";
     }
   };
 
@@ -132,6 +126,10 @@ const useDnDTask = <T,>(
         deleteMutation.mutate({ ...dragElement.value, goal: "" });
       }
     }
+    const goalAddAreaStyle = goalAreaRef.element.lastElementChild.style;
+    const taskAddAreaStyle = taskAreaRef.element.lastElementChild.style;
+    goalAddAreaStyle.visibility = "hidden";
+    taskAddAreaStyle.visibility = "hidden";
 
     const dragStyle = dragElement.element.style;
 
@@ -139,11 +137,11 @@ const useDnDTask = <T,>(
     dragStyle.zIndex = "";
     dragStyle.cursor = "";
     dragStyle.transform = "";
+    dragStyle.border = "";
 
     // ドラッグしている要素をstateから削除
     state.dragElement = null;
 
-    setHover({ goal: false, task: false });
     // windowに登録していたイベントを削除
     window.removeEventListener("mouseup", onMouseUp);
     window.removeEventListener("mousemove", onMouseMove);

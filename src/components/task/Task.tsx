@@ -42,7 +42,7 @@ const Task = ({ task, index, date, goal }: props) => {
         <>
           {task === undefined || (
             <>
-              <div className="pt-2" key={task.id}>
+              <div className=" py-2  rounded" key={task.id}>
                 <div className="">
                   <Group position="apart" className="my-0">
                     <div className="flex space-x-4">

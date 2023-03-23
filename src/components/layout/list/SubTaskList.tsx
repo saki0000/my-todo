@@ -23,7 +23,7 @@ const SubTasks = ({ taskId }: { taskId: number }) => {
   if (isError) return <div></div>;
   return (
     <>
-      {data && (
+      {data && data.length != 0 && (
         <div className="my-2 ml-4 mr-2" key={taskId}>
           {data?.map((task: SubTaskType, index: number) => (
             <div className="my-3" key={index}>
