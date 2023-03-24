@@ -1,18 +1,16 @@
 import { Chip, Divider, Group, Paper, Stack } from "@mantine/core";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useRecoilValue } from "recoil";
-import { URL } from "../../../api";
 import { stateAtom } from "../../../atoms/stateAtom";
 import BoxInfoIcon from "../../../components/button/BoxInfoIcon";
 import DueDateTaskList from "../../../components/layout/list/DueDateTaskList";
-import GoalTaskList from "../../../components/layout/list/GoalTaskList";
 import PrimaryTaskList from "../../../components/layout/list/PrimaryTaskList";
 import TaskList from "../../../components/layout/list/TaskList";
 import { selectUser } from "../../../redux/userSlice";
 import { BoxType, User } from "../../../types/Types";
+import GoalTaskList from "../../goal/components/GoalTaskList";
+import useFetchBoxTasks from "../hooks/useFetchBoxTasks";
 type BoxName = Omit<
   {
     [attr in BoxType]: string;
@@ -27,16 +25,8 @@ const boxes: BoxName = {
 
 const NextActionBox = () => {
   const user: User = useSelector(selectUser);
-  const fetchData = async () => {
-    const res = await axios.get(
-      `${URL}/do_tasks?id=${user.uid}&box=nextAction`
-    );
-    return res.data;
-  };
-  const { data, error, isLoading, isError } = useQuery({
-    queryKey: ["nextAction"],
-    queryFn: fetchData,
-  });
+
+  const { data, error, isLoading, isError } = useFetchBoxTasks();
   const [label, setLabel] = useState<string | string[]>("all");
   const state = useRecoilValue(stateAtom);
 
@@ -93,7 +83,7 @@ const NextActionBox = () => {
               box={"nextAction"}
             />
           )}
-          {label === "goal" && <GoalTaskList />}
+          {label === "goal" && <GoalTaskList data={data} />}
         </Stack>
       </Paper>
     </>

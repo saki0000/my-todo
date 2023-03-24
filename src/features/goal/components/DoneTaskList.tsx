@@ -1,8 +1,8 @@
 import { Loader } from "@mantine/core";
 import { useRecoilValue } from "recoil";
 import { stateAtom } from "../../../atoms/stateAtom";
+import Task from "../../../components/task/Task";
 import { BoxType, TaskType } from "../../../types/Types";
-import Task from "../../task/Task";
 
 type PropsType = {
   data: TaskType[];
@@ -27,15 +27,15 @@ const DoneTaskList = ({
       {/* <div className="h-full overflow-auto"> */}
 
       <div>
+        {children}
         {data && data.length !== 0 ? (
-          <>
-            {children}
+          <div className="mt-2">
             {data.map((task: TaskType, index: number) => (
               <div key={task?.id || 0}>
                 <Task task={task} index={index} goal={true} />
               </div>
             ))}
-          </>
+          </div>
         ) : (
           <div className="my-4 ml-10">
             {isLoading || first.first === box || box === "inbox" || (
