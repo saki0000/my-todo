@@ -16,7 +16,6 @@ const useDnDTask = <T,>(
     }
   | undefined => {
   if (!defaultTasks) return;
-
   const [items, setItems] = useState<{ tasks: TaskType[]; goal: TaskType[] }>({
     tasks: defaultTasks,
     goal: goalTasks,
@@ -147,7 +146,7 @@ const useDnDTask = <T,>(
     window.removeEventListener("mousemove", onMouseMove);
   };
 
-  const mapFunc = (value: TaskType): DnDResult<TaskType> => {
+  const mapFunc = (value: TaskType, type: string): DnDResult<TaskType> => {
     const key = state.keys.get(value) || Math.random().toString(16);
 
     // 生成したkey文字列を保存
@@ -169,36 +168,73 @@ const useDnDTask = <T,>(
           const { left: x, top: y } = element.getBoundingClientRect();
           const position: Position = { x, y };
 
-          const itemIndex = dndItems.task.findIndex((item) => item.key === key);
-          if (itemIndex === -1) {
-            return dndItems.task.push({
+          if (type === "task") {
+            const itemIndex = dndItems.task.findIndex(
+              (item) => item.key === key
+            );
+            if (itemIndex === -1) {
+              return dndItems.task.push({
+                key,
+                value,
+                element,
+                position,
+                parent: "task",
+              });
+            }
+            if (dragElement?.key === key) {
+              // ドラッグ要素のズレを計算する
+              const dragX = dragElement.position.x - position.x;
+              const dragY = dragElement.position.y - position.y;
+
+              // 入れ替え時のズレを無くす
+              element.style.transform = `translate(${dragX}px,${dragY}px)`;
+
+              // マウスポインターの位置も再計算してズレを無くす
+              pointerPosition.x -= dragX;
+              pointerPosition.y -= dragY;
+            }
+            // 要素を更新する
+            state.dndItems.task[itemIndex] = {
               key,
               value,
               element,
               position,
               parent: "task",
-            });
-          }
-          if (dragElement?.key === key) {
-            // ドラッグ要素のズレを計算する
-            const dragX = dragElement.position.x - position.x;
-            const dragY = dragElement.position.y - position.y;
+            };
+          } else {
+            const itemIndex = dndItems.goal.findIndex(
+              (item) => item.key === key
+            );
+            if (itemIndex === -1) {
+              return dndItems.goal.push({
+                key,
+                value,
+                element,
+                position,
+                parent: "goal",
+              });
+            }
+            if (dragElement?.key === key) {
+              // ドラッグ要素のズレを計算する
+              const dragX = dragElement.position.x - position.x;
+              const dragY = dragElement.position.y - position.y;
 
-            // 入れ替え時のズレを無くす
-            element.style.transform = `translate(${dragX}px,${dragY}px)`;
+              // 入れ替え時のズレを無くす
+              element.style.transform = `translate(${dragX}px,${dragY}px)`;
 
-            // マウスポインターの位置も再計算してズレを無くす
-            pointerPosition.x -= dragX;
-            pointerPosition.y -= dragY;
+              // マウスポインターの位置も再計算してズレを無くす
+              pointerPosition.x -= dragX;
+              pointerPosition.y -= dragY;
+            }
+            // 要素を更新する
+            state.dndItems.goal[itemIndex] = {
+              key,
+              value,
+              element,
+              position,
+              parent: "goal",
+            };
           }
-          // 要素を更新する
-          state.dndItems.task[itemIndex] = {
-            key,
-            value,
-            element,
-            position,
-            parent: "task",
-          };
 
           // 要素が無ければ新しく追加して処理を終わる
         },
@@ -232,10 +268,10 @@ const useDnDTask = <T,>(
   };
 
   return {
-    tasks: items.tasks.map(mapFunc),
+    tasks: items.tasks.map((v) => mapFunc(v, "task")),
     goal:
       items.goal && items.goal.length != 0
-        ? items.goal.map(mapFunc)
+        ? items.goal.map((v) => mapFunc(v, "goal"))
         : undefined,
   };
 };

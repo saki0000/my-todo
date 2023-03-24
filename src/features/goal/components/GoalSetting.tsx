@@ -1,15 +1,12 @@
 import { ActionIcon, HoverCard, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { AiOutlinePlusCircle, AiOutlineSetting } from "react-icons/ai";
-import { useRecoilState } from "recoil";
-import { hoverAtom } from "../../../atoms/hoverAtom";
 import Task from "../../../components/task/Task";
 import { TaskType } from "../../../types/Types";
-import useFetchBoxTasks from "../../fetch/hooks/useFetchBoxTasks";
 import useDnDTask from "../hooks/useDnDTask";
 
-type Props = { goalTasks: TaskType[] };
+type Props = { goalTasks: TaskType[]; nextActionTasks?: TaskType[] };
 type GoalRefType = {
   element: HTMLElement | null;
   today: string | null;
@@ -19,9 +16,14 @@ type TaskRefType = { element: HTMLElement | null; isHover: boolean };
 const date = new Date();
 const dt = date.toJSON().split("T")[0];
 
-const GoalSetting = ({ goalTasks }: Props) => {
+const GoalSetting = ({ goalTasks, nextActionTasks }: Props) => {
+  const [goalData, setGoalData] = useState(goalTasks);
+  const [nextData, setNextData] = useState<TaskType[]>(
+    nextActionTasks
+      ? nextActionTasks.filter((v: TaskType) => v.goal !== dt)
+      : []
+  );
   const [opened, { open, close }] = useDisclosure(false);
-  const [hover] = useRecoilState(hoverAtom);
   const goalAreaRef = useRef<GoalRefType>({
     element: null,
     today: null,
@@ -31,11 +33,12 @@ const GoalSetting = ({ goalTasks }: Props) => {
     element: null,
     isHover: false,
   }).current;
-  const { data, error, isLoading, isError } = useFetchBoxTasks();
 
   const result = useDnDTask<TaskType>(
-    data ? data.filter((v: TaskType) => v.goal !== dt) : [],
-    goalTasks,
+    nextActionTasks
+      ? nextActionTasks.filter((v: TaskType) => v.goal !== dt)
+      : [],
+    goalTasks ? goalTasks : [],
     taskAreaRef,
     goalAreaRef
   );

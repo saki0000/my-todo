@@ -83,7 +83,7 @@ const NextActionBox = () => {
               box={"nextAction"}
             />
           )}
-          {label === "goal" && <GoalTaskList />}
+          {label === "goal" && <GoalTaskList data={data} />}
         </Stack>
       </Paper>
     </>

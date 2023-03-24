@@ -13,7 +13,7 @@ const useUpdateGoal = (
     {
       onMutate: async (newData: StateTask) => {
         queryClient.cancelQueries(["goal"]);
-        const previousData = queryClient.getQueryData(["goal"]);
+        const previousGoalData = queryClient.getQueryData(["goal"]);
 
         queryClient.setQueryData(["goal"], (old: StateTask[] | undefined) => {
           if (old) {
@@ -26,13 +26,15 @@ const useUpdateGoal = (
             }
           }
         });
-        return { previousData };
+
+        return { previousGoalData };
       },
       onError: (err, newData, context) => {
-        queryClient.setQueryData(["goal"], context?.previousData);
+        queryClient.setQueryData(["goal"], context?.previousGoalData);
       },
       onSettled: () => {
-        queryClient.invalidateQueries(["goal"]);
+        queryClient.invalidateQueries({ queryKey: ["goal"] });
+        queryClient.invalidateQueries({ queryKey: ["nextAction"] });
       },
     }
   );
