@@ -1,24 +1,27 @@
 import { ActionIcon, Menu } from "@mantine/core";
-import { useMutation } from "@tanstack/react-query";
+import moment from "moment";
+import "moment/locale/ja";
 import { AiOutlineSetting } from "react-icons/ai";
-import { updateTaskAPI } from "../../features/update/api/UpdateApi";
+import useUpdateGoal from "../../features/goal/hooks/useUpdateGoal";
 import { TaskType } from "../../types/Types";
 
-const MenuButton = ({ task }: { task: TaskType }) => {
-  const date = new Date();
-  const dt = date.toJSON().split("T")[0];
-  const mutation = useMutation((newTask: TaskType) =>
-    updateTaskAPI(task.id, newTask)
-  );
+const MenuButton = ({ task, index }: { task: TaskType; index: number }) => {
+  const dt = moment().format("YYYY-MM-DD");
+  const mutation = useUpdateGoal(index);
   return (
     <Menu>
       <Menu.Target>
-        <ActionIcon>
+        <ActionIcon onClick={(e) => e.stopPropagation()}>
           <AiOutlineSetting />
         </ActionIcon>
       </Menu.Target>
       <Menu.Dropdown>
-        <Menu.Item onClick={() => mutation.mutate({ ...task, goal: dt })}>
+        <Menu.Item
+          onClick={(e) => {
+            mutation.mutate({ ...task, goal: dt });
+            e.stopPropagation();
+          }}
+        >
           <p className="m-0">目標に設定</p>
         </Menu.Item>
       </Menu.Dropdown>

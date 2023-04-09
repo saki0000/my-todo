@@ -1,35 +1,36 @@
 import { Button, Group, Stack, Textarea, TextInput } from "@mantine/core";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRecoilValue } from "recoil";
-import { separateAtom } from "../../../atoms/openAtom";
-import { SubTaskType } from "../../../types/Types";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../redux/userSlice";
+import { User } from "../../../types/Types";
 import DueDate from "../../update/components/DueDate";
 import Weight from "../../update/components/Weight";
 import useAddSubTask from "../hooks/useAddSubTask";
+import { AddTaskType } from "../type/FeatureAddType";
 
-type Props = { taskValue: any; setOpen: (arg: boolean) => void };
+type Props = { taskId: number; setOpen: (arg: boolean) => void };
 
-const AddSubTaskForms = ({ taskValue, setOpen }: Props) => {
-  const modalValue = useRecoilValue(separateAtom);
-  const mutation = useAddSubTask();
+const AddSubTaskForms = ({ taskId, setOpen }: Props) => {
+  const user: User = useSelector(selectUser);
+  const mutation = useAddSubTask(taskId);
   const {
     control,
     register,
     handleSubmit,
     // formState: { errors },
-  } = useForm<SubTaskType>({
+  } = useForm<AddTaskType>({
     defaultValues: {
-      task_id: modalValue.id,
+      user_id: user.uid,
       name: "",
-      box: taskValue.box,
-      date: taskValue.date,
       due_date: "",
       weight: "",
+      subtasks: [],
       statement: false,
       memo: "",
+      goal: "",
     },
   });
-  const onSubmit: SubmitHandler<SubTaskType> = (data: SubTaskType) => {
+  const onSubmit: SubmitHandler<AddTaskType> = (data: AddTaskType) => {
     mutation.mutate(data);
     setOpen(true);
   };

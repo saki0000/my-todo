@@ -33,13 +33,13 @@ const NextActionBox = () => {
   return (
     <>
       <Paper p="xl" shadow="lg" className="h-full" radius="md">
-        <Stack className="h-full px-2" key={"nextAction"}>
+        <Stack className="h-full p-2" key={"nextAction"}>
           <Group>
-            <p className="text-xl my-2 font-medium">{boxes["nextAction"]}</p>
+            <p className="text-2xl my-2 font-medium">{boxes["nextAction"]}</p>
             <BoxInfoIcon box={"nextAction"} />
           </Group>
 
-          <Divider className="border-brown" />
+          <Divider />
           {state.first === "nextAction" && (
             <Chip.Group position="left" value={label} onChange={setLabel}>
               <Chip variant="outline" value="all">

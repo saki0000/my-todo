@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { TaskType } from "../../../types/Types";
 import { DnDRef, DnDResult, Position } from "../type/type";
 import useUpdateGoal from "./useUpdateGoal";
@@ -16,10 +16,11 @@ const useDnDTask = <T,>(
     }
   | undefined => {
   if (!defaultTasks) return;
-  const [items, setItems] = useState<{ tasks: TaskType[]; goal: TaskType[] }>({
-    tasks: defaultTasks,
-    goal: goalTasks,
-  });
+  // const [items, setItems] = useState<{ tasks: TaskType[]; goal: TaskType[] }>({
+  //   tasks: defaultTasks,
+  //   goal: goalTasks,
+  // });
+
   const state = useRef<DnDRef<TaskType>>({
     dndItems: { task: [], goal: [] },
     keys: new Map(),
@@ -97,15 +98,15 @@ const useDnDTask = <T,>(
         ({ key }) => key === dragElement.key
       );
       if (isHover(event, goalAreaRef.element)) {
-        const goal = items.goal;
-        const tasks = items.tasks;
+        const goal = goalTasks;
+        const tasks = defaultTasks;
         goal.push(dragElement.value);
         tasks.splice(dragIndex, 1);
         dndItems.task.splice(dragIndex, 1);
         const { left: x, top: y } = dragElement.element.getBoundingClientRect();
         dragElement.parent = "goal";
         dragElement.position = { x, y };
-        setItems({ tasks: tasks, goal: goal });
+        // setItems({ tasks: tasks, goal: goal });
         mutation.mutate({ ...dragElement.value, goal: goalAreaRef.today });
       }
     } else if (dragElement.parent == "goal") {
@@ -113,15 +114,15 @@ const useDnDTask = <T,>(
         ({ key }) => key === dragElement.key
       );
       if (isHover(event, taskAreaRef.element)) {
-        const goal = items.goal;
-        const tasks = items.tasks;
+        const goal = goalTasks;
+        const tasks = defaultTasks;
         tasks.push(dragElement.value);
         goal.splice(dragIndex, 1);
         dndItems.goal.splice(dragIndex, 1);
         const { left: x, top: y } = dragElement.element.getBoundingClientRect();
         dragElement.position = { x, y };
         dragElement.parent = "task";
-        setItems({ tasks: tasks, goal: goal });
+        // setItems({ tasks: tasks, goal: goal });
         deleteMutation.mutate({ ...dragElement.value, goal: "" });
       }
     }
@@ -267,13 +268,15 @@ const useDnDTask = <T,>(
     };
   };
 
-  return {
-    tasks: items.tasks.map((v) => mapFunc(v, "task")),
+  const returnItems = {
+    tasks: defaultTasks.map((v) => mapFunc(v, "task")),
     goal:
-      items.goal && items.goal.length != 0
-        ? items.goal.map((v) => mapFunc(v, "goal"))
+      goalTasks && goalTasks.length != 0
+        ? goalTasks.map((v) => mapFunc(v, "goal"))
         : undefined,
   };
+
+  return returnItems;
 };
 
 export default useDnDTask;

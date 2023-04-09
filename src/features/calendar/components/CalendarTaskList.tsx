@@ -1,7 +1,9 @@
 import { Loader } from "@mantine/core";
 import { useQuery } from "@tanstack/react-query";
 import { useSelector } from "react-redux";
-import Task from "../../../components/task/Task";
+import { useRecoilValue } from "recoil";
+import { stateAtom } from "../../../atoms/stateAtom";
+import Task from "../../../components/task/TaskLayout";
 import { selectUser } from "../../../redux/userSlice";
 import { TaskType, User } from "../../../types/Types";
 import AddTask from "../../add/components/AddTask";
@@ -14,6 +16,8 @@ const CalendarTask = ({ date }: { date: string }) => {
     isLoading,
     isError,
   } = useQuery(["calender", date], () => fetchCalendarTask(user.uid, date));
+  const state = useRecoilValue(stateAtom);
+
   return (
     <>
       <div className="my-6">
@@ -29,7 +33,7 @@ const CalendarTask = ({ date }: { date: string }) => {
           </div>
         )}
         {isError && <div>error</div>}
-        <AddTask box={"calender"} date={date} />
+        {state.first == "calender" && <AddTask box={"calender"} date={date} />}
       </div>
     </>
   );

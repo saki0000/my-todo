@@ -1,36 +1,33 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import { useSelector } from "react-redux";
-import { URL } from "../../../api";
-import { selectUser } from "../../../redux/userSlice";
-import { SubTaskType, User } from "../../../types/Types";
-import SubTask from "../../task/SubTask";
+import AddSubTask from "../../../features/add/components/AddSubTask";
+import { fetchSubTask } from "../../../features/fetch/api/fetchApi";
+import { SubTaskType } from "../../../types/Types";
+import Task from "../../task/TaskLayout";
 
-const SubTasks = ({ taskId }: { taskId: number }) => {
-  const user: User = useSelector(selectUser);
-
-  const fetchData = async () => {
-    const res = await axios.get(
-      `${URL}/tasks/${taskId}/subtasks?id=${user.uid}`
-    );
-    return res.data;
-  };
+const SubTasks = ({ taskId, open }: { taskId: number; open?: boolean }) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [taskId],
-    queryFn: fetchData,
+    queryFn: () => fetchSubTask(taskId),
   });
   if (isLoading) return <></>;
   if (isError) return <div></div>;
   return (
     <>
       {data && data.length != 0 && (
-        <div className="my-2 ml-4 mr-2" key={taskId}>
+        <div className="my-1 pl-8" key={taskId}>
           {data?.map((task: SubTaskType, index: number) => (
-            <div className="my-3" key={index}>
-              <SubTask task={task} index={index} taskId={taskId} />
+            <div className="my-2 flex space-x-2" key={index}>
+              <Task task={task} index={index} sub={true} openadd={open} />
             </div>
           ))}
         </div>
+      )}
+      {open && (
+        <>
+          <div className="mt-4">
+            <AddSubTask taskId={taskId} />
+          </div>
+        </>
       )}
     </>
   );

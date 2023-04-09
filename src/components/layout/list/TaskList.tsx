@@ -13,7 +13,7 @@ const TaskList = ({ data, isLoading, isError, error, box }: any) => {
         <div>
           {data && data.length !== 0 ? (
             data.map((task: TaskType, index: number) => (
-              <div key={task?.id || 0}>
+              <div key={task?.id || 0} className="mt-1">
                 <Task task={task} index={index} />
               </div>
             ))

@@ -1,17 +1,20 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { TaskType } from "../../../types/Types";
+import { BoxType, TaskType } from "../../../types/Types";
 import { updateTaskAPI } from "../../update/api/UpdateApi";
-const useDeleteTask = (task: TaskType, index: number) => {
+const useDeleteTask = (
+  task: TaskType,
+  index: number,
+  key: BoxType | number | null
+) => {
   const queryClient = useQueryClient();
 
   const mutation = useMutation(
     (newData: TaskType) => updateTaskAPI(task.id, newData),
     {
       onMutate: async () => {
-        console.log(task.box);
-        queryClient.cancelQueries([task.box]);
-        const previousData = queryClient.getQueryData([task.box]);
-        queryClient.setQueryData([task.box], (old: TaskType[] | undefined) => {
+        queryClient.cancelQueries([key]);
+        const previousData = queryClient.getQueryData([key]);
+        queryClient.setQueryData([key], (old: TaskType[] | undefined) => {
           if (old) {
             const newAry = [...old];
             newAry.splice(index, 1);
@@ -21,10 +24,10 @@ const useDeleteTask = (task: TaskType, index: number) => {
         return { previousData };
       },
       onError: (err, newData, context) => {
-        queryClient.setQueryData([task.box], context?.previousData);
+        queryClient.setQueryData([key], context?.previousData);
       },
       onSettled: () => {
-        queryClient.invalidateQueries([task.box]);
+        queryClient.invalidateQueries([key]);
       },
     }
   );

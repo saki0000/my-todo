@@ -1,17 +1,12 @@
+import moment from "moment";
+import "moment/locale/ja";
 import { useMemo } from "react";
-
-const useGetDateOfYear = (today: Date) => {
+const useGetDateOfYear = () => {
   const dateTask = useMemo(() => {
     return [...Array(365)].map((_, index) => {
-      return new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() + index
-      )
-        .toJSON()
-        .split("T")[0];
+      return moment().add(index, "days").format("YYYY-MM-DD");
     });
-  }, [today]);
+  }, []);
   return [dateTask];
 };
 

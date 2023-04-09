@@ -7,10 +7,10 @@ const Head = React.memo(() => {
   const dispatch = useDispatch();
   // const user: User = useSelector(selectUser);
   return (
-    <>
-      <Group align="center" position="apart" className="bg-darkBlue mx-16">
+    <div className="flex h-full ">
+      <Group align="center" position="apart" className="mx-8 w-full self-end">
         <Group>
-          <p className="font-bold text-2xl text-white">ASAP TASK</p>
+          <p className="font-bold text-3xl m-0 text-white">ASAP TASK</p>
           {/* <Text>{user.displayName}</Text> */}
         </Group>
         <Button
@@ -24,7 +24,7 @@ const Head = React.memo(() => {
           Logout
         </Button>
       </Group>
-    </>
+    </div>
   );
 });
 

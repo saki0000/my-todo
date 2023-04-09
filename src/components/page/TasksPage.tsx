@@ -30,11 +30,11 @@ const TasksPage: React.FC = () => {
     someday: <SomedayBox />,
   };
   return (
-    <>
-      <Grid.Col span={7} className="h-full">
+    <Grid className="h-full pl-4 pb-6 p-0">
+      <Grid.Col span={8} className="h-full">
         {components[state.first]}
       </Grid.Col>
-      <Grid.Col span={3} className="h-full">
+      <Grid.Col span={4} className="h-full">
         <Stack justify="space-between" className="h-full">
           {Object.entries(state).map((key: [string, NewBoxType]) => (
             <>
@@ -57,7 +57,7 @@ const TasksPage: React.FC = () => {
           ))}
         </Stack>
       </Grid.Col>
-    </>
+    </Grid>
   );
 };
 

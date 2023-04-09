@@ -1,4 +1,3 @@
-import { Grid } from "@mantine/core";
 import { useRoutes } from "react-router-dom";
 import Authed from "../components/page/Authed";
 import TasksPage from "../components/page/TasksPage";
@@ -14,14 +13,18 @@ const router = [
       {
         index: true,
         element: (
-          <Grid.Col span={10} className="h-full">
+          <div className="h-full p-4">
             <Inbox />
-          </Grid.Col>
+          </div>
         ),
       },
       {
         path: "tasks",
-        element: <TasksPage />,
+        element: (
+          <div className="h-full m-4">
+            <TasksPage />
+          </div>
+        ),
       },
     ],
   },

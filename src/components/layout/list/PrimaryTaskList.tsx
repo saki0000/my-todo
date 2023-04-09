@@ -50,11 +50,13 @@ const PrimaryTaskList = ({ data, isLoading, isError, error, box }: any) => {
               <div>
                 <p className="my-2">優先度：高</p>
                 <Divider />
-                {primaryTask?.high.map((task: TaskType, index: number) => (
-                  <div key={task?.id || 0}>
-                    <Task task={task} index={index} />
-                  </div>
-                ))}
+                <div className="flex flex-col space-y-1 mt-2">
+                  {primaryTask?.high.map((task: TaskType, index: number) => (
+                    <div key={task?.id || 0}>
+                      <Task task={task} index={index} />
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
             {primaryTask?.middle.length !== 0 && (
