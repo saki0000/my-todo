@@ -8,6 +8,7 @@ module.exports = {
         purple2: "#9ac1f0",
         darkBlue: "#bac6ce",
         brown: "#666",
+        textBlack: "rgb(73 82 93)",
       },
     },
   },

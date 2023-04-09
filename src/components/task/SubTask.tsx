@@ -1,5 +1,4 @@
 import { Badge, Checkbox, Group, Text } from "@mantine/core";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { AiOutlineEnter } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
@@ -8,6 +7,7 @@ import useDeleteSubTask from "../../features/delete/hooks/useDeleteSubTask";
 import EditButton from "../../features/update/components/EditButton";
 import UpdateTask from "../../features/update/components/UpdateTask";
 import { TaskType } from "../../types/Types";
+import SubTasks from "../layout/list/SubTaskList";
 
 type props = {
   task: TaskType;
@@ -17,15 +17,9 @@ type props = {
 const SubTask = ({ task, index, taskId }: props) => {
   const [open, setOpen] = useState(false);
   const state = useRecoilValue(stateAtom);
-  const queryClient = useQueryClient();
-  const deleteFunc = useDeleteSubTask();
+  const mutation = useDeleteSubTask(task, index);
 
-  const mutation = useMutation(deleteFunc, {
-    onSuccess: () => {
-      queryClient.invalidateQueries([taskId]);
-    },
-  });
-  // const { data, mutate } = useFetchSubTask(modalValue.id);
+  console.log(task);
   return (
     <>
       {task && !task.statement && (
@@ -50,7 +44,7 @@ const SubTask = ({ task, index, taskId }: props) => {
                         checked={false}
                         onChange={(e) => {
                           e.preventDefault();
-                          mutation.mutate(task.id);
+                          mutation.mutate(task);
                         }}
                       />
                       <Text>{task?.name}</Text>
@@ -84,6 +78,7 @@ const SubTask = ({ task, index, taskId }: props) => {
                       {task.memo}
                     </Text>
                   )}
+                  <SubTasks taskId={task.id} />
                 </div>
               }
             </>

@@ -12,6 +12,7 @@ export type TaskType = {
   user_id: string;
   weight: string;
   goal: string;
+  parent_id: number | null;
 };
 export type SubTaskType = TaskType & { task_id: number };
 export type StateType = {

@@ -1,14 +1,14 @@
 import { ActionIcon, Group, Text } from "@mantine/core";
 import { useState } from "react";
 import { AiOutlinePlus } from "react-icons/ai";
-import { TaskType } from "../../../types/Types";
 import AddSubTaskForms from "./AddSubTaskForms";
 
-type props = { task: TaskType };
-const AddSubTask = ({ task }: props) => {
+type props = { taskId: number };
+const AddSubTask = ({ taskId }: props) => {
   const [open, setOpen] = useState<boolean>(true);
+  console.log(taskId);
   return (
-    <div className=" my-4">
+    <div className="my-4">
       {open ? (
         <Group>
           <ActionIcon
@@ -21,7 +21,7 @@ const AddSubTask = ({ task }: props) => {
           <Text>タスクを追加</Text>
         </Group>
       ) : (
-        <AddSubTaskForms taskValue={task} setOpen={setOpen} />
+        <AddSubTaskForms taskId={taskId} setOpen={setOpen} />
       )}
     </div>
   );

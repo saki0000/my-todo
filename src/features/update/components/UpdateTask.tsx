@@ -64,8 +64,9 @@ const UpdateTask = ({ task, setOpen, type, index }: props) => {
           <Textarea placeholder="Memo" {...register("memo")}></Textarea>
           <Group>
             <Button
-              onClick={() => {
+              onClick={(e) => {
                 setOpen(false);
+                e.stopPropagation();
               }}
               variant="light"
               color="red"
@@ -74,7 +75,15 @@ const UpdateTask = ({ task, setOpen, type, index }: props) => {
             >
               キャンセル
             </Button>
-            <Button type="submit" variant="light" color="brown" radius="md">
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              type="submit"
+              variant="light"
+              color="brown"
+              radius="md"
+            >
               変更
             </Button>
           </Group>

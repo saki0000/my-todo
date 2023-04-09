@@ -29,7 +29,7 @@ const DoneTaskList = ({
       <div>
         {children}
         {data && data.length !== 0 ? (
-          <div className="mt-2">
+          <div className="mt-2 flex flex-col space-y-1">
             {data.map((task: TaskType, index: number) => (
               <div key={task?.id || 0}>
                 <Task task={task} index={index} goal={true} />

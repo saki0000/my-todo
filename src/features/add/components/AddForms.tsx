@@ -30,7 +30,8 @@ const AddForms = ({ box, date, setOpen }: Props) => {
     subtasks: [],
     statement: false,
     memo: "",
-    goal: false,
+    goal: "",
+    parent_id: null,
   };
   const {
     control,
@@ -65,8 +66,9 @@ const AddForms = ({ box, date, setOpen }: Props) => {
           <Textarea placeholder="Memo" {...register("memo")}></Textarea>
           <Group>
             <Button
-              onClick={() => {
+              onClick={(e) => {
                 setOpen(true);
+                e.stopPropagation();
               }}
               variant="light"
               color="red"
@@ -75,7 +77,15 @@ const AddForms = ({ box, date, setOpen }: Props) => {
             >
               キャンセル
             </Button>
-            <Button type="submit" variant="light" color="brown" radius="md">
+            <Button
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+              type="submit"
+              variant="light"
+              color="brown"
+              radius="md"
+            >
               追加
             </Button>
           </Group>

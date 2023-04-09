@@ -2,13 +2,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { Divider, Group, Paper, Stack, Text } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
+import moment from "moment";
+import "moment/locale/ja";
 import BoxInfoIcon from "../../../components/button/BoxInfoIcon";
 import useGetDateOfYear from "../hooks/CalenderHook";
 import CalendarTask from "./CalendarTaskList";
 
 const Calender = ({ onClick }: { onClick?: () => void }) => {
-  const today = new Date();
-  const [dateTask] = useGetDateOfYear(today);
+  const today = moment().format("YYYY-MM-DD");
+  const [dateTask] = useGetDateOfYear();
   const [calendar, setCalendar] = useSetState({
     first: "カレンダー",
     second: "今日",
@@ -24,9 +26,9 @@ const Calender = ({ onClick }: { onClick?: () => void }) => {
         onClick={onClick}
         className="h-full"
       >
-        <Stack className="h-full mx-2" key="calendar">
+        <Stack className="h-full m-2" key="calendar">
           <Group>
-            <p className="text-xl my-2 font-medium">
+            <p className="text-xl my-2 font-semibold text-textBlack">
               {calendar.first}
               <span
                 onClick={() => {
@@ -43,7 +45,7 @@ const Calender = ({ onClick }: { onClick?: () => void }) => {
             <BoxInfoIcon box="calendar" />
           </Group>
 
-          <Divider className="border-brown" />
+          <Divider />
           <div className="h-full overflow-auto">
             {calendar.first === "カレンダー" ? (
               <>
@@ -54,13 +56,10 @@ const Calender = ({ onClick }: { onClick?: () => void }) => {
                     <CalendarTask date={date} />
                   </div>
                 ))}
-                <Divider className="border-brown" />
               </>
             ) : (
               <>
-                <CalendarTask date={today.toJSON().split("T")[0]} />
-
-                <Divider className="border-brown" />
+                <CalendarTask date={today} />
               </>
             )}
           </div>

@@ -1,29 +1,24 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRecoilValue } from "recoil";
-import { separateAtom } from "../../../atoms/openAtom";
 import { addSubTask } from "../api/AddApi";
-import { AddSubTaskType } from "../type/FeatureAddType";
+import { AddTaskType } from "../type/FeatureAddType";
 
-const useAddSubTask = () => {
-  const modalValue = useRecoilValue(separateAtom);
+const useAddSubTask = (id: number) => {
+  console.log(id);
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
-    mutationFn: (newData: AddSubTaskType) => addSubTask(modalValue.id, newData),
+    mutationFn: (newData: AddTaskType) => addSubTask(id, newData),
     onMutate: async (newData) => {
-      queryClient.cancelQueries([modalValue.id]);
-      const previousData = queryClient.getQueryData([modalValue.id]);
-      queryClient.setQueryData([modalValue.id], (old: any) => [
-        ...old,
-        newData,
-      ]);
+      queryClient.cancelQueries([id]);
+      const previousData = queryClient.getQueryData([id]);
+      queryClient.setQueryData([id], (old: any) => old && [...old, newData]);
       return { previousData };
     },
     onError: (err, newData, context) => {
-      queryClient.setQueryData([modalValue.id], context?.previousData);
+      queryClient.setQueryData([id], context?.previousData);
     },
     onSettled: () => {
-      queryClient.invalidateQueries([modalValue.id]);
+      queryClient.invalidateQueries([id]);
     },
   });
   return mutation;

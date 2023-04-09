@@ -48,11 +48,13 @@ const DueDateTaskList = ({ data, isLoading, isError, error, box }: any) => {
                 <div key={value[0]}>
                   <p className="my-2">{value[0]}</p>
                   <Divider />
-                  {value[1]?.map((task: TaskType, index: number) => (
-                    <div key={task?.id || 0}>
-                      <Task task={task} index={index} />
-                    </div>
-                  ))}
+                  <div className="flex flex-col space-x-1 mt-2">
+                    {value[1]?.map((task: TaskType, index: number) => (
+                      <div key={task?.id || 0}>
+                        <Task task={task} index={index} />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               ))}
           </>

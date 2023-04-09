@@ -1,6 +1,8 @@
 import { ActionIcon, HoverCard, Modal } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { useRef, useState } from "react";
+import moment from "moment";
+import "moment/locale/ja";
+import { useRef } from "react";
 import { AiOutlinePlusCircle, AiOutlineSetting } from "react-icons/ai";
 import Task from "../../../components/task/Task";
 import { TaskType } from "../../../types/Types";
@@ -13,16 +15,9 @@ type GoalRefType = {
   isHover: boolean;
 };
 type TaskRefType = { element: HTMLElement | null; isHover: boolean };
-const date = new Date();
-const dt = date.toJSON().split("T")[0];
+const dt = moment().format("YYYY-MM-DD");
 
 const GoalSetting = ({ goalTasks, nextActionTasks }: Props) => {
-  const [goalData, setGoalData] = useState(goalTasks);
-  const [nextData, setNextData] = useState<TaskType[]>(
-    nextActionTasks
-      ? nextActionTasks.filter((v: TaskType) => v.goal !== dt)
-      : []
-  );
   const [opened, { open, close }] = useDisclosure(false);
   const goalAreaRef = useRef<GoalRefType>({
     element: null,
@@ -56,7 +51,7 @@ const GoalSetting = ({ goalTasks, nextActionTasks }: Props) => {
               <p className="my-4 font-semibold text-lg">Next Action List</p>
             </div>
             <div
-              className="h-full p-4 border-dashed border-blue-400 rounded"
+              className="h-full p-4 border-dashed border-blue-400 rounded space-y-1"
               ref={(e) => {
                 if (!e) return;
                 taskAreaRef.element = e;
@@ -98,7 +93,7 @@ const GoalSetting = ({ goalTasks, nextActionTasks }: Props) => {
                 goalAreaRef.element = e;
                 goalAreaRef.today = dt;
               }}
-              className="h-full p-4 border-dashed border-blue-400 rounded"
+              className="h-full p-4 border-dashed border-blue-400 rounded space-y-1"
               id="goal"
             >
               {result &&

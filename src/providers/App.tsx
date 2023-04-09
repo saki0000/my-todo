@@ -6,7 +6,7 @@ import { BrowserRouter } from "react-router-dom";
 import { store } from "../app/store";
 
 const queryClient = new QueryClient({
-  defaultOptions: { queries: {} },
+  // defaultOptions: { queries: {} },
 });
 
 type AppProviderProps = {

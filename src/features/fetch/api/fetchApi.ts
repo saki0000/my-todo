@@ -8,3 +8,7 @@ export const fetchTask = async (id: number) => {
   const res = await axios.get(`${URL}/tasks/${id}`);
   return res.data;
 };
+export const fetchSubTask = async (taskId: number) => {
+  const res = await axios.get(`${URL}/subtasks?id=${taskId}`);
+  return res.data;
+};
