@@ -28,7 +28,7 @@ const Calender = ({ onClick }: { onClick?: () => void }) => {
       >
         <Stack className="h-full m-2" key="calendar">
           <Group>
-            <p className="text-2xl my-2 font-medium">
+            <p className="text-xl my-2 font-semibold text-textBlack">
               {calendar.first}
               <span
                 onClick={() => {

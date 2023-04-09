@@ -35,7 +35,9 @@ const NextActionBox = () => {
       <Paper p="xl" shadow="lg" className="h-full" radius="md">
         <Stack className="h-full p-2" key={"nextAction"}>
           <Group>
-            <p className="text-2xl my-2 font-medium">{boxes["nextAction"]}</p>
+            <p className="text-xl my-2 font-semibold text-textBlack">
+              {boxes["nextAction"]}
+            </p>
             <BoxInfoIcon box={"nextAction"} />
           </Group>
 

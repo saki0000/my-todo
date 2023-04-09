@@ -28,7 +28,9 @@ const TaskBox = ({ box, isLoading, isError, data, error }: props) => {
       <Paper p="xl" shadow="lg" className="h-full" radius="md">
         <Stack className="h-full p-2" key={box}>
           <Group>
-            <p className="text-2xl my-2 font-medium">{boxes[box]}</p>
+            <p className="text-xl my-2 font-semibold text-textBlack">
+              {boxes[box]}
+            </p>
             <BoxInfoIcon box={box} />
           </Group>
 
