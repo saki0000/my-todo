@@ -135,9 +135,11 @@ const TaskLayout = ({ task, index, date, goal, sub, openadd }: props) => {
           )}
 
           {/* memo */}
-          <div className="ml-9 mr-1 mt-2 m-0">
-            <Memo memo={task?.memo} />
-          </div>
+          {task.memo && (
+            <div className="ml-9 mr-1 mt-2 m-0">
+              <Memo memo={task?.memo} />
+            </div>
+          )}
 
           {subtask && <SubTasks taskId={task.id} open={openadd} />}
           <PromptBadge task={task} />

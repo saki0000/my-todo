@@ -8,6 +8,8 @@ const SubTasks = ({ taskId, open }: { taskId: number; open?: boolean }) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [taskId],
     queryFn: () => fetchSubTask(taskId),
+    enabled: taskId != 0,
+    retry: 5,
   });
   if (isLoading) return <></>;
   if (isError) return <div></div>;

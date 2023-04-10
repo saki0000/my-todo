@@ -16,6 +16,8 @@ const Task = ({ task, index, date, goal, sub, openadd }: props) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: [task.id],
     queryFn: () => fetchSubTask(task.id),
+    retry: 5,
+    enabled: task.id != 0,
   });
   if (isLoading) return <></>;
   if (isError) return <div></div>;
