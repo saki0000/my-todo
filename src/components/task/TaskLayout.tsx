@@ -6,6 +6,7 @@ import { AiOutlineDown, AiOutlineRight } from "react-icons/ai";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { separateAtom } from "../../atoms/openAtom";
 import { stateAtom } from "../../atoms/stateAtom";
+import ChatGpt from "../../features/chatgpt/components/ChatGpt";
 import useDeleteTask from "../../features/delete/hooks/useDeleteTask";
 import SeparateButton from "../../features/separate/components/SeparateButton";
 import DistributeButton from "../../features/update/components/DistributeButton";
@@ -111,7 +112,7 @@ const TaskLayout = ({ task, index, date, goal, sub, openadd }: props) => {
                   ) : (
                     <MenuButton task={task} index={index} />
                   )}
-                  {/* <Box /> */}{" "}
+                  <ChatGpt text={task.name} />
                 </div>
               </>
             ) : (
